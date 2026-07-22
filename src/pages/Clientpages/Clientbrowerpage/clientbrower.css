@@ -1,0 +1,44 @@
+.clientbrowerprofile{
+    width: 80px;
+    margin-top: 20px;
+}
+/* Base styles – scrolling enabled */
+.skillsRow {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 📱 MOBILE: hide scrollbar */
+@media (max-width: 768px) {
+  .skillsRow {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* Edge */
+  }
+
+  .skillsRow::-webkit-scrollbar {
+    display: none;                /* Chrome, Safari */
+    height: 0;
+  }
+}
+
+/* 💻 DESKTOP: show scrollbar */
+@media (min-width: 769px) {
+  .skillsRow::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .skillsRow::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+
+  .skillsRow::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+* {
+  -webkit-tap-highlight-color: transparent; /* removes the gray/blue overlay on tap */
+  user-select: none; /* prevents text selection */
+}

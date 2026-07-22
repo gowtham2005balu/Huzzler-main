@@ -1,0 +1,228 @@
+/* ---------------- GLOBAL FIXES ---------------- */
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+    background: #ffffff;
+}
+
+img {
+    display: block;
+}
+
+/* ---------------- HEADER ---------------- */
+.head{
+    font-size: 10px;
+    margin-left: 60px;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    
+    
+}
+.profile1{
+font-size: 36px;
+font-weight: 400;
+
+}
+.profile2{
+    font-weight: 400;
+    font-size: 16px;
+}
+.header-container {
+    width: 100%;
+    padding: 24px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+  font-size: 16px;
+  
+  
+}
+
+/* Profile row */
+.profile-row {
+    display: flex;
+    align-items: flex-end;
+ gap: 16px;
+    width: 68%;
+    margin-left: 170px;
+    padding: 30px;
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Profile image container */
+.profile-img-wrapper {
+    position: relative;
+    
+    
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 2px solid #e5e5e5;
+}
+
+.section-profile{
+   margin-left: 10px;
+ font-size: 20px;
+
+}
+
+.profile-name{
+  
+   display: inline;
+    font-weight: 400;
+    
+}
+.profile-email{
+    font-size: 16px;
+    color: #000000ab;
+}
+/* Small edit button */
+.edit-icon-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fef08a;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+.profile-upload-input {
+    display: none;
+}
+
+/* Upload overlay */
+.upload-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------------- CARD STYLES ---------------- */
+.section-card {
+    width: 70%;
+    background: #ffffff;
+    margin-left: 200px;
+    padding: 24px;
+    border-radius: 24px;
+    font-size: 20px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+}
+.section-card2 {
+  width: 70%;
+  background: #ffffff;
+margin-left: 200px;
+  padding: 24px;
+  border-radius: 24px;
+  margin-top: 20px;
+  box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
+}
+
+.section-card1{
+     width: 70%;
+  background: #ffffff;
+margin-left: 200px;
+  padding: 24px;
+  border-radius: 24px;
+  margin-top: 10px;
+  box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
+}
+/* Section title */
+.section-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+/* ---------------- MENU ITEM ---------------- */
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f2f2f2;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-item img {
+    width: 26px;
+    height: 26px;
+}
+
+.menu-arrow {
+    width: 18px;
+    opacity: 0.5;
+}
+
+/* ---------------- LOGOUT ---------------- */
+.logout-btn {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #e63946;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.logout-icon-delete{
+    padding: 10px;
+    margin-left: -20px;
+
+}
+.delete-btn {
+    color: #e63946;
+    font-weight: 600;
+}
+
+.delete-btn img {
+    filter: brightness(0) saturate(100%) invert(22%) sepia(91%) saturate(2100%) hue-rotate(350deg) brightness(90%) contrast(95%);
+}
+
+.delete-text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #e63946;
+}
+
+.deleteaccount {
+    color: #e63946;
+}
+
+/* Loader (optional small one) */
+.loader-small {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

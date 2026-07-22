@@ -1,0 +1,117 @@
+/* MAIN WRAPPER */
+.dashboard {
+  padding: 20px;
+  padding-left: 40px;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.page-wrapper {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* GRID */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 20px;
+}
+
+/* SERVICE CARD */
+.work-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.09);
+  transition: 0.2s ease;
+  border-left: 4px solid #6c63ff;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
+}
+
+/* TITLE + CATEGORY */
+.work-card h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.work-card p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* SKILL CHIPS */
+.skills-box {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.skill-chip {
+  display: inline-block;
+  background: #eef0ff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin: 4px 6px 4px 0;
+  color: #5149ff;
+  font-weight: 500;
+}
+
+/* PRICE TEXT */
+.price {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  color: #222;
+}
+
+/* SAMPLE LINKS */
+.samples a {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #6a5dfc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.samples a:hover {
+  text-decoration: underline;
+}
+
+/* FLOATING BUTTON */
+.add-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  background: #6c63ff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #5a54e8;
+}

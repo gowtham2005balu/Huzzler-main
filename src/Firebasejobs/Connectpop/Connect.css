@@ -1,0 +1,552 @@
+/* ============================================
+   Connect.css - Send Request Popup Styles
+   ============================================ */
+
+/* ============ MODAL BACKDROP ============ */
+.ffds-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ============ MODAL CONTAINER ============ */
+.ffds-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 32px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  animation: ffds-slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ffds-slideIn {
+  from {
+    transform: translateY(-30px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for modal */
+.ffds-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ffds-modal::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.ffds-modal::-webkit-scrollbar-thumb {
+  background: #c5b3ff;
+  border-radius: 10px;
+}
+
+.ffds-modal::-webkit-scrollbar-thumb:hover {
+  background: #7A4DFF;
+}
+
+/* ============ MODAL HEADER ============ */
+.ffds-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #7A4DFF 0%, #5a2dcc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ffds-modal > p {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0 0 20px 0;
+}
+
+/* ============ LABELS ============ */
+.ffds-modal label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ============ SELECT DROPDOWN ============ */
+.ffds-select {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #fafafa;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.ffds-select:hover {
+  border-color: #c5b3ff;
+  background-color: #fff;
+}
+
+.ffds-select:focus {
+  border-color: #7A4DFF;
+  box-shadow: 0 0 0 3px rgba(122, 77, 255, 0.15);
+  background-color: #fff;
+}
+
+/* ============ INPUT FIELD ============ */
+.ffds-input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #fafafa;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.ffds-input:hover {
+  border-color: #c5b3ff;
+  background-color: #fff;
+}
+
+.ffds-input:focus {
+  border-color: #7A4DFF;
+  box-shadow: 0 0 0 3px rgba(122, 77, 255, 0.15);
+  background-color: #fff;
+}
+
+.ffds-input::placeholder {
+  color: #9ca3af;
+}
+
+/* ============ TEXTAREA ============ */
+.ffds-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #fafafa;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.ffds-textarea:hover {
+  border-color: #c5b3ff;
+  background-color: #fff;
+}
+
+.ffds-textarea:focus {
+  border-color: #7A4DFF;
+  box-shadow: 0 0 0 3px rgba(122, 77, 255, 0.15);
+  background-color: #fff;
+}
+
+.ffds-textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* ============ SERVICE PREVIEW CARD ============ */
+.ffds-service-preview {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  padding: 16px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  border: 1px solid #ddd6fe;
+  animation: ffds-fadeIn 0.3s ease;
+}
+
+@keyframes ffds-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ffds-service-preview strong {
+  font-size: 15px;
+  color: #5b21b6;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ffds-service-preview p {
+  margin: 6px 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.ffds-service-preview div {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.ffds-service-preview span {
+  background: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #7c3aed;
+  border: 1px solid #ede9fe;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============ MODAL FOOTER ============ */
+.ffds-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* ============ BUTTONS ============ */
+.ffds-btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.ffds-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Outline Button */
+.ffds-btn-outline {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.ffds-btn-outline:hover:not(:disabled) {
+  border-color: #7A4DFF;
+  color: #7A4DFF;
+  background: #faf5ff;
+}
+
+.ffds-btn-outline:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Primary Button */
+.ffds-btn-primary {
+  background: linear-gradient(135deg, #7A4DFF 0%, #6930c3 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(122, 77, 255, 0.35);
+}
+
+.ffds-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #6930c3 0%, #5521b5 100%);
+  box-shadow: 0 6px 20px rgba(122, 77, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.ffds-btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ============ SUCCESS POPUP OVERLAY ============ */
+.ffds-pop-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: ffds-fadeInOverlay 0.3s ease;
+}
+
+@keyframes ffds-fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============ SUCCESS CARD ============ */
+.ffds-pop-card-large {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px 48px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: ffds-popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ffds-popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Success Icon Container */
+.ffds-pop-icon-large {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 10px 30px rgba(34, 197, 94, 0.2),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.05);
+  animation: ffds-pulse 2s infinite;
+}
+
+@keyframes ffds-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 10px 30px rgba(34, 197, 94, 0.2),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 15px 40px rgba(34, 197, 94, 0.35),
+      inset 0 -2px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.ffds-pop-icon-large img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Success Title */
+.ffds-pop-title-large {
+  font-size: 24px;
+  font-weight: 700;
+  color: #059669;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Success Text */
+.ffds-pop-text-large {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ffds-pop-text-large strong {
+  color: #7A4DFF;
+  font-weight: 600;
+}
+
+/* ============ DIVIDER (optional) ============ */
+.ffds-divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.ffds-divider::before,
+.ffds-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.ffds-divider::before {
+  margin-right: 12px;
+}
+
+.ffds-divider::after {
+  margin-left: 12px;
+}
+
+/* ============ RESPONSIVE STYLES ============ */
+@media (max-width: 576px) {
+  .ffds-modal {
+    padding: 20px 20px;
+    border-radius: 16px;
+    margin: 10px;
+    max-height: 85vh;
+  }
+
+  .ffds-card-title {
+    font-size: 18px;
+  }
+
+  .ffds-modal > p {
+    font-size: 13px;
+  }
+
+  .ffds-select,
+  .ffds-input,
+  .ffds-textarea {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .ffds-modal-footer {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .ffds-btn {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .ffds-pop-card-large {
+    padding: 32px 24px;
+  }
+
+  .ffds-pop-icon-large {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ffds-pop-icon-large img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ffds-pop-title-large {
+    font-size: 20px;
+  }
+
+  .ffds-pop-text-large {
+    font-size: 14px;
+  }
+
+  .ffds-service-preview {
+    padding: 12px;
+  }
+
+  .ffds-service-preview div {
+    gap: 8px;
+  }
+
+  .ffds-service-preview span {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
+/* ============ LOADING SPINNER (for button) ============ */
+.ffds-btn-primary:disabled::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ffds-spin 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes ffds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============ EMPTY STATE ============ */
+.ffds-empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.ffds-empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}

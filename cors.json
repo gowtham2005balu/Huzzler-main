@@ -1,0 +1,20 @@
+// [
+//   {
+//     "origin": ["http://localhost:5173","https://firebasehuzzler-client.onrender.com"],
+//     "method": ["GET", "POST", "PUT", "HEAD"],
+//     "maxAgeSeconds": 3600,
+//     "responseHeader": [
+//       "Content-Type",
+//       "Access-Control-Allow-Origin"
+//     ]
+//   }
+// ]
+
+[
+  {
+    "origin": ["*"],
+    "method": ["GET", "POST", "PUT", "HEAD"],
+     "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]

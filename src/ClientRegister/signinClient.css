@@ -1,0 +1,178 @@
+/* ---------- Global Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.signup-wrapper {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Logo ---------- */
+.logo-box {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  width: 120px;
+  height: auto;
+}
+
+/* ---------- Header ---------- */
+.signup-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.back-btn {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.center-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* ---------- Form Container ---------- */
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* ---------- Password Wrapper ---------- */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ---------- Continue Button ---------- */
+.yellow-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 25px;
+  background: #ffcc00;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.yellow-btn:hover {
+  opacity: 0.85;
+}
+
+.yellow-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Login Text ---------- */
+.login-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-link {
+  color: #ff9900;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+/* Large Tablets */
+@media (max-width: 1024px) {
+  .signup-wrapper {
+    max-width: 480px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 110px;
+  }
+  .yellow-btn {
+    font-size: 15px;
+    padding: 13px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .signup-wrapper {
+    padding: 15px;
+  }
+
+  .logo-img {
+    width: 95px;
+  }
+
+  .signup-header h3 {
+    font-size: 18px;
+  }
+
+  .form-container input {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  .yellow-btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 360px) {
+  .logo-img {
+    width: 80px;
+  }
+
+  .form-container input {
+    padding: 10px;
+  }
+
+  .yellow-btn {
+    padding: 11px;
+  }
+}

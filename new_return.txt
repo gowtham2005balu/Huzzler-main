@@ -1,0 +1,329 @@
+  return (
+    <div
+      className="freelance-wrapper"
+      style={{
+        marginLeft: collapsed ? "-180px" : "-60px",
+        transition: "margin-left 0.25s ease",
+        marginTop: "0px",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        background: "linear-gradient(0deg, #F7F4EE, #F7F4EE), #FFFFFF",
+        fontFamily: "'DM Sans', sans-serif"
+      }}
+    >
+      {/* Top Notification Strip */}
+      <div style={{ background: "linear-gradient(90deg, #6C3EEB 0%, #7C4EF5 100%)", padding: "6px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", color: "white", fontSize: "12px", width: "100%", zIndex: 50 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ width: "6px", height: "6px", background: "#F0E870", borderRadius: "3px" }}></div>
+          <span>🎉 3 new projects match your profile today — Senior UI/UX roles starting immediately</span>
+        </div>
+        <button style={{ background: "none", border: "none", color: "white", cursor: "pointer", opacity: 0.7 }}>✕</button>
+      </div>
+
+      <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "calc(100vh - 28px)", marginTop: "20px" }}>
+        {/* Left area (Main Content) */}
+        <div style={{ flex: 1, padding: "8px 24px 20px", display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
+          {/* Header */}
+          <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <div style={{ color: "#4A4060", fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }}>Welcome back,</div>
+              <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{userInfo.first_name || "James Andrew"} 👋</div>
+            </div>
+            
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1, justifyContent: "center", minWidth: "250px" }}>
+                {!isMobile && <div style={{ color: "#8C84A8", fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }}>Discover projects that match your skills</div>}
+                <div style={{ display: "flex", alignItems: "center", background: "#F7F4EE", borderRadius: "50px", padding: "8px 16px", border: "1px solid #EBE5F2", width: "100%", maxWidth: "400px" }}>
+                  <FiSearch color="#8C84A8" size={16} />
+                  <input placeholder="Search freelancers, jobs, services..." style={{ border: "none", background: "transparent", outline: "none", marginLeft: "8px", flex: 1, fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+                </div>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <button onClick={() => setNotifOpen(!notifOpen)} style={{ background: "white", border: "1px solid #EBE5F2", borderRadius: "50%", width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                <FiBell color="#8C84A8" size={16} />
+                {notifCount > 0 && <span style={{ position: "absolute", top: "0px", right: "0px", width: "8px", height: "8px", background: "#F0E870", borderRadius: "50%" }}></span>}
+              </button>
+              <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#6C3EEB", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "16px" }}>
+                {userInfo.first_name ? userInfo.first_name.charAt(0).toUpperCase() : "JA"}
+              </div>
+            </div>
+          </header>
+
+          {/* Category Tabs */}
+          <div style={{ display: "flex", gap: "24px", color: "#8C84A8", fontSize: "14px", fontWeight: 600, borderBottom: "1px solid #EBE5F2", paddingBottom: "8px", overflowX: "auto", fontFamily: "'DM Sans', sans-serif", scrollbarWidth: "none" }}>
+            <div style={{ color: "#6C3EEB", borderBottom: "2px solid #6C3EEB", paddingBottom: "6px", marginBottom: "-9px", whiteSpace: "nowrap", cursor: "pointer" }}>UI/UX Design</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Development</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>AI Services</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Digital Marketing</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Writing & Translation</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Video & Animation</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Business</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Finance</div>
+            <div style={{ whiteSpace: "nowrap", cursor: "pointer" }}>Consulting</div>
+          </div>
+
+          {/* Hero Section */}
+          <section style={{ background: "linear-gradient(100.35deg, #F5EFA0 0%, #FDF7D0 50%, #F0E8A8 100%)", borderRadius: "20px", padding: "16px 20px", display: "flex", flexDirection: "column", gap: "12px", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", width: "160px", height: "160px", right: "-40px", top: "-40px", background: "rgba(108, 62, 235, 0.08)", borderRadius: "80px" }}></div>
+            <div style={{ position: "absolute", width: "100px", height: "100px", right: "100px", bottom: "-30px", background: "rgba(108, 62, 235, 0.05)", borderRadius: "50px" }}></div>
+            
+            <div style={{ zIndex: 1 }}>
+              <h2 style={{ fontSize: "24px", fontWeight: 800, margin: 0, color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Welcome, {userInfo.first_name || "James Andrew"}! 🚀</h2>
+              <p style={{ margin: "4px 0 0 0", color: "#4A4060", fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }}>You have 12 new matches waiting · Last active 2h ago</p>
+            </div>
+
+            <div style={{ display: "flex", gap: "12px", zIndex: 1, flexWrap: "wrap" }}>
+              <div onClick={() => navigate("/freelance-dashboard/freelancebrowesproject")} style={{ flex: 1, minWidth: "160px", background: "linear-gradient(106.39deg, #5B2FCC 0%, #7C4EF5 50%, #9B6FFF 100%)", borderRadius: "16px", padding: "12px 16px", cursor: "pointer", position: "relative", overflow: "hidden", color: "white" }}>
+                <div style={{ position: "absolute", width: "60px", height: "60px", right: "-15px", top: "-15px", background: "white", opacity: 0.15, borderRadius: "30px" }}></div>
+                <div style={{ width: "24px", height: "24px", background: "rgba(255, 255, 255, 0.2)", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "8px", fontSize: "12px" }}>📂</div>
+                <div style={{ fontWeight: 700, fontSize: "14px", fontFamily: "'Sora', sans-serif" }}>Browse All Projects</div>
+                <div style={{ fontSize: "11px", opacity: 0.7, marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>Explore all available opportunities</div>
+              </div>
+              <div onClick={() => navigate("/freelance-dashboard/freelancermyworks")} style={{ flex: 1, minWidth: "160px", background: "white", borderRadius: "16px", padding: "12px 16px", cursor: "pointer", border: "1px solid rgba(108, 62, 235, 0.1)", boxShadow: "0px 2px 8px rgba(108, 62, 235, 0.08)", position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", width: "60px", height: "60px", right: "-15px", top: "-15px", background: "#6C3EEB", opacity: 0.15, borderRadius: "30px" }}></div>
+                <div style={{ width: "24px", height: "24px", background: "#EDE8FF", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "8px", fontSize: "12px" }}>🗂️</div>
+                <div style={{ fontWeight: 700, fontSize: "14px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>My Works</div>
+                <div style={{ fontSize: "11px", opacity: 0.7, marginTop: "2px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif" }}>Track your work</div>
+              </div>
+              <div style={{ flex: 1, minWidth: "160px", background: "linear-gradient(106.21deg, #EDE8FF 0%, #F5F2FF 100%)", borderRadius: "16px", padding: "12px 16px", cursor: "pointer", border: "1px solid rgba(108, 62, 235, 0.12)", position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", width: "60px", height: "60px", right: "-15px", top: "-15px", background: "#6C3EEB", opacity: 0.15, borderRadius: "30px" }}></div>
+                <div style={{ width: "24px", height: "24px", background: "rgba(108, 62, 235, 0.15)", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "8px", fontSize: "12px" }}>✨</div>
+                <div style={{ fontWeight: 700, fontSize: "14px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>AI Assistant</div>
+                <div style={{ fontSize: "11px", opacity: 0.7, marginTop: "2px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif" }}>Smart freelance help</div>
+              </div>
+            </div>
+          </section>
+
+          {/* Top Recommendations */}
+          <section style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
+                <h3 style={{ fontSize: "16px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>🌟 Top Recommendations</h3>
+                <div style={{ display: "flex", background: "#F7F4EE", padding: "3px", borderRadius: "50px", gap: "4px", border: "1px solid #EDE8FF" }}>
+                  <div style={{ padding: "6px 14px", background: "#6C3EEB", color: "white", borderRadius: "50px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", boxShadow: "0px 2px 10px rgba(108, 62, 235, 0.3)", cursor: "pointer" }}>For You</div>
+                  <div style={{ padding: "6px 14px", color: "#8C84A8", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Trending</div>
+                  <div style={{ padding: "6px 14px", color: "#8C84A8", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>24 Hours</div>
+                </div>
+              </div>
+              <Link to="/freelance-dashboard/freelancebrowesproject" style={{ color: "#6C3EEB", fontSize: "12px", fontWeight: 600, textDecoration: "none", fontFamily: "'DM Sans', sans-serif" }}>View All →</Link>
+            </div>
+
+            {/* Purple Featured Card - Use the first job if available */}
+            {filteredJobs.length > 0 && (
+              <div onClick={() => onViewJob(filteredJobs[0])} style={{ background: "linear-gradient(101.93deg, #3D1DB3 0%, #5B2FCC 40%, #7845E8 80%, #9060F0 100%)", borderRadius: "20px", padding: "16px 20px", color: "white", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", gap: "10px", cursor: "pointer" }}>
+                <div style={{ position: "absolute", width: "200px", height: "200px", right: "-50px", top: "-50px", background: "rgba(255, 255, 255, 0.06)", borderRadius: "100px" }}></div>
+                <div style={{ position: "absolute", width: "120px", height: "120px", left: "160px", bottom: "-30px", background: "rgba(255, 255, 255, 0.04)", borderRadius: "60px" }}></div>
+                
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", zIndex: 1 }}>
+                  <div style={{ width: "24px", height: "24px", background: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(2px)", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "10px", fontFamily: "'Sora', sans-serif" }}>{filteredJobs[0].category ? filteredJobs[0].category.substring(0,2).toUpperCase() : "ZD"}</div>
+                  <div style={{ fontWeight: 600, fontSize: "13px", fontFamily: "'DM Sans', sans-serif" }}>{filteredJobs[0].companyName || "Zuntra Digital"}</div>
+                  <div style={{ background: "rgba(255, 255, 255, 0.15)", border: "1px solid rgba(255, 255, 255, 0.25)", padding: "2px 8px", borderRadius: "20px", fontSize: "10px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center" }}>✓ Verified Client · Series B</div>
+                </div>
+
+                <div style={{ zIndex: 1 }}>
+                  <h2 style={{ fontSize: "20px", fontWeight: 800, margin: "0 0 2px 0", fontFamily: "'Sora', sans-serif" }}>{filteredJobs[0].title || "Senior UI/UX Designer"}</h2>
+                  <div style={{ fontSize: "12px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>🌍 Remote · Contract · Immediate start</div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", zIndex: 1, marginTop: "2px" }}>
+                  <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: "'Sora', sans-serif" }}>₹{filteredJobs[0].budget_from || filteredJobs[0].budget || "90K"}</div>
+                  <div style={{ fontSize: "12px", opacity: 0.8, fontFamily: "'Sora', sans-serif", marginTop: "4px" }}>/month</div>
+                </div>
+
+                <div style={{ display: "flex", gap: "6px", zIndex: 1, marginTop: "2px", flexWrap: "wrap" }}>
+                  {(filteredJobs[0].skills || ["UI Design", "Figma", "UX Research", "Prototyping"]).slice(0, 4).map((skill, index) => (
+                    <div key={index} style={{ background: "rgba(255, 255, 255, 0.15)", border: "1px solid rgba(255, 255, 255, 0.25)", padding: "4px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif", backdropFilter: "blur(2px)" }}>{skill}</div>
+                  ))}
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 1, marginTop: "4px", flexWrap: "wrap", gap: "12px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div style={{ display: "flex" }}>
+                      <div style={{ width: "22px", height: "22px", borderRadius: "11px", background: "rgba(255, 255, 255, 0.2)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "8px", fontWeight: 700, marginRight: "-6px", zIndex: 3 }}>A</div>
+                      <div style={{ width: "22px", height: "22px", borderRadius: "11px", background: "rgba(255, 255, 255, 0.2)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "8px", fontWeight: 700, marginRight: "-6px", zIndex: 2 }}>B</div>
+                      <div style={{ width: "22px", height: "22px", borderRadius: "11px", background: "rgba(255, 255, 255, 0.2)", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "8px", fontWeight: 700, zIndex: 1 }}>C</div>
+                    </div>
+                    <div style={{ fontSize: "12px", opacity: 0.9, fontFamily: "'DM Sans', sans-serif" }}>{filteredJobs[0].views || 24} views · {timeAgo(filteredJobs[0].createdAt)}</div>
+                  </div>
+                  <button style={{ background: "white", color: "#6C3EEB", border: "none", padding: "8px 20px", borderRadius: "50px", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)", fontFamily: "'Sora', sans-serif" }}>Apply Now →</button>
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* Recommended Jobs Grid */}
+          <section style={{ display: "flex", flexDirection: "column", gap: "12px", paddingBottom: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>💼 Recommended</h3>
+              <Link to="/freelance-dashboard/freelancebrowesproject" style={{ color: "#6C3EEB", fontSize: "12px", fontWeight: 600, textDecoration: "none", fontFamily: "'DM Sans', sans-serif" }}>View all →</Link>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px" }}>
+              {filteredJobs.slice(1, 7).map(job => (
+                <article key={job.id} onClick={() => onViewJob(job)} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "14px", padding: "14px", display: "flex", flexDirection: "column", gap: "8px", cursor: "pointer", transition: "transform 0.2s" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <div style={{ width: "32px", height: "32px", background: "linear-gradient(135deg, #6C63FF 0%, #A89BFF 100%)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "12px", fontFamily: "'DM Sans', sans-serif" }}>{job.category ? job.category.substring(0,2).toUpperCase() : "CS"}</div>
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: "14px", color: "#1A1A2E", fontFamily: "'DM Sans', sans-serif" }}>{job.companyName || "Creativo Studio"}</div>
+                        <div style={{ fontSize: "11px", color: "#9999BB", fontFamily: "'DM Sans', sans-serif" }}>{job.category || "Design Agency"}</div>
+                      </div>
+                    </div>
+                    <div onClick={(e) => { e.stopPropagation(); toggleSave(job.id); }} style={{ width: "28px", height: "28px", background: "#EEF0FF", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", color: savedJobs.includes(job.id) ? "#6C63FF" : "#9999BB", cursor: "pointer" }}>
+                      <BsBookmarkFill size={14} />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1A2E", fontFamily: "'DM Sans', sans-serif" }}>{job.title}</div>
+                    <div style={{ fontSize: "13px", color: "#6B6B8A", lineHeight: "1.4", maxHeight: "36px", overflow: "hidden", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{job.description}</div>
+                  </div>
+
+                  <div style={{ display: "flex", gap: "14px", marginTop: "4px" }}>
+                    <div>
+                      <div style={{ fontSize: "10px", fontWeight: 600, color: "#9999BB", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "'DM Sans', sans-serif" }}>Budget</div>
+                      <div style={{ fontSize: "13px", fontWeight: 600, color: "#6C63FF", fontFamily: "'DM Sans', sans-serif" }}>₹{job.budget_from || job.budget || 0} - ₹{job.budget_to || job.budget || 0}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "10px", fontWeight: 600, color: "#9999BB", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "'DM Sans', sans-serif" }}>Timeline</div>
+                      <div style={{ fontSize: "13px", fontWeight: 600, color: "#1A1A2E", fontFamily: "'DM Sans', sans-serif" }}>{job.timeline || "2-3 Weeks"}</div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginTop: "4px" }}>
+                    {job.skills?.slice(0, 4).map((s, i) => (
+                      <div key={i} style={{ background: i % 2 === 0 ? "#FFF0F5" : (i % 3 === 0 ? "#EEEEFF" : "#EAF7EE"), color: i % 2 === 0 ? "#D4537E" : (i % 3 === 0 ? "#534AB7" : "#1D9E75"), padding: "4px 10px", borderRadius: "16px", fontSize: "11px", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
+                    ))}
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+                    <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                      <div style={{ background: "#E8F4FF", color: "#185FA5", padding: "4px 10px", borderRadius: "16px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>Remote</div>
+                      <div style={{ fontSize: "11px", color: "#9999BB", fontFamily: "'DM Sans', sans-serif" }}>{timeAgo(job.createdAt)}</div>
+                    </div>
+                    <button style={{ background: "#6C63FF", color: "white", padding: "8px 16px", borderRadius: "8px", border: "none", fontSize: "12px", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Apply Now</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* Notifications Drawer */}
+      {notifOpen && (
+          <div
+            onClick={() => setNotifOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              paddingTop: "90px",
+              zIndex: 999,
+              background: "rgba(0,0,0,0.3)"
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: "480px",
+                maxHeight: "70vh",
+                background: "#ffffff",
+                borderRadius: "20px",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid #cfc2c2",
+                marginLeft: "auto",
+                marginRight: "40px",
+                marginTop: "10px",
+              }}
+            >
+              {/* HEADER */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  borderBottom: "1px solid #ddd",
+                  fontFamily: "'Sora', sans-serif"
+                }}
+              >
+                <FiBell size={20} color="#6C3EEB" />
+                <span style={{ marginLeft: 8, color: "#1A1433" }}>
+                  Notification ({notifications.length})
+                </span>
+              </div>
+
+              {/* SECTION TITLE */}
+              <div
+                style={{
+                  padding: "12px 20px",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "#8C84A8",
+                  borderBottom: "1px solid #ddd",
+                  fontFamily: "'DM Sans', sans-serif",
+                  background: "#FAFAFA"
+                }}
+              >
+                Recent
+              </div>
+              
+              {/* BODY */}
+              <div style={{ overflowY: "auto" }}>
+                {notifications.length === 0 && (
+                  <div
+                    style={{
+                      padding: "30px",
+                      textAlign: "center",
+                      color: "#888",
+                      fontFamily: "'DM Sans', sans-serif"
+                    }}
+                  >
+                    No notifications yet
+                  </div>
+                )}
+               
+                {notifications.map((n) => (
+                  <div
+                    key={n.id}
+                    onClick={() => handleNotificationClick(n)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "16px 20px",
+                      borderBottom: "1px solid #e5e5e5",
+                      background: !n.read ? "#F5F2FF" : "#ffffff",
+                      cursor: "pointer",
+                      transition: "0.2s",
+                    }}
+                  >
+                    {/* AVATAR */}
+                    <img
+                      src={n.senderAvatar || n.freelancerAvatar || n.profileImage || profile}
+                      onError={(e) => (e.target.src = profile)}
+                      alt=""
+                      style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", marginRight: "14px" }}
+                    />
+                    {/* CONTENT */}
+                    <div style={{ flex: 1, fontFamily: "'DM Sans', sans-serif" }}>
+                      <div style={{ fontWeight: 600, fontSize: "14px", color: "#1A1433" }}>{n.title}</div>
+                      <div style={{ fontSize: "12px", color: "#4A4060", marginTop: "2px" }}>{n.freelancerName || n.first_name || n.firstName || "Applicant"}</div>
+                      <div style={{ fontSize: "11px", marginTop: "4px", color: "#8C84A8" }}>{getStatusLabel(n.status, n.jobTitle)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+    </div>
+  );
+}

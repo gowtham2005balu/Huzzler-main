@@ -1,0 +1,39 @@
+/* ================= JOBS GRID ================= */
+.job-carddd{
+ display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+ 
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 28px;
+  padding: 10px;
+}
+.jobs-griddd {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* Desktop & Tablet */
+@media (min-width: 768px) {
+  .jobs-griddd{
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  /* Card width control */
+  .job-carddd {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .jobs-griddd {
+    max-width: 1000px;
+  }
+}

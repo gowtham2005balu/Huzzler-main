@@ -1,0 +1,84 @@
+.pro-container {
+  padding: 20px;
+  max-width: 480px;
+  margin: auto;
+}
+
+.pro-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pro-logo {
+  width: 40px;
+  height: 40px;
+  background: #fdfd96;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.pro-back {
+  border: none;
+  background: none;
+  margin-left: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pro-title {
+  text-align: center;
+  margin: 25px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pro-field {
+  margin-bottom: 20px;
+}
+
+.pro-field input,
+.pro-field select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+.pro-status-label {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.pro-status-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.pro-status-box {
+  flex: 1;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 16px;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.pro-status-box.selected {
+  background: black;
+  color: white;
+}
+
+.pro-btn {
+  width: 100%;
+  padding: 14px;
+  background: #ffeb3b;
+  border: 1px solid black;
+  border-radius: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}

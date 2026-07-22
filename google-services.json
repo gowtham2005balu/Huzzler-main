@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "414272931377",
+    "firebase_url": "https://huzzler-2d6de-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "huzzler-2d6de",
+    "storage_bucket": "huzzler-2d6de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414272931377:android:67a3b52c6ebb958f7db710",
+        "android_client_info": {
+          "package_name": "com.example.huzzler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414272931377-enkr7i3hlvjo4orcfd0cpabt1446848u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.huzzler",
+            "certificate_hash": "3e39a7567782895712349bc8a58ff4aaa91f0bf2"
+          }
+        },
+        {
+          "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLFBc6rVgimgLc2wRMnpPLv67XwEIwVZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414272931377-1p599iffjlq9tu2k4aduc8f9rk54qg56.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.adminHuzzler"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414272931377:android:90bc81eb20122b777db710",
+        "android_client_info": {
+          "package_name": "com.example.huzzler_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414272931377-3pgpiqsb1je81vqu2k0um8tjj6me16qq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.huzzler_admin",
+            "certificate_hash": "195e8a84fec3a1919da7e788a23b118fd0792927"
+          }
+        },
+        {
+          "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLFBc6rVgimgLc2wRMnpPLv67XwEIwVZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414272931377-1p599iffjlq9tu2k4aduc8f9rk54qg56.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.adminHuzzler"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414272931377:android:991dc6431dfaf8d47db710",
+        "android_client_info": {
+          "package_name": "com.huzzler.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414272931377-p5hdtt00g1b92ihpu8j82rl41fjkdkrp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huzzler.app",
+            "certificate_hash": "3e39a7567782895712349bc8a58ff4aaa91f0bf2"
+          }
+        },
+        {
+          "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLFBc6rVgimgLc2wRMnpPLv67XwEIwVZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414272931377-vmjltvp62i55th510nttn0tiqlkolt79.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414272931377-1p599iffjlq9tu2k4aduc8f9rk54qg56.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.adminHuzzler"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

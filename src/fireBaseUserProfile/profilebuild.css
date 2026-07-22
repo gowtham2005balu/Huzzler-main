@@ -1,0 +1,32 @@
+/* -------- SKILLS WRAPPER -------- */
+.skill-scroll {
+  display: flex;
+  gap: 8px;
+}
+
+/* 🖥 DESKTOP → wrap to next line */
+@media (min-width: 769px) {
+  .skill-scroll {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    white-space: normal;
+  }
+}
+
+/* 📱 MOBILE → horizontal scroll, no scrollbar */
+@media (max-width: 768px) {
+  .skill-scroll {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+    /* hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .skill-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}

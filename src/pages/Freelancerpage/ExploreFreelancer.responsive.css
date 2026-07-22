@@ -1,0 +1,148 @@
+/* Mobile & Tablet */
+@media (max-width: 1024px) {
+
+  /* Main Wrapper */
+  .freelance-wrapper {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 12px;
+  }
+
+  /* Header Icons */
+  .icon-wrapper img {
+    width: 22px !important;
+  }
+
+  /* Search */
+  .job-search {
+    width: 100% !important;
+  }
+
+  /* Tabs */
+  .tabs-container {
+    width: 100% !important;
+    overflow-x: auto;
+  }
+
+  /* Filter & Sort */
+  .filter-sort-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+
+  /* Job Cards */
+  .jobs {
+    margin-left: 0 !important;
+  }
+
+  .job-card {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 16px !important;
+  }
+
+  /* Save Button (REMOVE fixed margin) */
+  .job-save-btn {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    margin: 0 !important;
+  }
+
+  /* Budget */
+  .job-budget {
+    font-size: 14px;
+  }
+
+  /* Skills */
+  .skills-container span {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  /* Notification dropdown */
+  .notif-dropdown {
+    right: 10px !important;
+    width: 90vw !important;
+  }
+}
+@media (max-width: 768px) {
+*{
+    padding: 2px;
+}
+  .freelance-wrapper {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 12px;
+  }
+
+  .job-card {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .job-save-btn {
+    position: absolute;
+    right: 16px;
+    top: 50px;
+  }
+
+  .notif-dropdown {
+    width: 90vw !important;
+    right: 10px !important;
+  }
+   .icon-wrapper
+{
+    padding-right:2px;
+   
+}
+  .filter-sort-row {
+    justify-content: flex-end !important;
+    gap: 12px;
+  }
+
+  .filter-btn,
+  .sort-btnn {
+    margin: 0 !important;
+    padding: 8px 12px;
+   
+  }
+ 
+}
+/* SAME ICON SIZE EVERYWHERE */
+.top-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* Profile image should be circular */
+.top-icon img[alt="Profile"] {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+/* Mobile - still SAME size */
+@media (max-width: 768px) {
+  .top-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .top-icon img {
+    width: 22px;
+    height: 22px;
+  }
+
+}

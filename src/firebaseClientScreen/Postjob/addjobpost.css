@@ -1,0 +1,152 @@
+.sortimg{
+ width: 30px;
+}
+
+/* ---------- HEADER WRAPPER ---------- */
+.job-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+/* ---------- TEXT BLOCK ---------- */
+.header-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- TITLE ---------- */
+.header-title {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+  text-transform: capitalize;
+}
+
+/* ---------- SUBTITLE ---------- */
+.header-subtitle {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #6b7280;
+  max-width: 520px;
+}
+
+
+.freelance-wrapper{
+  
+    margin-top: -20px;
+}
+
+
+
+
+/* ---------- TABLET (≤ 768px) ---------- */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+    max-width: 100%;
+  }
+}
+
+/* ---------- MOBILE (≤ 480px) ---------- */
+@media (max-width: 480px) {
+  .job-header {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .header-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .header-subtitle {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+}
+
+
+/* ===== Skills Row ===== */
+.skills-row-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.skills-row-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== Skill Chip ===== */
+.skill-chip {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 999px;
+  background-color: #FFFFBE;
+  color: #111827;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ===== +More Chip ===== */
+.more-chip {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 999px;
+  background-color: #7C3CFF;
+  color: #ffffff;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 768px) {
+  .skill-chip,
+  .more-chip {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 480px) {
+  .skills-row-wrapper {
+    gap: 5px;
+  }
+
+  .skill-chip,
+  .more-chip {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}

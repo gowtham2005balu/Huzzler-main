@@ -1,0 +1,105 @@
+.job-card {
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+}
+
+.job-card-header {
+  margin-bottom: 12px;
+}
+
+.job-badge {
+  display: inline-block;
+  background: #efe7ff;
+  color: #7a4dff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.job-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 6px 0 2px;
+}
+
+.job-category {
+  font-size: 14px;
+  color: #7a4dff;
+}
+
+.job-budget {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-duration {
+  font-size: 13px;
+  color: #666;
+}
+
+.job-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.skill-chip {
+  background: #ffeb99;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.job-description {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.job-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.accept-btn {
+  flex: 1;
+  background: #7a4dff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reject-btn {
+  flex: 1;
+  background: #fff;
+  color: #7a4dff;
+  border: 2px solid #7a4dff;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accept-btn:hover {
+  background: #6938ff;
+}
+
+.reject-btn:hover {
+  background: #f4f0ff;
+}

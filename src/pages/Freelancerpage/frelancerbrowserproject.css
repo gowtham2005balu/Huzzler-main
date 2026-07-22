@@ -1,0 +1,120 @@
+.frelancerbrowserproject{
+ 
+
+}
+
+/* Container (important for wrapping) */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Default chip style */
+.skill-chip {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: fit-content;
+  background-color: #ffffff99;
+  color: #444;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+/* Active state */
+.skill-chip.active {
+  background-color: #7c3cff;
+  color: #ffffff;
+  border-color: #7c3cff;
+}
+
+/* Hover (desktop only) */
+@media (hover: hover) {
+  .skill-chip:hover {
+    transform: scale(1.03);
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .skill-chip {
+    padding: 8px 14px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+}
+
+/* 📱 Small phones */
+@media (max-width: 480px) {
+  .skill-chip {
+    padding: 6px 12px;
+    font-size: 164x;
+  }
+}
+
+
+/* Tabs container (recommended) */
+.tabs-wrapper {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Base tab */
+.tab-button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: transparent;
+  color: #000;
+  border: none;
+  cursor: pointer;
+
+  min-width: 120px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+
+  transition: all 0.2s ease;
+}
+
+/* Active tab */
+.tab-button.active {
+  background: rgba(124, 60, 255, 1);
+  color: #ffffff;
+}
+
+/* Desktop hover */
+@media (hover: hover) {
+  .tab-button:hover {
+    background: rgba(124, 60, 255, 0.1);
+  }
+}
+
+/* 📱 Tablet */
+@media (max-width: 768px) {
+  .tab-button {
+    padding: 10px 16px;
+    min-width: 100px;
+    font-size: 13px;
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 480px) {
+  .tabs-wrapper {
+    gap: 8px;
+  }
+
+  .tab-button {
+    padding: 8px 12px;
+    min-width: unset;
+    flex: 1;               /* Equal width tabs */
+    font-size: 12px;
+  }
+}

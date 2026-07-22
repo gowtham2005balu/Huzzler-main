@@ -1,0 +1,304 @@
+/* Container */
+.client-profile-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header & Cover */
+.profile-header {
+  position: relative;
+  height: 200px;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-actions {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-actions button {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.right-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Profile Card */
+.profile-card {
+  background: white;
+  margin: -50px 20px 20px;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+  margin-top: -60px;
+  background: #eee;
+}
+
+.profile-card h2 {
+  margin: 10px 0 5px;
+  font-size: 1.4rem;
+  color: #1a1a1a;
+}
+
+.designation {
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.location {
+  color: #999;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.social-links a {
+  color: #0077b5;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Tabs */
+.services-section {
+  padding: 0 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #999;
+  cursor: pointer;
+  position: relative;
+}
+
+.tabs button.active {
+  color: #000;
+  font-weight: 700;
+}
+
+.tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+/* Service Cards */
+.service-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.service-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.service-header span {
+  font-size: 0.85rem;
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips span {
+  background: #f0f0f0;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+/* Modals & Sheets */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.5);
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.sheet {
+  background: white;
+  width: 100%;
+  padding: 30px 20px;
+  border-radius: 20px 20px 0 0;
+  animation: slideUp 0.3s ease-out;
+}
+
+.sheet-item {
+  width: 100%;
+  padding: 15px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.reason-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.reason-chip {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.reason-chip.active {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.cancel-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Spinner */
+.profile-loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
