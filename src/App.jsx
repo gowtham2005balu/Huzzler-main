@@ -423,7 +423,7 @@ export default function App() {
 
       {/* ========== firebase auth ========== */}
 
-      <Route path="/firelogin" element={<Navigate to="/freelance-dashboard" replace />} />
+      <Route path="/firelogin" element={<Firelogin />} />
       <Route path="/fireregister" element={<Firebaseregister />} />
 
 

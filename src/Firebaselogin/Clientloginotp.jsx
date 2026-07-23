@@ -1018,7 +1018,7 @@ export default function OtpVerify() {
       }
 
       const userData = snap.data();
-      const role = userData.role;
+      const role = (userData.role || "").trim().toLowerCase();
       
       console.log("User role:", role);
 
@@ -1027,7 +1027,7 @@ export default function OtpVerify() {
 
       // Navigate based on role
       if (role === "client") {
-        navigate("/client-dashbroad2/clientserachbar");
+        navigate("/client-dashbroad2");
       } else if (role === "freelancer") {
         navigate("/freelance-dashboard");
       } else {

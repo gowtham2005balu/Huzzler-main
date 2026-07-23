@@ -99,7 +99,7 @@ export default function SiteDetails() {
 
       // success: navigate to client main screen (adjust route)
       alert("Client profile saved successfully!");
-      navigate("/client-dashboard", { state: { userData: finalData, uid } });
+      navigate("/client-dashbroad2", { state: { userData: finalData, uid } });
     } catch (err) {
       console.error("Error saving client data:", err);
       alert("Failed to save client data. Try again.");

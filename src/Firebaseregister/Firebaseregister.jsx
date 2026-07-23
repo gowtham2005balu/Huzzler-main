@@ -725,7 +725,7 @@ line-height: 24px;
           Already have an account?
           <span
             className="login-btn"
-            onClick={() => navigate("/freelance-dashboard")}
+            onClick={() => navigate("/firelogin")}
           >
             Log in
           </span>

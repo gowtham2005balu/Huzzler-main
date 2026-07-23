@@ -46,11 +46,13 @@ const Signupstep1 = () => {
       const res = await signInWithPopup(auth, provider);
       const user = res.user;
 
+      const firstName = user.displayName?.split(" ")[0] || form.first_name || "Client";
+      const lastName = user.displayName?.split(" ")[1] || form.last_name || "";
       await setDoc(
         doc(db, "users", user.uid),
         {
-          first_name: user.displayName?.split(" ")[0] || form.first_name || "Client",
-          last_name: user.displayName?.split(" ")[1] || form.last_name || "",
+          first_name: firstName,
+          last_name: lastName,
           email: user.email,
           role: "client",
           avatarUrl: user.photoURL || form.avatarUrl || "",
@@ -59,7 +61,15 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/client-dashbroad2");
+      nav("/client-details", {
+        state: {
+          uid: user.uid,
+          email: user.email,
+          first_name: firstName,
+          last_name: lastName,
+          role: "client",
+        },
+      });
     } catch (err) {
       console.error(err);
       setErrorMsg("Google Sign Up failed. Please try again.");
@@ -77,11 +87,13 @@ const Signupstep1 = () => {
       const res = await signInWithPopup(auth, provider);
       const user = res.user;
 
+      const firstName = user.displayName?.split(" ")[0] || form.first_name || "Client";
+      const lastName = user.displayName?.split(" ")[1] || form.last_name || "";
       await setDoc(
         doc(db, "users", user.uid),
         {
-          first_name: user.displayName?.split(" ")[0] || form.first_name || "Client",
-          last_name: user.displayName?.split(" ")[1] || form.last_name || "",
+          first_name: firstName,
+          last_name: lastName,
           email: user.email,
           role: "client",
           avatarUrl: user.photoURL || form.avatarUrl || "",
@@ -90,7 +102,15 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/client-dashbroad2");
+      nav("/client-details", {
+        state: {
+          uid: user.uid,
+          email: user.email,
+          first_name: firstName,
+          last_name: lastName,
+          role: "client",
+        },
+      });
     } catch (err) {
       console.error(err);
       setErrorMsg("GitHub Sign Up failed. Please try again.");
@@ -131,7 +151,16 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/client-dashbroad2");
+      nav("/client-details", {
+        state: {
+          uid: user.uid,
+          email: normalizedEmail,
+          first_name: form.first_name.trim(),
+          last_name: form.last_name.trim(),
+          password: form.password,
+          role: "client",
+        },
+      });
     } catch (err) {
       console.error(err);
       if (err.code === "auth/email-already-in-use") {

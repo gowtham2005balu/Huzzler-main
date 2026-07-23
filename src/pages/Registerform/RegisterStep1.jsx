@@ -46,11 +46,14 @@ const Signupstep1 = () => {
       const res = await signInWithPopup(auth, provider);
       const user = res.user;
 
+      const firstName = user.displayName?.split(" ")[0] || form.first_name || "Freelancer";
+      const lastName = user.displayName?.split(" ")[1] || form.last_name || "";
+
       await setDoc(
         doc(db, "users", user.uid),
         {
-          first_name: user.displayName?.split(" ")[0] || form.first_name || "Freelancer",
-          last_name: user.displayName?.split(" ")[1] || form.last_name || "",
+          first_name: firstName,
+          last_name: lastName,
           email: user.email,
           role: "freelancer",
           avatarUrl: user.photoURL || form.avatarUrl || "",
@@ -59,7 +62,9 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/freelance-dashboard");
+      nav("/freelancer-details", {
+        state: { uid: user.uid, email: user.email, first_name: firstName, last_name: lastName },
+      });
     } catch (err) {
       console.error(err);
       setErrorMsg("Google Sign Up failed. Please try again.");
@@ -77,11 +82,14 @@ const Signupstep1 = () => {
       const res = await signInWithPopup(auth, provider);
       const user = res.user;
 
+      const firstName = user.displayName?.split(" ")[0] || form.first_name || "Freelancer";
+      const lastName = user.displayName?.split(" ")[1] || form.last_name || "";
+
       await setDoc(
         doc(db, "users", user.uid),
         {
-          first_name: user.displayName?.split(" ")[0] || form.first_name || "Freelancer",
-          last_name: user.displayName?.split(" ")[1] || form.last_name || "",
+          first_name: firstName,
+          last_name: lastName,
           email: user.email,
           role: "freelancer",
           avatarUrl: user.photoURL || form.avatarUrl || "",
@@ -90,7 +98,9 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/freelance-dashboard");
+      nav("/freelancer-details", {
+        state: { uid: user.uid, email: user.email, first_name: firstName, last_name: lastName },
+      });
     } catch (err) {
       console.error(err);
       setErrorMsg("GitHub Sign Up failed. Please try again.");
@@ -131,7 +141,14 @@ const Signupstep1 = () => {
         { merge: true }
       );
 
-      nav("/freelance-dashboard");
+      nav("/freelancer-details", {
+        state: {
+          uid: user.uid,
+          email: normalizedEmail,
+          first_name: form.first_name.trim(),
+          last_name: form.last_name.trim(),
+        },
+      });
     } catch (err) {
       console.error(err);
       if (err.code === "auth/email-already-in-use") {

@@ -157,7 +157,7 @@ export const ProfessionalLoginRedirect = () => {
           navigate("/freelance-dashboard/freelanceHome", { replace: true });
         } 
         else if (role === "client") {
-          navigate("/client-dashboard/clienthome", { replace: true });
+          navigate("/client-dashbroad2/clienthome", { replace: true });
         } 
         else {
           navigate("/error", { replace: true });
