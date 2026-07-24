@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch, FiBell, FiMessageCircle } from "react-icons/fi";
+import { FiSearch, FiBell, FiMessageCircle, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firbase/Firebase";
 import AuthModal from "./AuthModal";
@@ -18,7 +18,7 @@ const CATEGORIES = [
 ];
 
 export default function TopNavbar({
-  userName = "James Andrew",
+  userName = "",
   activeCategory = "UI/UX Design",
   onSelectCategory,
   searchValue = "",
@@ -32,24 +32,90 @@ export default function TopNavbar({
   showCategoryNav = false,
 }) {
   const navigate = useNavigate();
+  const navRef = useRef(null);
   const [selectedCat, setSelectedCat] = useState(activeCategory);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState("login");
   const [currentUser, setCurrentUser] = useState(auth?.currentUser || null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (navRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = navRef.current;
+      setShowLeftArrow(scrollLeft > 10);
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    const el = navRef.current;
+    if (el) {
+      checkScrollPosition();
+      el.addEventListener("scroll", checkScrollPosition);
+      window.addEventListener("resize", checkScrollPosition);
+      return () => {
+        el.removeEventListener("scroll", checkScrollPosition);
+        window.removeEventListener("resize", checkScrollPosition);
+      };
+    }
+  }, [showCategoryNav]);
+
+  const handleScrollLeft = () => {
+    if (navRef.current) {
+      navRef.current.scrollBy({ left: -250, behavior: "smooth" });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (navRef.current) {
+      navRef.current.scrollBy({ left: 250, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     if (!auth) return;
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
-    return unsub;
+    return () => {
+      if (typeof unsub === "function") unsub();
+    };
   }, []);
 
-  const isUserAuthenticated =
-    propIsLoggedIn !== undefined
-      ? propIsLoggedIn
-      : Boolean(currentUser || auth?.currentUser);
+  const isUserAuthenticated = Boolean(
+    currentUser ||
+    auth?.currentUser ||
+    localStorage.getItem("userEmail") ||
+    localStorage.getItem("freelancerOtpUser") ||
+    localStorage.getItem("clientOtpUser") ||
+    (propIsLoggedIn !== undefined && propIsLoggedIn)
+  );
 
+  const resolvedUserName = (() => {
+    if (userName && userName !== "James Andrew") return userName;
+    if (currentUser?.displayName) return currentUser.displayName;
+    if (currentUser?.email) return currentUser.email.split("@")[0];
+
+    try {
+      const storedF = localStorage.getItem("freelancerOtpUser");
+      if (storedF) {
+        const parsed = JSON.parse(storedF);
+        const name = parsed.first_name || parsed.firstName || parsed.name || parsed.displayName;
+        if (name) return name;
+      }
+      const storedC = localStorage.getItem("clientOtpUser");
+      if (storedC) {
+        const parsed = JSON.parse(storedC);
+        const name = parsed.first_name || parsed.firstName || parsed.name || parsed.displayName;
+        if (name) return name;
+      }
+      const storedEmail = localStorage.getItem("userEmail");
+      if (storedEmail) return storedEmail.split("@")[0];
+    } catch (e) { }
+
+    return "";
+  })();
 
   const handleCategoryClick = (cat) => {
     setSelectedCat(cat);
@@ -63,16 +129,14 @@ export default function TopNavbar({
     setAuthModalOpen(true);
   };
 
-
-
-  const initials = userName
-    ? userName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "JA";
+  const initials = resolvedUserName
+    ? resolvedUserName
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+    : "U";
 
   return (
     <div
@@ -107,7 +171,7 @@ export default function TopNavbar({
                 marginBottom: "2px",
               }}
             >
-              Welcome back,
+              {resolvedUserName ? "Welcome back," : "Welcome to Huzzler,"}
             </span>
             <span
               style={{
@@ -117,7 +181,7 @@ export default function TopNavbar({
                 color: "#1A1433",
               }}
             >
-              {userName}! 👋
+              {resolvedUserName ? `${resolvedUserName}! 👋` : "Freelancer! 👋"}
             </span>
           </div>
 
@@ -328,44 +392,104 @@ export default function TopNavbar({
 
       {/* OPTIONAL CATEGORY NAVBAR ROW */}
       {showCategoryNav && (
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "28px",
-            borderBottom: "1px solid #EBE5F2",
-            overflowX: "auto",
-            paddingBottom: "10px",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          {CATEGORIES.map((cat) => {
-            const isActive = selectedCat === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => handleCategoryClick(cat)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: "4px 0 8px 0",
-                  fontSize: "14px",
-                  fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "#7C3AED" : "#555555",
-                  fontFamily: "'DM Sans', sans-serif",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  position: "relative",
-                  borderBottom: isActive ? "2.5px solid #7C3AED" : "2.5px solid transparent",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </nav>
+        <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
+          {showLeftArrow && (
+            <button
+              onClick={handleScrollLeft}
+              style={{
+                position: "absolute",
+                left: "-8px",
+                top: "50%",
+                transform: "translateY(-65%)",
+                zIndex: 10,
+                width: "32px",
+                height: "32px",
+                borderRadius: "50%",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "#7C3AED"
+              }}
+            >
+              <FiChevronLeft size={18} />
+            </button>
+          )}
+
+          <nav
+            ref={navRef}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "28px",
+              borderBottom: "1px solid #EBE5F2",
+              overflowX: "auto",
+              paddingBottom: "10px",
+              paddingLeft: showLeftArrow ? "32px" : "12px",
+              paddingRight: showRightArrow ? "32px" : "12px",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              width: "100%",
+              scrollBehavior: "smooth"
+            }}
+          >
+            {CATEGORIES.map((cat) => {
+              const isActive = selectedCat === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryClick(cat)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: "4px 0 8px 0",
+                    fontSize: "14px",
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? "#7C3AED" : "#555555",
+                    fontFamily: "'DM Sans', sans-serif",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    position: "relative",
+                    borderBottom: isActive ? "2.5px solid #7C3AED" : "2.5px solid transparent",
+                    transition: "all 0.2s ease",
+                    flexShrink: 0
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </nav>
+
+          {showRightArrow && (
+            <button
+              onClick={handleScrollRight}
+              style={{
+                position: "absolute",
+                right: "-8px",
+                top: "50%",
+                transform: "translateY(-65%)",
+                zIndex: 10,
+                width: "32px",
+                height: "32px",
+                borderRadius: "50%",
+                background: "#FFFFFF",
+                border: "1px solid #E2E8F0",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                color: "#7C3AED"
+              }}
+            >
+              <FiChevronRight size={18} />
+            </button>
+          )}
+        </div>
       )}
 
       {/* AUTH POPUP MODAL */}

@@ -77,9 +77,10 @@ export default function SplashScreen() {
 
       {/* Logo Scale Animation */}
       <img
-        src="/assets/huzzler logo.png"
+        src="https://res.cloudinary.com/dqsyzpxkg/image/upload/v1783590626/1000497503_dep9re.jpg"
         alt="Logo"
         className={`logo ${logoScale ? "scale" : ""}`}
+        style={{ borderRadius: 20, objectFit: "cover" }}
       />
     </div>
   );

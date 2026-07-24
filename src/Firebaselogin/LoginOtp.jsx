@@ -80,7 +80,7 @@ const LoginOtpScreen = ({ email, first_name, last_name, password }) => {
  
   return (
     <div style={{ padding: 20, textAlign: "center" }}>
-      <img src="/logo.png" width={60} alt="logo" />
+      <img src="https://res.cloudinary.com/dqsyzpxkg/image/upload/v1783590626/1000497503_dep9re.jpg" width={60} style={{ borderRadius: 10, objectFit: "cover" }} alt="logo" />
 
       <div style={{ marginTop: 20, cursor: "pointer" }} onClick={() => navigate(-1)}>
         <span style={{ fontSize: 14 }}>← BACK</span>

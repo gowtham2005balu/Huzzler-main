@@ -523,7 +523,7 @@ export default function ClientHomeUI() {
             try {
               const stored = localStorage.getItem("clientOtpUser") || localStorage.getItem("freelancerOtpUser");
               if (stored) localData = JSON.parse(stored);
-            } catch (e) {}
+            } catch (e) { }
 
             const authDisplayName = currentUser.displayName || "";
             const authFirst = authDisplayName.split(" ")[0] || "";
@@ -694,10 +694,10 @@ export default function ClientHomeUI() {
       <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "100vh", marginTop: "0px" }}>
         <div style={{ flex: 1, padding: "0px 24px 20px", display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
 
-          
+
           <TopNavbar
-            userName={userInfo.first_name || "James Andrew"}
-            isLoggedIn={Boolean(auth.currentUser)}
+            userName={userInfo.first_name || ""}
+            isLoggedIn={Boolean(auth.currentUser || localStorage.getItem("userEmail") || localStorage.getItem("clientOtpUser"))}
 
             searchValue={searchText}
             onSearchChange={(val) => setSearchText(val)}
@@ -812,7 +812,7 @@ export default function ClientHomeUI() {
 
           {/* Continue Hiring & Shortlisted */}
           <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "16px" }}>
-            
+
             <div style={{ flex: "1.5", display: "flex", flexDirection: "column", gap: "16px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Continue Hiring</h3>
@@ -911,7 +911,7 @@ export default function ClientHomeUI() {
                 <div key={i} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: freelancer.color, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>{freelancer.initials}</div>
-                    {freelancer.tag === "Top Rated" ? 
+                    {freelancer.tag === "Top Rated" ?
                       <div style={{ background: "#FDFCEB", border: "1px solid #F0E870", color: "#D9A000", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>🏆 Top Rated</div> :
                       <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
                     }
@@ -933,7 +933,7 @@ export default function ClientHomeUI() {
                     <div style={{ fontSize: "11px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>Replies in {freelancer.rep}</div>
                   </div>
                   <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-                    {i === 0 || i === 2 ? 
+                    {i === 0 || i === 2 ?
                       <button style={{ flex: 1, background: "#6C3EEB", color: "white", padding: "10px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Hire</button> :
                       <button style={{ flex: 1, background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "10px", borderRadius: "8px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Contact</button>
                     }
@@ -953,7 +953,7 @@ export default function ClientHomeUI() {
                 <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Explore →</span>
               </div>
             </div>
-            
+
             <div style={{ display: "flex", gap: "16px" }}>
               <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
@@ -982,7 +982,7 @@ export default function ClientHomeUI() {
 
         </div>
       </div>
-      
+
       {/* NOTIFICATION POPUP */}
       {notifOpen && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(2px)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 999 }} onClick={(e) => { if (e.target === e.currentTarget) setNotifOpen(false); }}>

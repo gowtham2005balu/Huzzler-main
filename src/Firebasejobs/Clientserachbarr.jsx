@@ -349,7 +349,7 @@ export default function ClientHomeUI() {
               "Freelancer";
             freelancerImage = d.profileImage || "";
           }
-        } catch (_) {}
+        } catch (_) { }
       }
 
       // Mark notification as declined
@@ -521,93 +521,461 @@ export default function ClientHomeUI() {
   return (
     <>
       {/* NEW DASHBOARD UI INJECTED BELOW */}
-        <div
-          className="client-home-wrapper"
-          style={{
-            marginTop: "0px",
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "100vh",
-            background: "linear-gradient(0deg, #F7F4EE, #F7F4EE), #FFFFFF",
-            fontFamily: "'DM Sans', sans-serif",
-          }}
-        >
-          <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "100vh", marginTop: "20px" }}>
-            <div style={{ flex: 1, padding: "8px 24px 20px", display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
-              
-              <TopNavbar
-                userName={userInfo.first_name || "James Andrew"}
-                isLoggedIn={Boolean(auth.currentUser)}
+      <div
+        className="client-home-wrapper"
+        style={{
+          marginTop: "0px",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          background: "linear-gradient(0deg, #F7F4EE, #F7F4EE), #FFFFFF",
+          fontFamily: "'DM Sans', sans-serif",
+        }}
+      >
+        <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "100vh", marginTop: "20px" }}>
+          <div style={{ flex: 1, padding: "8px 24px 20px", display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
 
-                searchValue={searchText}
-                onSearchChange={(val) => setSearchText(val)}
-                profileImage={userInfo.profileImage}
-                onBellClick={() => setNotifOpen(!notifOpen)}
-                onMessageClick={() => navigate("/client-dashbroad2/messages")}
-                onSelectCategory={(cat) => {
-                  navigate("/client-dashbroad2/category", { state: { category: cat } });
-                }}
-              />
+            <TopNavbar
+              userName={userInfo.first_name || ""}
+              isLoggedIn={Boolean(auth.currentUser || localStorage.getItem("userEmail") || localStorage.getItem("clientOtpUser"))}
+
+              searchValue={searchText}
+              onSearchChange={(val) => setSearchText(val)}
+              profileImage={userInfo.profileImage}
+              onBellClick={() => setNotifOpen(!notifOpen)}
+              onMessageClick={() => navigate("/client-dashbroad2/messages")}
+              onSelectCategory={(cat) => {
+                navigate("/client-dashbroad2/category", { state: { category: cat } });
+              }}
+            />
 
 
 
-              {/* Yellow Banner */}
-              <section style={{ background: "linear-gradient(100.35deg, rgba(245, 239, 160, 1) 0%, rgba(253, 247, 208, 1) 50%, rgba(240, 232, 168, 1) 100%)", borderRadius: "20px", padding: "24px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", maxWidth: "1336px", boxSizing: "border-box", position: "relative", overflow: "hidden" }}>
-                <div style={{ position: "absolute", width: "400px", height: "400px", right: "-100px", top: "-100px", background: "rgba(240, 232, 168, 0.4)", borderRadius: "200px", zIndex: 0 }}></div>
+            {/* Yellow Banner */}
+            <section style={{ background: "linear-gradient(100.35deg, rgba(245, 239, 160, 1) 0%, rgba(253, 247, 208, 1) 50%, rgba(240, 232, 168, 1) 100%)", borderRadius: "20px", padding: "24px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", maxWidth: "1336px", boxSizing: "border-box", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", width: "400px", height: "400px", right: "-100px", top: "-100px", background: "rgba(240, 232, 168, 0.4)", borderRadius: "200px", zIndex: 0 }}></div>
 
-                <div style={{ zIndex: 1 }}>
-                  <h2 style={{ fontSize: "28px", fontWeight: 700, margin: 0, color: "#1A1433", fontFamily: "'Sora', sans-serif", letterSpacing: "-0.5px", lineHeight: "1.2" }}>Good morning, {userInfo.companyName || userInfo.first_name || "Creativo Studio"}! 👋</h2>
-                  <p style={{ margin: "4px 0 0 0", color: "#6B6B8A", fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>You have <strong style={{ color: "#1A1433" }}>{newApplicantsTodayCount} new applicant{newApplicantsTodayCount === 1 ? "" : "s"}</strong> today</p>
-                </div>
-
-                <div style={{ display: "flex", gap: "16px", zIndex: 1 }}>
-                  <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
-                    <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{activeJobsCount}</div>
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Active Jobs</div>
-                  </div>
-                  <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
-                    <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{applicantsCount}</div>
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Applicants</div>
-                  </div>
-                  <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
-                    <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{inProgressCount}</div>
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>In Progress</div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Proposal Review Strip */}
-              <div style={{ background: "white", border: "1px solid #EBE5F2", padding: "12px 20px", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", maxWidth: "1336px", boxSizing: "border-box" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{ fontSize: "16px" }}>⏱</span>
-                  <span style={{ fontSize: "14px", fontWeight: 700, color: "#1A1433", fontFamily: "'DM Sans', sans-serif" }}>Proposal review pending</span>
-                  <span style={{ fontSize: "14px", color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif" }}>{notifications.length > 0 ? `— ${notifications.length} freelancer${notifications.length === 1 ? "" : "s"} applied to your project` : "— 12 freelancers applied to your project"}</span>
-                </div>
-                <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>{notifications.length > 0 ? latestNotifTime : "1h 20m"}</div>
+              <div style={{ zIndex: 1 }}>
+                <h2 style={{ fontSize: "28px", fontWeight: 700, margin: 0, color: "#1A1433", fontFamily: "'Sora', sans-serif", letterSpacing: "-0.5px", lineHeight: "1.2" }}>Good morning, {userInfo.companyName || userInfo.first_name || "Creativo Studio"}! 👋</h2>
+                <p style={{ margin: "4px 0 0 0", color: "#6B6B8A", fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>You have <strong style={{ color: "#1A1433" }}>{newApplicantsTodayCount} new applicant{newApplicantsTodayCount === 1 ? "" : "s"}</strong> today</p>
               </div>
 
-              <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "8px" }}>
-                {/* Top Match Card */}
-                <div style={{ flex: "1.5", background: "linear-gradient(108.32deg, #1C1243 0%, #2A1B54 100%)", borderRadius: "24px", padding: "32px", color: "white", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0px 8px 32px rgba(28, 18, 67, 0.15)", boxSizing: "border-box" }}>
-                  <div style={{ position: "absolute", width: "500px", height: "500px", right: "-150px", bottom: "-150px", background: "rgba(255, 255, 255, 0.03)", borderRadius: "250px", zIndex: 0 }}></div>
-                  <div style={{ position: "absolute", width: "250px", height: "250px", right: "150px", top: "-50px", background: "rgba(255, 255, 255, 0.02)", borderRadius: "125px", zIndex: 0 }}></div>
+              <div style={{ display: "flex", gap: "16px", zIndex: 1 }}>
+                <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
+                  <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{activeJobsCount}</div>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Active Jobs</div>
+                </div>
+                <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
+                  <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{applicantsCount}</div>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Applicants</div>
+                </div>
+                <div style={{ background: "rgba(255, 255, 255, 0.5)", padding: "16px 24px", borderRadius: "16px", textAlign: "center" }}>
+                  <div style={{ fontSize: "24px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>{inProgressCount}</div>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>In Progress</div>
+                </div>
+              </div>
+            </section>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 1 }}>
-                    <div style={{ display: "flex", gap: "16px" }}>
-                      <div style={{ width: "56px", height: "56px", borderRadius: "16px", background: "#6C3EEB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+            {/* Proposal Review Strip */}
+            <div style={{ background: "white", border: "1px solid #EBE5F2", padding: "12px 20px", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", maxWidth: "1336px", boxSizing: "border-box" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "16px" }}>⏱</span>
+                <span style={{ fontSize: "14px", fontWeight: 700, color: "#1A1433", fontFamily: "'DM Sans', sans-serif" }}>Proposal review pending</span>
+                <span style={{ fontSize: "14px", color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif" }}>{notifications.length > 0 ? `— ${notifications.length} freelancer${notifications.length === 1 ? "" : "s"} applied to your project` : "— 12 freelancers applied to your project"}</span>
+              </div>
+              <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>{notifications.length > 0 ? latestNotifTime : "1h 20m"}</div>
+            </div>
+
+            <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "8px" }}>
+              {/* Top Match Card */}
+              <div style={{ flex: "1.5", background: "linear-gradient(108.32deg, #1C1243 0%, #2A1B54 100%)", borderRadius: "24px", padding: "32px", color: "white", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0px 8px 32px rgba(28, 18, 67, 0.15)", boxSizing: "border-box" }}>
+                <div style={{ position: "absolute", width: "500px", height: "500px", right: "-150px", bottom: "-150px", background: "rgba(255, 255, 255, 0.03)", borderRadius: "250px", zIndex: 0 }}></div>
+                <div style={{ position: "absolute", width: "250px", height: "250px", right: "150px", top: "-50px", background: "rgba(255, 255, 255, 0.02)", borderRadius: "125px", zIndex: 0 }}></div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 1 }}>
+                  <div style={{ display: "flex", gap: "16px" }}>
+                    <div style={{ width: "56px", height: "56px", borderRadius: "16px", background: "#6C3EEB", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                      {topMatch ? getInitials(`${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`) : "AS"}
+                    </div>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                        <div style={{ background: "#F0E870", color: "#1A1433", padding: "4px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>⭐ Top Match</div>
+                      </div>
+                      <h3 style={{ fontSize: "22px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "white" }}>
+                        {topMatch ? `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim() : "Aryan Shah"}
+                      </h3>
+                      <div style={{ fontSize: "13px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>Available now · Verified Pro</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (!topMatch) return;
+                      navigate("/client-dashbroad2/chat", {
+                        state: {
+                          currentUid: auth.currentUser?.uid,
+                          otherUid: topMatch.id,
+                          otherName: `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim(),
+                          otherImage: topMatch.profileImage || "",
+                        }
+                      });
+                    }}
+                    style={{ background: "#6C3EEB", color: "white", padding: "10px 24px", borderRadius: "50px", border: "none", fontSize: "14px", fontWeight: 700, cursor: "pointer", fontFamily: "'Sora', sans-serif" }}
+                  >
+                    Hire Now →
+                  </button>
+                </div>
+
+                <div style={{ zIndex: 1, marginTop: "24px" }}>
+                  <div style={{ fontSize: "14px", color: "#EBE5F2", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>
+                    {topMatch ? (topMatch.role || topMatch.title || "Senior UI/UX Designer") : "Senior UI/UX Designer"} · Remote · Contract · Immediate start
+                  </div>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
+                    <div style={{ fontSize: "28px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                      {topMatch ? (topMatch.rate ? `₹${topMatch.rate}/month` : "₹90K") : "₹90K"}
+                    </div>
+                    {!topMatch?.rate && <div style={{ fontSize: "14px", color: "#A39DBA", fontFamily: "'Sora', sans-serif" }}>/month</div>}
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", marginTop: "12px", flexWrap: "wrap" }}>
+                    {(Array.isArray(topMatch?.skills) ? topMatch.skills : ["UI Design", "Figma", "UX Research", "Prototyping"]).slice(0, 4).map((s, i) => (
+                      <div key={i} style={{ background: "rgba(255, 255, 255, 0.1)", border: "1px solid rgba(255, 255, 255, 0.1)", padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px", fontSize: "13px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>
+                    <span>💼 {topMatch?.completedProjects || "28"} completed projects</span>
+                    <span>·</span>
+                    <span>⏱ Response time ~2 hours</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433", marginBottom: "4px" }}>Quick Actions</div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", height: "100%" }}>
+                  <div onClick={() => navigate("/client-dashbroad2/AddJobScreen")} style={{ background: "linear-gradient(106.39deg, #7C4EF5 0%, #6C3EEB 100%)", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "white", cursor: "pointer", padding: "20px", boxShadow: "0px 4px 16px rgba(108, 62, 235, 0.15)" }}>
+                    <FiPlus size={24} />
+                    <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Post a Job</span>
+                  </div>
+                  <div onClick={() => navigate("/client-dashbroad2/clientcategories")} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
+                    <FiSearch size={24} color="#6C3EEB" />
+                    <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Browse Talent</span>
+                  </div>
+                  <div onClick={() => navigate("/client-dashbroad2/AddJobScreen")} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
+                    <span style={{ fontSize: "24px" }}>📁</span>
+                    <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>My Projects</span>
+                  </div>
+                  <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
+                    <span style={{ fontSize: "24px" }}>⭐</span>
+                    <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Leave Review</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Continue Hiring & Shortlisted */}
+            <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "16px" }}>
+
+              <div style={{ flex: "1.5", display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Continue Hiring</h3>
+                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>All drafts →</span>
+                </div>
+
+                {clientJobs.length > 0 ? (
+                  clientJobs.slice(0, 2).map((job) => {
+                    const jobApps = notifications.filter((n) => n.jobId === job.id);
+                    const totalApps = jobApps.length;
+                    const newApps = jobApps.filter((n) => !n.read).length;
+                    return (
+                      <div key={job.id} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                            <div style={{ width: "40px", height: "40px", background: "#F5F2FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📄</div>
+                            <div>
+                              <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Review Proposals — {job.title}</div>
+                              <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>
+                                {totalApps} freelancer{totalApps === 1 ? "" : "s"} applied · {newApps} new · 📅 Decision pending
+                              </div>
+                            </div>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <div style={{ fontWeight: 700, fontSize: "14px", color: "#6C3EEB", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>75%</div>
+                            <button
+                              onClick={() => {
+                                if (job.type === "24h") {
+                                  navigate(`/client-dashbroad2/job-full24/${job.id}`, { state: { jobData: job } });
+                                } else {
+                                  navigate(`/client-dashbroad2/job-full/${job.id}`, { state: { jobData: job, from: "works" } });
+                                }
+                              }}
+                              style={{ background: "#F0E870", color: "#1A1433", padding: "8px 20px", borderRadius: "20px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+                            >
+                              Continue →
+                            </button>
+                          </div>
+                        </div>
+                        <div style={{ width: "100%", height: "6px", background: "#F5F2FF", borderRadius: "4px", overflow: "hidden" }}>
+                          <div style={{ width: "75%", height: "100%", background: "#6C3EEB", borderRadius: "4px" }}></div>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <>
+                    <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                          <div style={{ width: "40px", height: "40px", background: "#F5F2FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📄</div>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Review Proposals — NovaSpark</div>
+                            <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>18 freelancers shortlisted · 3 new · 📅 Decision due tomorrow</div>
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontWeight: 700, fontSize: "14px", color: "#6C3EEB", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>75%</div>
+                          <button style={{ background: "#F0E870", color: "#1A1433", padding: "8px 20px", borderRadius: "20px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Continue →</button>
+                        </div>
+                      </div>
+                      <div style={{ width: "100%", height: "6px", background: "#F5F2FF", borderRadius: "4px", overflow: "hidden" }}>
+                        <div style={{ width: "75%", height: "100%", background: "#6C3EEB", borderRadius: "4px" }}></div>
+                      </div>
+                    </div>
+
+                    <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                          <div style={{ width: "40px", height: "40px", background: "#F5F8FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📝</div>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Complete Project Brief</div>
+                            <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>2 required fields remaining · 🔥 Get 3+ more proposals</div>
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontWeight: 700, fontSize: "14px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>60%</div>
+                          <button style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 20px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Finish →</button>
+                        </div>
+                      </div>
+                      <div style={{ width: "100%", height: "6px", background: "#F5F8FF", borderRadius: "4px", overflow: "hidden" }}>
+                        <div style={{ width: "60%", height: "100%", background: "#30B47A", borderRadius: "4px" }}></div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>📌 Shortlisted Talent</h3>
+                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Manage →</span>
+                </div>
+                <div style={{ display: "flex", gap: "16px", height: "100%", width: "100%" }}>
+                  {shortlistedTalent.length > 0 ? (
+                    shortlistedTalent.map((freelancer, idx) => {
+                      const name = `${freelancer.firstName || freelancer.first_name || "Freelancer"} ${freelancer.lastName || freelancer.last_name || ""}`.trim();
+                      const initials = getInitials(name);
+                      const role = freelancer.role || freelancer.title || "Professional";
+                      return (
+                        <div key={freelancer.id} style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
+                          <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: idx === 0 ? "#6C3EEB" : "#FF6B35", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                            {initials}
+                          </div>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{name}</div>
+                            <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>{role}</div>
+                          </div>
+                          <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
+                          <div style={{ background: "#F0E870", color: "#1A1433", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Top Rated</div>
+                          <div style={{ fontSize: "11px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Fast response</div>
+                          <button
+                            onClick={() => {
+                              navigate("/client-dashbroad2/chat", {
+                                state: {
+                                  currentUid: auth.currentUser?.uid,
+                                  otherUid: freelancer.id,
+                                  otherName: name,
+                                  otherImage: freelancer.profileImage || "",
+                                }
+                              });
+                            }}
+                            style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}
+                          >
+                            Invite →
+                          </button>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <>
+                      <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
+                        <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#6C3EEB", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>AS</div>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Aryan Shah</div>
+                          <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>UI/UX Designer</div>
+                        </div>
+                        <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
+                        <div style={{ background: "#F0E870", color: "#1A1433", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Top Rated</div>
+                        <div style={{ fontSize: "11px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Fast response</div>
+                        <button style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Invite →</button>
+                      </div>
+                      <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
+                        <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#FF6B35", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>PN</div>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Priya Nair</div>
+                          <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>Product Designer</div>
+                        </div>
+                        <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
+                        <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
+                        <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Replies in 1h</div>
+                        <button style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Invite →</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Recommended Freelancers Grid */}
+            <section style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "24px", width: "100%", maxWidth: "1336px", paddingBottom: "40px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Recommended Freelancers</h3>
+                <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>View all →</span>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+                {recommendedFreelancers.length > 0 ? (
+                  recommendedFreelancers.map((freelancer, i) => {
+                    const name = `${freelancer.firstName || freelancer.first_name || "Freelancer"} ${freelancer.lastName || freelancer.last_name || ""}`.trim();
+                    const initials = getInitials(name);
+                    const role = freelancer.role || freelancer.title || "Professional";
+                    const rate = freelancer.rate ? (typeof freelancer.rate === 'number' ? `₹${freelancer.rate.toLocaleString()}/day` : freelancer.rate) : "₹1,500/day";
+                    const skills = Array.isArray(freelancer.skills) ? freelancer.skills : ["Design", "Figma"];
+                    const bgColors = ["#FF6E91", "#30B47A", "#FF6B35", "#D9A000"];
+                    const avatarBg = bgColors[i % bgColors.length];
+                    return (
+                      <div key={freelancer.id} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                          <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: avatarBg, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                            {initials}
+                          </div>
+                          <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{name}</div>
+                          <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{role}</div>
+                        </div>
+                        <div style={{ fontWeight: 700, fontSize: "15px", color: "#6C3EEB", fontFamily: "'Sora', sans-serif" }}>{rate}</div>
+                        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                          {skills.slice(0, 2).map((s, idx) => (
+                            <div key={idx} style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
+                          ))}
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: "12px" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>
+                            <span style={{ color: "#1A1433" }}>★★★★★</span> 5.0
+                          </div>
+                          <div style={{ fontSize: "11px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>Replies in 2h</div>
+                        </div>
+                        <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+                          <button
+                            onClick={() => {
+                              navigate("/client-dashbroad2/chat", {
+                                state: {
+                                  currentUid: auth.currentUser?.uid,
+                                  otherUid: freelancer.id,
+                                  otherName: name,
+                                  otherImage: freelancer.profileImage || "",
+                                }
+                              });
+                            }}
+                            style={{ flex: 1, background: "#6C3EEB", color: "white", padding: "10px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
+                          >
+                            Hire
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  [
+                    { name: "Priya Nair", role: "Product Designer", tag: "Top Rated", initials: "P", color: "#FF6E91", rate: "₹1,500/day", skills: ["Figma", "UX"], rep: "1h" },
+                    { name: "Rahul Dev", role: "Mobile Designer", tag: "Available", initials: "R", color: "#30B47A", rate: "₹2,000/day", skills: ["iOS", "Android"], rep: "4h" },
+                    { name: "Maya Rajan", role: "Product Designer", tag: "Top Rated", initials: "MR", color: "#FF6B35", rate: "₹1,200/day", skills: ["Prototyping", "UI Design"], rep: "2h" },
+                    { name: "Sandhya Kumar", role: "UX Researcher", tag: "Available", initials: "SK", color: "#D9A000", rate: "₹950/day", skills: ["UX Research"], rep: "3h" }
+                  ].map((freelancer, i) => (
+                    <div key={i} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                        <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: freelancer.color, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>{freelancer.initials}</div>
+                        {freelancer.tag === "Top Rated" ?
+                          <div style={{ background: "#FDFCEB", border: "1px solid #F0E870", color: "#D9A000", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>🏆 Top Rated</div> :
+                          <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
+                        }
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{freelancer.name}</div>
+                        <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{freelancer.role}</div>
+                      </div>
+                      <div style={{ fontWeight: 700, fontSize: "15px", color: "#6C3EEB", fontFamily: "'Sora', sans-serif" }}>{freelancer.rate}</div>
+                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        {freelancer.skills.map((s, idx) => (
+                          <div key={idx} style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
+                        ))}
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: "12px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>
+                          <span style={{ color: "#1A1433" }}>★★★★★</span> 5.0
+                        </div>
+                        <div style={{ fontSize: "11px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>Replies in {freelancer.rep}</div>
+                      </div>
+                      <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+                        <button style={{ flex: 1, background: "#6C3EEB", color: "white", padding: "10px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Hire</button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+
+            {/* Top Talent This Week & Trending Skills */}
+            <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "24px", paddingBottom: "40px" }}>
+              {/* Left Column: Top Talent This Week */}
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Top Talent This Week</h3>
+                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>See all →</span>
+                </div>
+
+                <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column" }}>
+                  {/* Row 1 */}
+                  <div style={{ padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #EEEDF3" }}>
+                    <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                      <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#6C3EEB", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
                         {topMatch ? getInitials(`${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`) : "AS"}
                       </div>
                       <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                          <div style={{ background: "#F0E870", color: "#1A1433", padding: "4px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>⭐ Top Match</div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>
+                            {topMatch ? `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim() : "Aryan Shah"}
+                          </div>
+                          <div style={{ background: "#FDFCEB", color: "#D9A000", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>#1 This Week</div>
                         </div>
-                        <h3 style={{ fontSize: "22px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "white" }}>
-                          {topMatch ? `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim() : "Aryan Shah"}
-                        </h3>
-                        <div style={{ fontSize: "13px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>Available now · Verified Pro</div>
+                        <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>
+                          {topMatch ? (topMatch.role || topMatch.title || "Senior UI/UX Designer") : "Senior UI/UX Designer"}
+                        </div>
+                        <div style={{ fontSize: "13px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif", marginTop: "4px", fontWeight: 600 }}>
+                          {topMatch ? (topMatch.rate ? `₹${topMatch.rate}/mo` : "₹90K/mo") : "₹90K/mo"}
+                          <span style={{ color: "#8C84A8", fontWeight: 400 }}> · Remote · Full-time</span>
+                        </div>
+                        <div style={{ display: "flex", gap: "2px", marginTop: "6px" }}>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                        </div>
                       </div>
                     </div>
-                    <button 
+                    <button
                       onClick={() => {
                         if (!topMatch) return;
                         navigate("/client-dashbroad2/chat", {
@@ -619,699 +987,331 @@ export default function ClientHomeUI() {
                           }
                         });
                       }}
-                      style={{ background: "#6C3EEB", color: "white", padding: "10px 24px", borderRadius: "50px", border: "none", fontSize: "14px", fontWeight: 700, cursor: "pointer", fontFamily: "'Sora', sans-serif" }}
+                      style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 16px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
                     >
-                      Hire Now →
+                      View →
                     </button>
                   </div>
 
-                  <div style={{ zIndex: 1, marginTop: "24px" }}>
-                    <div style={{ fontSize: "14px", color: "#EBE5F2", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>
-                      {topMatch ? (topMatch.role || topMatch.title || "Senior UI/UX Designer") : "Senior UI/UX Designer"} · Remote · Contract · Immediate start
-                    </div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-                      <div style={{ fontSize: "28px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                        {topMatch ? (topMatch.rate ? `₹${topMatch.rate}/month` : "₹90K") : "₹90K"}
+                  {/* Row 2 */}
+                  <div style={{ padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                      <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#FF6E91", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                        KM
                       </div>
-                      {!topMatch?.rate && <div style={{ fontSize: "14px", color: "#A39DBA", fontFamily: "'Sora', sans-serif" }}>/month</div>}
-                    </div>
-                    <div style={{ display: "flex", gap: "8px", marginTop: "12px", flexWrap: "wrap" }}>
-                      {(Array.isArray(topMatch?.skills) ? topMatch.skills : ["UI Design", "Figma", "UX Research", "Prototyping"]).slice(0, 4).map((s, i) => (
-                        <div key={i} style={{ background: "rgba(255, 255, 255, 0.1)", border: "1px solid rgba(255, 255, 255, 0.1)", padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
-                      ))}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px", fontSize: "13px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>
-                      <span>💼 {topMatch?.completedProjects || "28"} completed projects</span>
-                      <span>·</span>
-                      <span>⏱ Response time ~2 hours</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "12px" }}>
-                  <div style={{ fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif", color: "#1A1433", marginBottom: "4px" }}>Quick Actions</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", height: "100%" }}>
-                    <div onClick={() => navigate("/client-dashbroad2/AddJobScreen")} style={{ background: "linear-gradient(106.39deg, #7C4EF5 0%, #6C3EEB 100%)", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "white", cursor: "pointer", padding: "20px", boxShadow: "0px 4px 16px rgba(108, 62, 235, 0.15)" }}>
-                      <FiPlus size={24} />
-                      <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Post a Job</span>
-                    </div>
-                    <div onClick={() => navigate("/client-dashbroad2/clientcategories")} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
-                      <FiSearch size={24} color="#6C3EEB" />
-                      <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Browse Talent</span>
-                    </div>
-                    <div onClick={() => navigate("/client-dashbroad2/AddJobScreen")} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
-                      <span style={{ fontSize: "24px" }}>📁</span>
-                      <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>My Projects</span>
-                    </div>
-                    <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px", color: "#1A1433", cursor: "pointer", padding: "20px" }}>
-                      <span style={{ fontSize: "24px" }}>⭐</span>
-                      <span style={{ fontWeight: 600, fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }}>Leave Review</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Continue Hiring & Shortlisted */}
-              <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "16px" }}>
-                
-                <div style={{ flex: "1.5", display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Continue Hiring</h3>
-                    <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>All drafts →</span>
-                  </div>
-
-                  {clientJobs.length > 0 ? (
-                    clientJobs.slice(0, 2).map((job) => {
-                      const jobApps = notifications.filter((n) => n.jobId === job.id);
-                      const totalApps = jobApps.length;
-                      const newApps = jobApps.filter((n) => !n.read).length;
-                      return (
-                        <div key={job.id} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                              <div style={{ width: "40px", height: "40px", background: "#F5F2FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📄</div>
-                              <div>
-                                <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Review Proposals — {job.title}</div>
-                                <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>
-                                  {totalApps} freelancer{totalApps === 1 ? "" : "s"} applied · {newApps} new · 📅 Decision pending
-                                </div>
-                              </div>
-                            </div>
-                            <div style={{ textAlign: "right" }}>
-                              <div style={{ fontWeight: 700, fontSize: "14px", color: "#6C3EEB", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>75%</div>
-                              <button 
-                                onClick={() => {
-                                  if (job.type === "24h") {
-                                    navigate(`/client-dashbroad2/job-full24/${job.id}`, { state: { jobData: job } });
-                                  } else {
-                                    navigate(`/client-dashbroad2/job-full/${job.id}`, { state: { jobData: job, from: "works" } });
-                                  }
-                                }}
-                                style={{ background: "#F0E870", color: "#1A1433", padding: "8px 20px", borderRadius: "20px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
-                              >
-                                Continue →
-                              </button>
-                            </div>
-                          </div>
-                          <div style={{ width: "100%", height: "6px", background: "#F5F2FF", borderRadius: "4px", overflow: "hidden" }}>
-                            <div style={{ width: "75%", height: "100%", background: "#6C3EEB", borderRadius: "4px" }}></div>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <>
-                      <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                            <div style={{ width: "40px", height: "40px", background: "#F5F2FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📄</div>
-                            <div>
-                              <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Review Proposals — NovaSpark</div>
-                              <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>18 freelancers shortlisted · 3 new · 📅 Decision due tomorrow</div>
-                            </div>
-                          </div>
-                          <div style={{ textAlign: "right" }}>
-                            <div style={{ fontWeight: 700, fontSize: "14px", color: "#6C3EEB", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>75%</div>
-                            <button style={{ background: "#F0E870", color: "#1A1433", padding: "8px 20px", borderRadius: "20px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Continue →</button>
-                          </div>
-                        </div>
-                        <div style={{ width: "100%", height: "6px", background: "#F5F2FF", borderRadius: "4px", overflow: "hidden" }}>
-                          <div style={{ width: "75%", height: "100%", background: "#6C3EEB", borderRadius: "4px" }}></div>
-                        </div>
-                      </div>
-
-                      <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                            <div style={{ width: "40px", height: "40px", background: "#F5F8FF", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>📝</div>
-                            <div>
-                              <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Complete Project Brief</div>
-                              <div style={{ fontSize: "13px", color: "#A39DBA", marginTop: "2px", fontFamily: "'DM Sans', sans-serif" }}>2 required fields remaining · 🔥 Get 3+ more proposals</div>
-                            </div>
-                          </div>
-                          <div style={{ textAlign: "right" }}>
-                            <div style={{ fontWeight: 700, fontSize: "14px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>60%</div>
-                            <button style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 20px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Finish →</button>
-                          </div>
-                        </div>
-                        <div style={{ width: "100%", height: "6px", background: "#F5F8FF", borderRadius: "4px", overflow: "hidden" }}>
-                          <div style={{ width: "60%", height: "100%", background: "#30B47A", borderRadius: "4px" }}></div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>📌 Shortlisted Talent</h3>
-                    <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Manage →</span>
-                  </div>
-                  <div style={{ display: "flex", gap: "16px", height: "100%", width: "100%" }}>
-                    {shortlistedTalent.length > 0 ? (
-                      shortlistedTalent.map((freelancer, idx) => {
-                        const name = `${freelancer.firstName || freelancer.first_name || "Freelancer"} ${freelancer.lastName || freelancer.last_name || ""}`.trim();
-                        const initials = getInitials(name);
-                        const role = freelancer.role || freelancer.title || "Professional";
-                        return (
-                          <div key={freelancer.id} style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
-                            <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: idx === 0 ? "#6C3EEB" : "#FF6B35", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                              {initials}
-                            </div>
-                            <div>
-                              <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{name}</div>
-                              <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>{role}</div>
-                            </div>
-                            <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
-                            <div style={{ background: "#F0E870", color: "#1A1433", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Top Rated</div>
-                            <div style={{ fontSize: "11px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Fast response</div>
-                            <button 
-                              onClick={() => {
-                                navigate("/client-dashbroad2/chat", {
-                                  state: {
-                                    currentUid: auth.currentUser?.uid,
-                                    otherUid: freelancer.id,
-                                    otherName: name,
-                                    otherImage: freelancer.profileImage || "",
-                                  }
-                                });
-                              }}
-                              style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}
-                            >
-                              Invite →
-                            </button>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <>
-                        <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
-                          <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#6C3EEB", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>AS</div>
-                          <div>
-                            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Aryan Shah</div>
-                            <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>UI/UX Designer</div>
-                          </div>
-                          <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
-                          <div style={{ background: "#F0E870", color: "#1A1433", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Top Rated</div>
-                          <div style={{ fontSize: "11px", color: "#30B47A", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Fast response</div>
-                          <button style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Invite →</button>
-                        </div>
-                        <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px" }}>
-                          <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#FF6B35", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>PN</div>
-                          <div>
-                            <div style={{ fontWeight: 700, fontSize: "15px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Priya Nair</div>
-                            <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>Product Designer</div>
-                          </div>
-                          <div style={{ color: "#F0E870", fontSize: "14px" }}>★★★★★</div>
-                          <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
-                          <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Replies in 1h</div>
-                          <button style={{ marginTop: "auto", width: "100%", background: "white", border: "1px solid #EBE5F2", color: "#6C3EEB", padding: "8px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Invite →</button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Recommended Freelancers Grid */}
-              <section style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "24px", width: "100%", maxWidth: "1336px", paddingBottom: "40px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Recommended Freelancers</h3>
-                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>View all →</span>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
-                  {recommendedFreelancers.length > 0 ? (
-                    recommendedFreelancers.map((freelancer, i) => {
-                      const name = `${freelancer.firstName || freelancer.first_name || "Freelancer"} ${freelancer.lastName || freelancer.last_name || ""}`.trim();
-                      const initials = getInitials(name);
-                      const role = freelancer.role || freelancer.title || "Professional";
-                      const rate = freelancer.rate ? (typeof freelancer.rate === 'number' ? `₹${freelancer.rate.toLocaleString()}/day` : freelancer.rate) : "₹1,500/day";
-                      const skills = Array.isArray(freelancer.skills) ? freelancer.skills : ["Design", "Figma"];
-                      const bgColors = ["#FF6E91", "#30B47A", "#FF6B35", "#D9A000"];
-                      const avatarBg = bgColors[i % bgColors.length];
-                      return (
-                        <div key={freelancer.id} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                            <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: avatarBg, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                              {initials}
-                            </div>
-                            <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
-                          </div>
-                          <div>
-                            <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{name}</div>
-                            <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{role}</div>
-                          </div>
-                          <div style={{ fontWeight: 700, fontSize: "15px", color: "#6C3EEB", fontFamily: "'Sora', sans-serif" }}>{rate}</div>
-                          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                            {skills.slice(0, 2).map((s, idx) => (
-                              <div key={idx} style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
-                            ))}
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: "12px" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>
-                              <span style={{ color: "#1A1433" }}>★★★★★</span> 5.0
-                            </div>
-                            <div style={{ fontSize: "11px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>Replies in 2h</div>
-                          </div>
-                          <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-                            <button 
-                              onClick={() => {
-                                navigate("/client-dashbroad2/chat", {
-                                  state: {
-                                    currentUid: auth.currentUser?.uid,
-                                    otherUid: freelancer.id,
-                                    otherName: name,
-                                    otherImage: freelancer.profileImage || "",
-                                  }
-                                });
-                              }}
-                              style={{ flex: 1, background: "#6C3EEB", color: "white", padding: "10px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
-                            >
-                              Hire
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    [
-                      { name: "Priya Nair", role: "Product Designer", tag: "Top Rated", initials: "P", color: "#FF6E91", rate: "₹1,500/day", skills: ["Figma", "UX"], rep: "1h" },
-                      { name: "Rahul Dev", role: "Mobile Designer", tag: "Available", initials: "R", color: "#30B47A", rate: "₹2,000/day", skills: ["iOS", "Android"], rep: "4h" },
-                      { name: "Maya Rajan", role: "Product Designer", tag: "Top Rated", initials: "MR", color: "#FF6B35", rate: "₹1,200/day", skills: ["Prototyping", "UI Design"], rep: "2h" },
-                      { name: "Sandhya Kumar", role: "UX Researcher", tag: "Available", initials: "SK", color: "#D9A000", rate: "₹950/day", skills: ["UX Research"], rep: "3h" }
-                    ].map((freelancer, i) => (
-                      <div key={i} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                          <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: freelancer.color, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>{freelancer.initials}</div>
-                          {freelancer.tag === "Top Rated" ? 
-                            <div style={{ background: "#FDFCEB", border: "1px solid #F0E870", color: "#D9A000", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>🏆 Top Rated</div> :
-                            <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "4px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>Available</div>
-                          }
-                        </div>
-                        <div>
-                          <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{freelancer.name}</div>
-                          <div style={{ fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{freelancer.role}</div>
-                        </div>
-                        <div style={{ fontWeight: 700, fontSize: "15px", color: "#6C3EEB", fontFamily: "'Sora', sans-serif" }}>{freelancer.rate}</div>
-                        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                          {freelancer.skills.map((s, idx) => (
-                            <div key={idx} style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>{s}</div>
-                          ))}
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: "12px" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>
-                            <span style={{ color: "#1A1433" }}>★★★★★</span> 5.0
-                          </div>
-                          <div style={{ fontSize: "11px", color: "#A39DBA", fontFamily: "'DM Sans', sans-serif" }}>Replies in {freelancer.rep}</div>
-                        </div>
-                        <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-                          <button style={{ flex: 1, background: "#6C3EEB", color: "white", padding: "10px", borderRadius: "8px", border: "none", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Hire</button>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </section>
-
-              {/* Top Talent This Week & Trending Skills */}
-              <div style={{ display: "flex", gap: "24px", width: "100%", maxWidth: "1336px", marginTop: "24px", paddingBottom: "40px" }}>
-                {/* Left Column: Top Talent This Week */}
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Top Talent This Week</h3>
-                    <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>See all →</span>
-                  </div>
-                  
-                  <div style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", display: "flex", flexDirection: "column" }}>
-                    {/* Row 1 */}
-                    <div style={{ padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #EEEDF3" }}>
-                      <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                        <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#6C3EEB", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                          {topMatch ? getInitials(`${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`) : "AS"}
-                        </div>
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>
-                              {topMatch ? `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim() : "Aryan Shah"}
-                            </div>
-                            <div style={{ background: "#FDFCEB", color: "#D9A000", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>#1 This Week</div>
-                          </div>
-                          <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>
-                            {topMatch ? (topMatch.role || topMatch.title || "Senior UI/UX Designer") : "Senior UI/UX Designer"}
-                          </div>
-                          <div style={{ fontSize: "13px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif", marginTop: "4px", fontWeight: 600 }}>
-                            {topMatch ? (topMatch.rate ? `₹${topMatch.rate}/mo` : "₹90K/mo") : "₹90K/mo"}
-                            <span style={{ color: "#8C84A8", fontWeight: 400 }}> · Remote · Full-time</span>
-                          </div>
-                          <div style={{ display: "flex", gap: "2px", marginTop: "6px" }}>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                          </div>
-                        </div>
-                      </div>
-                      <button 
-                        onClick={() => {
-                          if (!topMatch) return;
-                          navigate("/client-dashbroad2/chat", {
-                            state: {
-                              currentUid: auth.currentUser?.uid,
-                              otherUid: topMatch.id,
-                              otherName: `${topMatch.firstName || topMatch.first_name || ""} ${topMatch.lastName || topMatch.last_name || ""}`.trim(),
-                              otherImage: topMatch.profileImage || "",
-                            }
-                          });
-                        }}
-                        style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 16px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
-                      >
-                        View →
-                      </button>
-                    </div>
-                    
-                    {/* Row 2 */}
-                    <div style={{ padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                        <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: "#FF6E91", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                          KM
-                        </div>
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Karan Modi</div>
-                            <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>#2 This Week</div>
-                          </div>
-                          <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>Motion & 3D Designer</div>
-                          <div style={{ fontSize: "13px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif", marginTop: "4px", fontWeight: 600 }}>₹75K<span style={{ color: "#8C84A8", fontWeight: 400 }}>/mo · Hybrid · Contract</span></div>
-                          <div style={{ display: "flex", gap: "2px", marginTop: "6px" }}>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
-                             <span style={{ color: "#EEEDF3", fontSize: "12px" }}>★</span>
-                          </div>
-                        </div>
-                      </div>
-                      <button style={{ background: "#6C3EEB", color: "white", border: "none", padding: "8px 16px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Hire →</button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Column: Trending Skills */}
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Trending Skills</h3>
-                    <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Explore →</span>
-                  </div>
-                  
-                  <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
-                    {/* Purple Banner */}
-                    <div style={{ background: "linear-gradient(106.39deg, #8B65F8 0%, #7C4EF5 100%)", borderRadius: "16px", padding: "24px", color: "white", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                       <div>
-                        <div style={{ fontSize: "22px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>UI/UX Design</div>
-                        <div style={{ fontSize: "13px", opacity: 0.9, fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Highest demand across Huzzler</div>
-                      </div>
-                      
-                      <div style={{ display: "flex", gap: "32px", marginTop: "24px" }}>
-                        <div>
-                          <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>+34%</div>
-                          <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Growing fast</div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <div style={{ fontWeight: 700, fontSize: "16px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Karan Modi</div>
+                          <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "2px 8px", borderRadius: "12px", fontSize: "10px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>#2 This Week</div>
                         </div>
-                        <div>
-                          <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>1.2K</div>
-                          <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Freelancers</div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>₹90K</div>
-                          <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Avg Rates</div>
+                        <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>Motion & 3D Designer</div>
+                        <div style={{ fontSize: "13px", color: "#1A1433", fontFamily: "'DM Sans', sans-serif", marginTop: "4px", fontWeight: 600 }}>₹75K<span style={{ color: "#8C84A8", fontWeight: 400 }}>/mo · Hybrid · Contract</span></div>
+                        <div style={{ display: "flex", gap: "2px", marginTop: "6px" }}>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#F0E870", fontSize: "12px" }}>★</span>
+                          <span style={{ color: "#EEEDF3", fontSize: "12px" }}>★</span>
                         </div>
                       </div>
                     </div>
-                    
-                    {/* 3 small cards */}
-                    <div style={{ display: "flex", gap: "12px" }}>
-                      <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <div style={{ fontSize: "16px" }}>🎨</div>
-                        <div>
-                          <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>AI Design</div>
-                          <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>96 freelancers</div>
-                        </div>
-                        <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+32% ⬆</div>
-                      </div>
-
-                      <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <div style={{ fontSize: "16px" }}>💻</div>
-                        <div>
-                          <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Frontend</div>
-                          <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>300 freelancers</div>
-                        </div>
-                        <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+26% ⬆</div>
-                      </div>
-
-                      <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <div style={{ fontSize: "16px" }}>🎬</div>
-                        <div>
-                          <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Motion</div>
-                          <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>420 freelancers</div>
-                        </div>
-                        <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+18% ⬆</div>
-                      </div>
-                    </div>
+                    <button style={{ background: "#6C3EEB", color: "white", border: "none", padding: "8px 16px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Hire →</button>
                   </div>
                 </div>
               </div>
 
-              {/* Recently Active Section */}
-              <section style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "16px", width: "100%", maxWidth: "1336px", paddingBottom: "60px" }}>
+              {/* Right Column: Trending Skills */}
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#30B47A" }}></div>
-                    <h3 style={{ fontSize: "16px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Recently Active</h3>
-                  </div>
-                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>View all →</span>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Trending Skills</h3>
+                  <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>Explore →</span>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                  {freelancers.slice(0, 3).map((freelancer, index) => {
-                    const initials = `${freelancer.firstName || freelancer.first_name || ""}${freelancer.lastName || freelancer.last_name || ""}`.substring(0, 1).toUpperCase() || "F";
-                    const fullName = `${freelancer.firstName || freelancer.first_name || ""} ${freelancer.lastName || freelancer.last_name || ""}`.trim() || "Freelancer";
-                    const title = freelancer.role || freelancer.title || "Professional";
-                    const location = freelancer.location || freelancer.city || "Remote";
-                    const desc = freelancer.bio || freelancer.about || freelancer.description || "Experienced professional ready to work on your next big project.";
-                    const skills = Array.isArray(freelancer.skills) ? freelancer.skills.slice(0, 4) : [];
-                    const rate = freelancer.rate ? `₹${freelancer.rate}` : "₹1,000–₹1,500";
-                    
-                    // Colors for avatar
-                    const avatarColors = ["#7C4EF5", "#4A90E2", "#FF8A00"];
-                    const bgColor = avatarColors[index % avatarColors.length];
-
-                    // Badges logic
-                    let badges = null;
-                    if (index === 0) {
-                      badges = (
-                        <>
-                          <div style={{ background: "#FDFCEB", color: "#D9A000", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>⭐ 97% Match</div>
-                          <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>New</div>
-                        </>
-                      );
-                    } else if (index === 1) {
-                      badges = (
-                        <div style={{ background: "#FFF3E5", color: "#FF8A00", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>🔥 Hot</div>
-                      );
-                    }
-
-                    // Skill tag colors
-                    const skillColors = [
-                      { bg: "#F5F2FF", color: "#6C3EEB" },
-                      { bg: "#EBF3FF", color: "#4A90E2" },
-                      { bg: "#FFEBF0", color: "#FF6E91" },
-                      { bg: "#FFF3E5", color: "#FF8A00" },
-                    ];
-
-                    return (
-                      <div key={freelancer.id || index} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                          <div style={{ display: "flex", gap: "16px" }}>
-                            <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: bgColor, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
-                              {initials}
-                            </div>
-                            <div>
-                              <div style={{ fontWeight: 700, fontSize: "18px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{title}</div>
-                              <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{fullName} · {location} · Full-time</div>
-                            </div>
-                          </div>
-                          <div style={{ display: "flex", gap: "8px" }}>
-                            {badges}
-                          </div>
-                        </div>
-                        
-                        <div style={{ fontSize: "14px", color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", lineHeight: "1.5", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                          {desc}
-                        </div>
-                        
-                        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                          {skills.map((skill, sIdx) => {
-                            const sc = skillColors[sIdx % skillColors.length];
-                            return (
-                              <div key={sIdx} style={{ background: sc.bg, color: sc.color, padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
-                                {skill}
-                              </div>
-                            );
-                          })}
-                          {skills.length === 0 && (
-                            <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
-                              Design Systems
-                            </div>
-                          )}
-                        </div>
-
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
-                          <div style={{ fontSize: "16px", fontWeight: 700, color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>
-                            {rate}<span style={{ fontSize: "13px", color: "#8C84A8", fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}>/day</span>
-                          </div>
-                          <div style={{ display: "flex", gap: "12px" }}>
-                            <button style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 20px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "6px" }}>
-                              📌 Save
-                            </button>
-                            <button 
-                              onClick={() => {
-                                navigate("/client-dashbroad2/chat", {
-                                  state: {
-                                    currentUid: auth.currentUser?.uid,
-                                    otherUid: freelancer.id,
-                                    otherName: fullName,
-                                    otherImage: freelancer.profileImage || "",
-                                  }
-                                });
-                              }}
-                              style={{ background: "#6C3EEB", color: "white", border: "none", padding: "8px 24px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
-                              Hire →
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  {(!freelancers || freelancers.length === 0) && (
-                    <div style={{ textAlign: "center", padding: "40px", color: "#8C84A8" }}>
-                      No recently active freelancers found.
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
+                  {/* Purple Banner */}
+                  <div style={{ background: "linear-gradient(106.39deg, #8B65F8 0%, #7C4EF5 100%)", borderRadius: "16px", padding: "24px", color: "white", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontSize: "22px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>UI/UX Design</div>
+                      <div style={{ fontSize: "13px", opacity: 0.9, fontFamily: "'DM Sans', sans-serif", marginTop: "4px" }}>Highest demand across Huzzler</div>
                     </div>
-                  )}
+
+                    <div style={{ display: "flex", gap: "32px", marginTop: "24px" }}>
+                      <div>
+                        <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>+34%</div>
+                        <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Growing fast</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>1.2K</div>
+                        <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Freelancers</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "18px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>₹90K</div>
+                        <div style={{ fontSize: "11px", opacity: 0.8, fontFamily: "'DM Sans', sans-serif" }}>Avg Rates</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3 small cards */}
+                  <div style={{ display: "flex", gap: "12px" }}>
+                    <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div style={{ fontSize: "16px" }}>🎨</div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>AI Design</div>
+                        <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>96 freelancers</div>
+                      </div>
+                      <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+32% ⬆</div>
+                    </div>
+
+                    <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div style={{ fontSize: "16px" }}>💻</div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Frontend</div>
+                        <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>300 freelancers</div>
+                      </div>
+                      <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+26% ⬆</div>
+                    </div>
+
+                    <div style={{ flex: 1, background: "white", border: "1px solid #EEEDF3", borderRadius: "12px", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div style={{ fontSize: "16px" }}>🎬</div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: "13px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>Motion</div>
+                        <div style={{ fontSize: "11px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif" }}>420 freelancers</div>
+                      </div>
+                      <div style={{ color: "#30B47A", fontSize: "12px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>+18% ⬆</div>
+                    </div>
+                  </div>
                 </div>
-              </section>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* ================= NOTIFICATION POPUP ================= */}
-        {notifOpen && (
-          <>
-            {/* Overlay */}
-            <div
-              onClick={() => setNotifOpen(false)}
-              style={{ position: "fixed", inset: 0, zIndex: 9998 }}
-            />
-
-            {/* Panel */}
-            <div
-              style={{
-                position: "fixed",
-                top: 100,
-                right: isMobile ? 10 : 170,
-                width: isMobile ? "calc(100vw - 20px)" : 420,
-                maxHeight: "75vh",
-                background: "#fff",
-                borderRadius: 16,
-                boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-                border: "1px solid #ccc2c2",
-                zIndex: 9999,
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-              }}
-            >
-              {/* Header */}
-              <div
-                style={{
-                  padding: "16px 20px",
-                  borderBottom: "1px solid #eee",
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <FiBell />
-                  Notifications ({notifications.length})
+            {/* Recently Active Section */}
+            <section style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "16px", width: "100%", maxWidth: "1336px", paddingBottom: "60px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#30B47A" }}></div>
+                  <h3 style={{ fontSize: "16px", fontWeight: 700, margin: 0, fontFamily: "'Sora', sans-serif", color: "#1A1433" }}>Recently Active</h3>
                 </div>
-                <button
-                  onClick={markAllRead}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    fontSize: 12,
-                    color: "#888",
-                    cursor: "pointer",
-                    fontFamily: "Rubik, sans-serif",
-                  }}
-                >
-                  Mark all read
-                </button>
+                <span style={{ color: "#6C3EEB", fontSize: "14px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}>View all →</span>
               </div>
 
-              {/* Scroll Area */}
-              <div style={{ overflowY: "auto" }}>
-                {notifications.length === 0 && (
-                  <div
-                    style={{ padding: 30, textAlign: "center", color: "#777" }}
-                  >
-                    No notifications
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {freelancers.slice(0, 3).map((freelancer, index) => {
+                  const initials = `${freelancer.firstName || freelancer.first_name || ""}${freelancer.lastName || freelancer.last_name || ""}`.substring(0, 1).toUpperCase() || "F";
+                  const fullName = `${freelancer.firstName || freelancer.first_name || ""} ${freelancer.lastName || freelancer.last_name || ""}`.trim() || "Freelancer";
+                  const title = freelancer.role || freelancer.title || "Professional";
+                  const location = freelancer.location || freelancer.city || "Remote";
+                  const desc = freelancer.bio || freelancer.about || freelancer.description || "Experienced professional ready to work on your next big project.";
+                  const skills = Array.isArray(freelancer.skills) ? freelancer.skills.slice(0, 4) : [];
+                  const rate = freelancer.rate ? `₹${freelancer.rate}` : "₹1,000–₹1,500";
+
+                  // Colors for avatar
+                  const avatarColors = ["#7C4EF5", "#4A90E2", "#FF8A00"];
+                  const bgColor = avatarColors[index % avatarColors.length];
+
+                  // Badges logic
+                  let badges = null;
+                  if (index === 0) {
+                    badges = (
+                      <>
+                        <div style={{ background: "#FDFCEB", color: "#D9A000", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>⭐ 97% Match</div>
+                        <div style={{ background: "#E8F8F0", color: "#30B47A", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif" }}>New</div>
+                      </>
+                    );
+                  } else if (index === 1) {
+                    badges = (
+                      <div style={{ background: "#FFF3E5", color: "#FF8A00", padding: "6px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "4px" }}>🔥 Hot</div>
+                    );
+                  }
+
+                  // Skill tag colors
+                  const skillColors = [
+                    { bg: "#F5F2FF", color: "#6C3EEB" },
+                    { bg: "#EBF3FF", color: "#4A90E2" },
+                    { bg: "#FFEBF0", color: "#FF6E91" },
+                    { bg: "#FFF3E5", color: "#FF8A00" },
+                  ];
+
+                  return (
+                    <div key={freelancer.id || index} style={{ background: "white", border: "1px solid #EEEDF3", borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                        <div style={{ display: "flex", gap: "16px" }}>
+                          <div style={{ width: "48px", height: "48px", borderRadius: "24px", background: bgColor, color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: 700, fontFamily: "'Sora', sans-serif" }}>
+                            {initials}
+                          </div>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: "18px", color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>{title}</div>
+                            <div style={{ fontSize: "13px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", marginTop: "2px" }}>{fullName} · {location} · Full-time</div>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", gap: "8px" }}>
+                          {badges}
+                        </div>
+                      </div>
+
+                      <div style={{ fontSize: "14px", color: "#6B6B8A", fontFamily: "'DM Sans', sans-serif", lineHeight: "1.5", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {desc}
+                      </div>
+
+                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        {skills.map((skill, sIdx) => {
+                          const sc = skillColors[sIdx % skillColors.length];
+                          return (
+                            <div key={sIdx} style={{ background: sc.bg, color: sc.color, padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
+                              {skill}
+                            </div>
+                          );
+                        })}
+                        {skills.length === 0 && (
+                          <div style={{ background: "#F5F2FF", color: "#6C3EEB", padding: "6px 14px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
+                            Design Systems
+                          </div>
+                        )}
+                      </div>
+
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+                        <div style={{ fontSize: "16px", fontWeight: 700, color: "#1A1433", fontFamily: "'Sora', sans-serif" }}>
+                          {rate}<span style={{ fontSize: "13px", color: "#8C84A8", fontWeight: 400, fontFamily: "'DM Sans', sans-serif" }}>/day</span>
+                        </div>
+                        <div style={{ display: "flex", gap: "12px" }}>
+                          <button style={{ background: "white", color: "#1A1433", border: "1px solid #EEEDF3", padding: "8px 20px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: "6px" }}>
+                            📌 Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              navigate("/client-dashbroad2/chat", {
+                                state: {
+                                  currentUid: auth.currentUser?.uid,
+                                  otherUid: freelancer.id,
+                                  otherName: fullName,
+                                  otherImage: freelancer.profileImage || "",
+                                }
+                              });
+                            }}
+                            style={{ background: "#6C3EEB", color: "white", border: "none", padding: "8px 24px", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
+                            Hire →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {(!freelancers || freelancers.length === 0) && (
+                  <div style={{ textAlign: "center", padding: "40px", color: "#8C84A8" }}>
+                    No recently active freelancers found.
                   </div>
                 )}
-
-                {notifications.map((item) => (
-                  <NotificationTile
-                    key={item.id}
-                    item={item}
-                    onAccept={acceptNotif}
-                    onDecline={declineNotif}
-                  />
-                ))}
               </div>
-            </div>
-          </>
-        )}
+            </section>
+          </div>
+        </div>
+      </div>
 
-        {/* ================= FULL DETAIL DRAWER ================= */}
-        {detailOpen && (
-          <FullDetailDrawer
-            userId={detailUserId}
-            jobId={detailJobId}
-            onClose={() => {
-              setDetailOpen(false);
-              setDetailUserId(null);
-              setDetailJobId(null);
-            }}
-            onChatOpen={(freelancerId, name, image) => {
-              setDetailOpen(false);
-              navigate("/client-dashbroad2/chat", {
-                state: {
-                  currentUid: auth.currentUser?.uid,
-                  otherUid: freelancerId,
-                  otherName: name,
-                  otherImage: image,
-                },
-              });
-            }}
+      {/* ================= NOTIFICATION POPUP ================= */}
+      {notifOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            onClick={() => setNotifOpen(false)}
+            style={{ position: "fixed", inset: 0, zIndex: 9998 }}
           />
-        )}
 
-        <style>{`
+          {/* Panel */}
+          <div
+            style={{
+              position: "fixed",
+              top: 100,
+              right: isMobile ? 10 : 170,
+              width: isMobile ? "calc(100vw - 20px)" : 420,
+              maxHeight: "75vh",
+              background: "#fff",
+              borderRadius: 16,
+              boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+              border: "1px solid #ccc2c2",
+              zIndex: 9999,
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "16px 20px",
+                borderBottom: "1px solid #eee",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <FiBell />
+                Notifications ({notifications.length})
+              </div>
+              <button
+                onClick={markAllRead}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 12,
+                  color: "#888",
+                  cursor: "pointer",
+                  fontFamily: "Rubik, sans-serif",
+                }}
+              >
+                Mark all read
+              </button>
+            </div>
+
+            {/* Scroll Area */}
+            <div style={{ overflowY: "auto" }}>
+              {notifications.length === 0 && (
+                <div
+                  style={{ padding: 30, textAlign: "center", color: "#777" }}
+                >
+                  No notifications
+                </div>
+              )}
+
+              {notifications.map((item) => (
+                <NotificationTile
+                  key={item.id}
+                  item={item}
+                  onAccept={acceptNotif}
+                  onDecline={declineNotif}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ================= FULL DETAIL DRAWER ================= */}
+      {detailOpen && (
+        <FullDetailDrawer
+          userId={detailUserId}
+          jobId={detailJobId}
+          onClose={() => {
+            setDetailOpen(false);
+            setDetailUserId(null);
+            setDetailJobId(null);
+          }}
+          onChatOpen={(freelancerId, name, image) => {
+            setDetailOpen(false);
+            navigate("/client-dashbroad2/chat", {
+              state: {
+                currentUid: auth.currentUser?.uid,
+                otherUid: freelancerId,
+                otherName: name,
+                otherImage: image,
+              },
+            });
+          }}
+        />
+      )}
+
+      <style>{`
 /* ================= CATEGORY SCROLL ================= */
 :root { --search-height: 42px; }
 
@@ -1507,7 +1507,7 @@ export default function ClientHomeUI() {
 // NOTIFICATION TILE COMPONENT
 // ======================================================
 function NotificationTile({ item, onAccept, onDecline }) {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [freelancerName, setFreelancerName] = useState(
     item.freelancerName || ""
   );
@@ -1528,7 +1528,7 @@ function NotificationTile({ item, onAccept, onDecline }) {
           setFreelancerName(name);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [item.freelancerId]);
 
   useEffect(() => {
@@ -1545,7 +1545,7 @@ function NotificationTile({ item, onAccept, onDecline }) {
         if (j24Doc.exists() && j24Doc.data().title) {
           setJobTitle(j24Doc.data().title);
         }
-      } catch (_) {}
+      } catch (_) { }
     })();
   }, [item.jobId]);
 
@@ -1566,11 +1566,11 @@ function NotificationTile({ item, onAccept, onDecline }) {
 
   return (
     <div
-     onClick={() => {
-  if (!isDeclined) {
-    navigate(`/client-dashbroad2/clientnotificationdetails/${item.freelancerId}/${item.jobId}`)
-  }
-}}
+      onClick={() => {
+        if (!isDeclined) {
+          navigate(`/client-dashbroad2/clientnotificationdetails/${item.freelancerId}/${item.jobId}`)
+        }
+      }}
       style={{
         display: "flex",
         alignItems: "center",
@@ -1785,7 +1785,7 @@ function FullDetailDrawer({ userId, jobId, onClose, onChatOpen }) {
       ),
       (snap) =>
         setServices(snap.docs.map((d) => ({ id: d.id, ...d.data() }))),
-      () => {}
+      () => { }
     );
 
     // Fetch 24h services
@@ -1796,7 +1796,7 @@ function FullDetailDrawer({ userId, jobId, onClose, onChatOpen }) {
       ),
       (snap) =>
         setServices24h(snap.docs.map((d) => ({ id: d.id, ...d.data() }))),
-      () => {}
+      () => { }
     );
 
     // Check if already accepted
@@ -1812,7 +1812,7 @@ function FullDetailDrawer({ userId, jobId, onClose, onChatOpen }) {
         );
         const snap = await getDocs(q);
         if (!snap.empty) setIsAccepted(true);
-      } catch (_) {}
+      } catch (_) { }
     })();
 
     return () => {
@@ -1830,7 +1830,7 @@ function FullDetailDrawer({ userId, jobId, onClose, onChatOpen }) {
       if (jDoc.exists() && jDoc.data().title) return jDoc.data().title;
       const j24 = await getDoc(doc(db, "jobs_24h", jId));
       if (j24.exists() && j24.data().title) return j24.data().title;
-    } catch (_) {}
+    } catch (_) { }
     return "Job Application";
   }
 
@@ -2463,15 +2463,15 @@ function PortfolioCard({ item }) {
         gap: 14,
       }}
     >
-<img
-  src={imageUrl || "/assets/ActionCard.png"}
-  alt={title}
-  className="fds-portfolio-thumb"
-  onError={(e) => {
-    e.target.src = "/assets/ActionCard.png";
-  }
-  }
-/>
+      <img
+        src={imageUrl || "/assets/ActionCard.png"}
+        alt={title}
+        className="fds-portfolio-thumb"
+        onError={(e) => {
+          e.target.src = "/assets/ActionCard.png";
+        }
+        }
+      />
       <div style={{ flex: 1, minWidth: 0 }}>
         <p
           style={{

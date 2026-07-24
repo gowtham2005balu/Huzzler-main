@@ -23,7 +23,9 @@ import {
   FiBell,
   FiEye,
   FiClock,
-  FiSmile
+  FiSmile,
+  FiChevronLeft,
+  FiChevronRight
 } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
 import TopNavbar from "../../../components/TopNavbar";
@@ -126,7 +128,7 @@ export default function FreelanceHome() {
       }
 
       let jobsFormatted = computed.count >= 1000 ? (computed.count / 1000).toFixed(1) + "K" : computed.count + (def.isTop ? "" : " projects");
-      
+
       const maxCount = sortedSkills[0]?.count || 1;
       const percentage = Math.round((computed.count / maxCount) * 100);
       const demand = `+${percentage}%`;
@@ -145,6 +147,43 @@ export default function FreelanceHome() {
   }, [jobs, dbIcons]);
 
   const searchRef = useRef(null);
+  const catNavRef = useRef(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (catNavRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = catNavRef.current;
+      setShowLeftArrow(scrollLeft > 10);
+      setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    const el = catNavRef.current;
+    if (el) {
+      checkScrollPosition();
+      el.addEventListener("scroll", checkScrollPosition);
+      window.addEventListener("resize", checkScrollPosition);
+      return () => {
+        el.removeEventListener("scroll", checkScrollPosition);
+        window.removeEventListener("resize", checkScrollPosition);
+      };
+    }
+  }, []);
+
+  const handleCatScrollLeft = () => {
+    if (catNavRef.current) {
+      catNavRef.current.scrollBy({ left: -250, behavior: "smooth" });
+    }
+  };
+
+  const handleCatScrollRight = () => {
+    if (catNavRef.current) {
+      catNavRef.current.scrollBy({ left: 250, behavior: "smooth" });
+    }
+  };
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -158,11 +197,25 @@ export default function FreelanceHome() {
   );
 
 
-  const [userInfo, setUserInfo] = useState({
-    first_name: "",
-    last_name: "",
-    role: "",
-    profileImage: "",
+  const [userInfo, setUserInfo] = useState(() => {
+    try {
+      const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return {
+          first_name: parsed.first_name || parsed.firstName || parsed.name || "",
+          last_name: parsed.last_name || parsed.lastName || "",
+          role: parsed.role || parsed.professional_title || "",
+          profileImage: parsed.profileImage || "",
+        };
+      }
+    } catch (e) { }
+    return {
+      first_name: "",
+      last_name: "",
+      role: "",
+      profileImage: "",
+    };
   });
 
 
@@ -320,7 +373,7 @@ export default function FreelanceHome() {
         unsubSnapshot = onSnapshot(userRef, (snap) => {
           let data = {};
           if (snap.exists()) data = snap.data();
-          
+
           const hasValidData = data.firstName || data.first_name || data.firstname || data.role || data.professional_title;
 
           if (snap.exists() && hasValidData) {
@@ -328,7 +381,7 @@ export default function FreelanceHome() {
             try {
               const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
               if (stored) localData = JSON.parse(stored);
-            } catch (e) {}
+            } catch (e) { }
 
             const authDisplayName = currentUser.displayName || "";
             const authFirst = authDisplayName.split(" ")[0] || "";
@@ -346,12 +399,12 @@ export default function FreelanceHome() {
             unsubSnapshot2 = onSnapshot(freelancerRef, (fSnap) => {
               if (fSnap.exists()) {
                 const fData = fSnap.data();
-                
+
                 let localData = {};
                 try {
                   const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
                   if (stored) localData = JSON.parse(stored);
-                } catch (e) {}
+                } catch (e) { }
 
                 const authDisplayName = currentUser.displayName || "";
                 const authFirst = authDisplayName.split(" ")[0] || "";
@@ -588,127 +641,206 @@ export default function FreelanceHome() {
 
           {/* Header & Tabs Container */}
           <div style={{ width: "100%", maxWidth: "1336px", position: "relative", zIndex: 60 }}>
-          <TopNavbar
-            userName={userInfo.first_name || "James Andrew"}
-            isLoggedIn={Boolean(auth.currentUser)}
+            <TopNavbar
+              userName={userInfo.first_name || ""}
+              isLoggedIn={Boolean(user || auth?.currentUser || localStorage.getItem("userEmail") || localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser"))}
 
-            searchValue={searchText}
-            onSearchChange={(val) => setSearchText(val)}
-            onSearchSubmit={(val) => {
-              if (val.trim()) {
-                navigate("/freelance-dashboard/browse-projects", { state: { searchQuery: val.trim() } });
-              } else {
-                navigate("/freelance-dashboard/browse-projects");
-              }
-            }}
-            profileImage={userInfo.profileImage}
-            onBellClick={() => navigate("/freelance-dashboard/notifications")}
-            onMessageClick={() => navigate("/freelance-dashboard/messages")}
-            onSelectCategory={(cat) => {
-              navigate("/freelance-dashboard/browse-projects", { state: { category: cat } });
-            }}
-          />
+              searchValue={searchText}
+              onSearchChange={(val) => setSearchText(val)}
+              onSearchSubmit={(val) => {
+                if (val.trim()) {
+                  navigate("/freelance-dashboard/browse-projects", { state: { searchQuery: val.trim() } });
+                } else {
+                  navigate("/freelance-dashboard/browse-projects");
+                }
+              }}
+              profileImage={userInfo.profileImage}
+              onBellClick={() => navigate("/freelance-dashboard/notifications")}
+              onMessageClick={() => navigate("/freelance-dashboard/messages")}
+              onSelectCategory={(cat) => {
+                navigate("/freelance-dashboard/browse-projects", { state: { category: cat } });
+              }}
+            />
 
 
 
             {/* Category Tabs and Mega Menu Wrapper */}
             <div onMouseLeave={() => setShowMegaMenu(false)}>
-              {/* Category Tabs */}
-              <div style={{ display: "flex", gap: "24px", color: "#8C84A8", fontSize: "14px", fontWeight: 500, borderBottom: "1px solid #EBE5F2", overflowX: "auto", fontFamily: "'DM Sans', sans-serif", scrollbarWidth: "none", marginBottom: "24px" }}>
-                {categoriesData.map((cat, idx) => (
-                  <div
-                    key={idx}
-                    onMouseEnter={() => {
-                      setActiveMegaCategoryIndex(idx);
-                      setShowMegaMenu(true);
+              {/* Category Tabs with Left/Right Scroll Buttons */}
+              <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%", marginBottom: "24px" }}>
+                {/* Left Scroll Button */}
+                {showLeftArrow && (
+                  <button
+                    onClick={handleCatScrollLeft}
+                    style={{
+                      position: "absolute",
+                      left: "-8px",
+                      top: "50%",
+                      transform: "translateY(-65%)",
+                      zIndex: 10,
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#6C3EEB",
+                      transition: "all 0.2s"
                     }}
-                    onClick={() => {
-                      if (activeMegaCategoryIndex === idx && showMegaMenu) {
-                        setShowMegaMenu(false);
-                      } else {
-                        setActiveMegaCategoryIndex(idx);
-                        setShowMegaMenu(true);
-                      }
-                    }}
+                    title="Scroll left"
+                  >
+                    <FiChevronLeft size={18} />
+                  </button>
+                )}
+
+                {/* Category Tabs Container */}
+                <div
+                  ref={catNavRef}
                   style={{
-                    color: activeMegaCategoryIndex === idx && showMegaMenu ? "#6C3EEB" : "#8C84A8",
-                    borderBottom: activeMegaCategoryIndex === idx && showMegaMenu ? "2px solid #6C3EEB" : "2px solid transparent",
-                    paddingBottom: "12px",
-                    marginBottom: "-1px",
-                    whiteSpace: "nowrap",
-                    cursor: "pointer",
-                    transition: "all 0.2s"
+                    display: "flex",
+                    gap: "28px",
+                    color: "#8C84A8",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    borderBottom: "1px solid #EBE5F2",
+                    overflowX: "auto",
+                    fontFamily: "'DM Sans', sans-serif",
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                    width: "100%",
+                    padding: showLeftArrow ? "0 36px" : "0 12px 0 0",
+                    scrollBehavior: "smooth"
                   }}
                 >
-                  {cat.title}
-                </div>
-              ))}
-            </div>
-
-            {/* MEGAMENU DROPDOWN */}
-            {showMegaMenu && categoriesData[activeMegaCategoryIndex] && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "calc(100% - 24px)",
-                  left: 0,
-                  width: "100%",
-                  background: "white",
-                  border: "1px solid #E8E6F0",
-                  borderTop: "none",
-                  boxShadow: "0px 12px 32px rgba(108, 62, 235, 0.08)",
-                  borderRadius: "0 0 16px 16px",
-                  display: "flex",
-                  flexDirection: "column",
-                  overflow: "hidden"
-                }}
-              >
-                <div style={{ display: "flex", gap: "32px", padding: "24px 32px", overflowX: "auto" }}>
-                  {categoriesData[activeMegaCategoryIndex]?.sections.slice(0, 5).map((section, sidx) => (
-                    <div key={sidx} style={{ flex: "1 1 0", minWidth: "200px" }}>
-                      <h4 style={{ fontSize: "11px", fontWeight: 700, color: "#A39DBA", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px", fontFamily: "'Sora', sans-serif" }}>
-                        {section.title}
-                      </h4>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                        {section.items.map((item, iidx) => (
-                          <div 
-                            key={iidx} 
-                            onClick={() => {
-                              navigate("/freelance-dashboard/freelancebrowesproject", {
-                                state: {
-                                  category: categoriesData[activeMegaCategoryIndex].title,
-                                  skill: item
-                                }
-                              });
-                            }}
-                            style={{ display: "flex", alignItems: "center", gap: "8px", color: iidx === 0 ? "#6C3EEB" : "#4A4A68", fontWeight: iidx === 0 ? 600 : 500, fontSize: "14px", fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}
-                          >
-                            {iidx === 0 && <div style={{ width: "6px", height: "6px", borderRadius: "3px", background: "#6C3EEB" }}></div>}
-                            {item}
-                          </div>
-                        ))}
-                      </div>
+                  {categoriesData.map((cat, idx) => (
+                    <div
+                      key={idx}
+                      onMouseEnter={() => {
+                        setActiveMegaCategoryIndex(idx);
+                        setShowMegaMenu(true);
+                      }}
+                      onClick={() => {
+                        if (activeMegaCategoryIndex === idx && showMegaMenu) {
+                          setShowMegaMenu(false);
+                        } else {
+                          setActiveMegaCategoryIndex(idx);
+                          setShowMegaMenu(true);
+                        }
+                      }}
+                      style={{
+                        color: activeMegaCategoryIndex === idx && showMegaMenu ? "#6C3EEB" : "#8C84A8",
+                        borderBottom: activeMegaCategoryIndex === idx && showMegaMenu ? "2px solid #6C3EEB" : "2px solid transparent",
+                        paddingBottom: "12px",
+                        marginBottom: "-1px",
+                        whiteSpace: "nowrap",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        flexShrink: 0
+                      }}
+                    >
+                      {cat.title}
                     </div>
                   ))}
                 </div>
 
-                {/* Bottom Pill Tags */}
-                <div style={{ padding: "16px 32px", background: "#FDFCFE", borderTop: "1px solid #E8E6F0", display: "flex", gap: "12px", alignItems: "center" }}>
-                  <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
-                    Trending: {categoriesData[activeMegaCategoryIndex]?.sections[0]?.items[0] || "Services"}
-                  </div>
-                  <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
-                    Most Hired: {categoriesData[activeMegaCategoryIndex]?.title} Experts
-                  </div>
-                  <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
-                    New: Top Rated
+                {/* Right Scroll Button */}
+                {showRightArrow && (
+                  <button
+                    onClick={handleCatScrollRight}
+                    style={{
+                      position: "absolute",
+                      right: "-8px",
+                      top: "50%",
+                      transform: "translateY(-65%)",
+                      zIndex: 10,
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      background: "#FFFFFF",
+                      border: "1px solid #E2E8F0",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      color: "#6C3EEB",
+                      transition: "all 0.2s"
+                    }}
+                    title="Scroll right"
+                  >
+                    <FiChevronRight size={18} />
+                  </button>
+                )}
+              </div>
+
+              {/* MEGAMENU DROPDOWN */}
+              {showMegaMenu && categoriesData[activeMegaCategoryIndex] && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "calc(100% - 24px)",
+                    left: 0,
+                    width: "100%",
+                    background: "white",
+                    border: "1px solid #E8E6F0",
+                    borderTop: "none",
+                    boxShadow: "0px 12px 32px rgba(108, 62, 235, 0.08)",
+                    borderRadius: "0 0 16px 16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden"
+                  }}
+                >
+                  <div style={{ display: "flex", gap: "32px", padding: "24px 32px", overflowX: "auto" }}>
+                    {categoriesData[activeMegaCategoryIndex]?.sections.slice(0, 5).map((section, sidx) => (
+                      <div key={sidx} style={{ flex: "1 1 0", minWidth: "200px" }}>
+                        <h4 style={{ fontSize: "11px", fontWeight: 700, color: "#A39DBA", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px", fontFamily: "'Sora', sans-serif" }}>
+                          {section.title}
+                        </h4>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                          {section.items.map((item, iidx) => (
+                            <div
+                              key={iidx}
+                              onClick={() => {
+                                navigate("/freelance-dashboard/freelancebrowesproject", {
+                                  state: {
+                                    category: categoriesData[activeMegaCategoryIndex].title,
+                                    skill: item
+                                  }
+                                });
+                              }}
+                              style={{ display: "flex", alignItems: "center", gap: "8px", color: iidx === 0 ? "#6C3EEB" : "#4A4A68", fontWeight: iidx === 0 ? 600 : 500, fontSize: "14px", fontFamily: "'DM Sans', sans-serif", cursor: "pointer" }}
+                            >
+                              {iidx === 0 && <div style={{ width: "6px", height: "6px", borderRadius: "3px", background: "#6C3EEB" }}></div>}
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
 
-                  <div style={{ flex: 1 }} />
-                  <button onClick={() => setShowMegaMenu(false)} style={{ background: "transparent", border: "none", color: "#A39DBA", cursor: "pointer", fontSize: "13px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>Close Menu ✕</button>
+                  {/* Bottom Pill Tags */}
+                  <div style={{ padding: "16px 32px", background: "#FDFCFE", borderTop: "1px solid #E8E6F0", display: "flex", gap: "12px", alignItems: "center" }}>
+                    <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
+                      Trending: {categoriesData[activeMegaCategoryIndex]?.sections[0]?.items[0] || "Services"}
+                    </div>
+                    <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
+                      Most Hired: {categoriesData[activeMegaCategoryIndex]?.title} Experts
+                    </div>
+                    <div style={{ padding: "8px 16px", borderRadius: "50px", border: "1px solid #EBE5F2", background: "white", fontSize: "12px", color: "#8C84A8", fontFamily: "'DM Sans', sans-serif", cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.borderColor = "#6C3EEB"} onMouseLeave={(e) => e.target.style.borderColor = "#EBE5F2"}>
+                      New: Top Rated
+                    </div>
+
+                    <div style={{ flex: 1 }} />
+                    <button onClick={() => setShowMegaMenu(false)} style={{ background: "transparent", border: "none", color: "#A39DBA", cursor: "pointer", fontSize: "13px", fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>Close Menu ✕</button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
           </div>
 

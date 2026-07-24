@@ -31,13 +31,13 @@ export default function BrowseProjects() {
   const [showSort, setShowSort] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
-  
+
   // NEW STATE FOR FILTERING
   const [activeMainCategory, setActiveMainCategory] = useState("Graphics & Design");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
   const [searchJobQuery, setSearchJobQuery] = useState("");
-  
+
   // TOP SECTION FUNCTIONALITY STATE
   const [activeTab, setActiveTab] = useState("Work");
   const [activeSort, setActiveSort] = useState("Best Match");
@@ -49,7 +49,7 @@ export default function BrowseProjects() {
   ]);
 
   const sortRef = useRef(null);
-  
+
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const uid = user?.uid;
@@ -68,10 +68,10 @@ export default function BrowseProjects() {
     const formatData = (d, source) => {
       const data = d.data();
       const createdAt = data.created_at?.toDate?.() || null;
-      const salaryStr = (data.budget_from && data.budget_to) 
-        ? `₹${data.budget_from} - ₹${data.budget_to}` 
+      const salaryStr = (data.budget_from && data.budget_to)
+        ? `₹${data.budget_from} - ₹${data.budget_to}`
         : (data.budget ? `₹${data.budget}` : 'Negotiable');
-        
+
       const titleStr = data.companyName || "Client";
       const initials = titleStr.substring(0, 2).toUpperCase();
       const colors = ["#F59E0B", "#3B82F6", "#10B981", "#8B5CF6", "#EF4444"];
@@ -98,7 +98,7 @@ export default function BrowseProjects() {
       const data = snap.docs.map(d => formatData(d, "jobs"));
       setProjects(prev => {
         const others = prev.filter(j => j.source !== "jobs");
-        return [...others, ...data].sort((a,b) => (b.raw.created_at?.toMillis() || 0) - (a.raw.created_at?.toMillis() || 0));
+        return [...others, ...data].sort((a, b) => (b.raw.created_at?.toMillis() || 0) - (a.raw.created_at?.toMillis() || 0));
       });
     });
 
@@ -106,7 +106,7 @@ export default function BrowseProjects() {
       const data = snap.docs.map(d => formatData(d, "jobs_24h"));
       setProjects(prev => {
         const others = prev.filter(j => j.source !== "jobs_24h");
-        return [...others, ...data].sort((a,b) => (b.raw.created_at?.toMillis() || 0) - (a.raw.created_at?.toMillis() || 0));
+        return [...others, ...data].sort((a, b) => (b.raw.created_at?.toMillis() || 0) - (a.raw.created_at?.toMillis() || 0));
       });
     });
 
@@ -236,24 +236,24 @@ export default function BrowseProjects() {
           <div className="search-container">
             <div className="search-box">
               <Search size={18} color="#6B7280" style={{ marginLeft: 16 }} />
-              <input 
-                type="text" 
-                placeholder="Search UI/UX Designer, Product Designer, Video Editor..." 
+              <input
+                type="text"
+                placeholder="Search UI/UX Designer, Product Designer, Video Editor..."
                 value={searchJobQuery}
                 onChange={(e) => setSearchJobQuery(e.target.value)}
               />
               <button className="search-btn">Search</button>
             </div>
-            
+
             <div className="search-filters-row">
               <div className="filter-pills">
                 <button className={`pill ${activeSort === "Best Match" ? "active-pill" : ""}`} onClick={() => setActiveSort("Best Match")}>Best Match</button>
                 <button className={`pill ${activeSort === "Newest" ? "active-pill" : ""}`} onClick={() => setActiveSort("Newest")}>Newest</button>
                 <button className="pill">Availability</button>
-                
+
                 {activePills.map(pill => (
                   <button key={pill.id} className={`pill ${pill.colorClass}`} onClick={() => handleRemovePill(pill.id)}>
-                    {pill.label} <X size={12} style={{marginLeft: 4}}/>
+                    {pill.label} <X size={12} style={{ marginLeft: 4 }} />
                   </button>
                 ))}
 
@@ -286,26 +286,26 @@ export default function BrowseProjects() {
             <aside className="filters-sidebar">
               <div className="filters-header">
                 <h3>Filters</h3>
-                <span className="clear-all" onClick={() => { setSelectedCategory(""); setActiveMainCategory("Graphics & Design"); setSearchCategory(""); }} style={{cursor: 'pointer'}}>Clear all</span>
+                <span className="clear-all" onClick={() => { setSelectedCategory(""); setActiveMainCategory("Graphics & Design"); setSearchCategory(""); }} style={{ cursor: 'pointer' }}>Clear all</span>
               </div>
-              
+
               <div className="categories-section">
                 <h4>CATEGORIES</h4>
                 <div className="category-search">
                   <Search size={14} color="#9CA3AF" />
-                  <input 
-                    type="text" 
-                    placeholder="Search categories..." 
+                  <input
+                    type="text"
+                    placeholder="Search categories..."
                     value={searchCategory}
                     onChange={(e) => setSearchCategory(e.target.value)}
                   />
                 </div>
 
                 {categoriesData.map((mainCat, idx) => {
-                  const matchSearch = searchCategory === "" || 
-                    mainCat.title.toLowerCase().includes(searchCategory.toLowerCase()) || 
+                  const matchSearch = searchCategory === "" ||
+                    mainCat.title.toLowerCase().includes(searchCategory.toLowerCase()) ||
                     mainCat.sections.some(sec => sec.title.toLowerCase().includes(searchCategory.toLowerCase()) || sec.items.some(item => item.toLowerCase().includes(searchCategory.toLowerCase())));
-                  
+
                   if (!matchSearch) return null;
 
                   const isActive = activeMainCategory === mainCat.title;
@@ -329,8 +329,8 @@ export default function BrowseProjects() {
                                   if (searchCategory && !item.toLowerCase().includes(searchCategory.toLowerCase()) && !sec.title.toLowerCase().includes(searchCategory.toLowerCase()) && !mainCat.title.toLowerCase().includes(searchCategory.toLowerCase())) return null;
                                   const isSelected = selectedCategory === item;
                                   return (
-                                    <li 
-                                      key={iIdx} 
+                                    <li
+                                      key={iIdx}
                                       onClick={() => setSelectedCategory(isSelected ? "" : item)}
                                       className={isSelected ? "active-item" : ""}
                                     >

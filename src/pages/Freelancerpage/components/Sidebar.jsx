@@ -36,10 +36,24 @@ export default function FreelanceSideBar() {
   );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    first_name: "",
-    last_name: "",
-    role: "",
+  const [userInfo, setUserInfo] = useState(() => {
+    try {
+      const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return {
+          first_name: parsed.first_name || parsed.firstName || parsed.name || "",
+          last_name: parsed.last_name || parsed.lastName || "",
+          role: parsed.role || parsed.professional_title || "",
+          profileImage: parsed.profileImage || "",
+        };
+      }
+    } catch (e) { }
+    return {
+      first_name: "",
+      last_name: "",
+      role: "",
+    };
   });
 
   const fireSignOut = async () => {
@@ -67,7 +81,7 @@ export default function FreelanceSideBar() {
       unsubSnapshot = onSnapshot(userRef, (snap) => {
         let data = {};
         if (snap.exists()) data = snap.data();
-        
+
         const hasValidData = data.firstName || data.first_name || data.firstname || data.role || data.professional_title;
 
         if (snap.exists() && hasValidData) {
@@ -75,7 +89,7 @@ export default function FreelanceSideBar() {
           try {
             const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
             if (stored) localData = JSON.parse(stored);
-          } catch (e) {}
+          } catch (e) { }
 
           const authDisplayName = currentUser.displayName || "";
           const authFirst = authDisplayName.split(" ")[0] || "";
@@ -93,12 +107,12 @@ export default function FreelanceSideBar() {
           unsubSnapshot2 = onSnapshot(freelancerRef, (fSnap) => {
             if (fSnap.exists()) {
               const fData = fSnap.data();
-              
+
               let localData = {};
               try {
                 const stored = localStorage.getItem("freelancerOtpUser") || localStorage.getItem("clientOtpUser");
                 if (stored) localData = JSON.parse(stored);
-              } catch (e) {}
+              } catch (e) { }
 
               const authDisplayName = currentUser.displayName || "";
               const authFirst = authDisplayName.split(" ")[0] || "";
@@ -117,9 +131,9 @@ export default function FreelanceSideBar() {
     });
 
     return () => {
-      unsubAuth();
-      if (unsubSnapshot) unsubSnapshot();
-      if (unsubSnapshot2) unsubSnapshot2();
+      if (typeof unsubAuth === "function") unsubAuth();
+      if (typeof unsubSnapshot === "function") unsubSnapshot();
+      if (typeof unsubSnapshot2 === "function") unsubSnapshot2();
     };
   }, []);
 
@@ -141,7 +155,7 @@ export default function FreelanceSideBar() {
     <>
       {/* MOBILE TOPBAR */}
       <div className="mobile-topbar">
-        <div className="hz-logo-icon">H</div>
+        <img src="https://res.cloudinary.com/dqsyzpxkg/image/upload/v1783590626/1000497503_dep9re.jpg" alt="Logo" className="hz-logo-icon" />
         <button
           className="mobile-menu-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -152,9 +166,8 @@ export default function FreelanceSideBar() {
 
       {/* SIDEBAR */}
       <aside
-        className={`hz-sidebar ${collapsed ? "collapsed" : ""} ${
-          mobileOpen ? "mobile-show" : ""
-        }`}
+        className={`hz-sidebar ${collapsed ? "collapsed" : ""} ${mobileOpen ? "mobile-show" : ""
+          }`}
       >
         {/* Toggle Button */}
         <button className="hz-collapse-btn" onClick={toggleSidebar}>
@@ -163,7 +176,7 @@ export default function FreelanceSideBar() {
 
         {/* LOGO CARD */}
         <div className="hz-logo-area">
-          <div className="hz-logo-icon">H</div>
+          <img src="https://res.cloudinary.com/dqsyzpxkg/image/upload/v1783590626/1000497503_dep9re.jpg" alt="Logo" className="hz-logo-icon" />
           {!collapsed && (
             <span className="hz-logo-text">
               Huzzler <span style={{ color: '#7C4EF5' }}>AI</span>
@@ -174,7 +187,7 @@ export default function FreelanceSideBar() {
         {/* MENU */}
         <nav className="hz-menu">
           <div className="hz-section-title">{!collapsed && "MAIN"}</div>
-          
+
           <button
             className={`hz-menu-btn ${isActive("/freelance-dashboard") ? "active-btn" : ""}`}
             onClick={() => handleMobileNav("/freelance-dashboard")}
@@ -197,7 +210,6 @@ export default function FreelanceSideBar() {
           >
             <MessageSquare size={18} className="icon-lucide" />
             {!collapsed && <span className="btn-text">Messages</span>}
-            {!collapsed && <span className="badge-count">3</span>}
           </button>
 
           <button
@@ -206,11 +218,10 @@ export default function FreelanceSideBar() {
           >
             <Bell size={18} className="icon-lucide" />
             {!collapsed && <span className="btn-text">Notifications</span>}
-            {!collapsed && <span className="badge-count">5</span>}
           </button>
 
           <div className="hz-section-title">{!collapsed && "SERVICES"}</div>
-          
+
           <button
             className={`hz-menu-btn ${isActive("/freelance-dashboard/createservice") ? "active-btn" : ""}`}
             onClick={() => handleMobileNav("/freelance-dashboard/createservice")}
@@ -268,29 +279,33 @@ export default function FreelanceSideBar() {
         {/* FOOTER */}
         <div className="hz-user-footer">
           <div className="hz-user-avatar">
-            {userInfo.profileImage ? (
-              <img src={userInfo.profileImage} alt="" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
+            {typeof userInfo.profileImage === "string" && userInfo.profileImage ? (
+              <img src={userInfo.profileImage} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
             ) : (
-              <>
-                {(userInfo.first_name || "Freelancer")[0].toUpperCase()}
-                {(userInfo.last_name || "")[0]?.toUpperCase() || ""}
-              </>
+              (() => {
+                const fn = typeof userInfo.first_name === "string" && userInfo.first_name ? userInfo.first_name : "Freelancer";
+                const ln = typeof userInfo.last_name === "string" ? userInfo.last_name : "";
+                return `${fn[0]?.toUpperCase() || 'F'}${ln[0]?.toUpperCase() || ''}`;
+              })()
             )}
           </div>
 
           {!collapsed && (
             <div className="hz-user-info">
               <p className="hz-user-name">
-                {userInfo.first_name || "Freelancer"} {userInfo.last_name || ""}
+                {typeof userInfo.first_name === "string" && userInfo.first_name ? userInfo.first_name : "Freelancer"}{" "}
+                {typeof userInfo.last_name === "string" ? userInfo.last_name : ""}
               </p>
-              <p className="hz-user-role">{userInfo.role || "UI/UX Designer"}</p>
+              <p className="hz-user-role">
+                {typeof userInfo.role === "string" && userInfo.role ? userInfo.role : "UI/UX Designer"}
+              </p>
             </div>
           )}
-          
+
           {!collapsed && (
             <div className="hz-user-more" onClick={() => setShowUserMenu(!showUserMenu)}>
               <MoreVertical size={16} />
-              
+
               {showUserMenu && (
                 <div className="hz-user-popup-menu">
                   <button className="hz-popup-btn" onClick={() => handleMobileNav("/freelance-dashboard/settings")}>
@@ -372,15 +387,11 @@ export default function FreelanceSideBar() {
           width: 40px;
           height: 40px;
           min-width: 40px;
-          background: #7C4EF5;
           border-radius: 10px;
+          object-fit: cover;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          font-family: 'Sora', sans-serif;
         }
 
         .hz-logo-text {

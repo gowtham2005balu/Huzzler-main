@@ -41,7 +41,7 @@ export default function Signin() {
       </div>
 
       <div className="logo-box">
-        <img src="/assets/huzzler.png" alt="logo" className="logo-img" />
+        <img src="https://res.cloudinary.com/dqsyzpxkg/image/upload/v1783590626/1000497503_dep9re.jpg" alt="logo" className="logo-img" style={{ borderRadius: 10, objectFit: "cover" }} />
       </div>
     </div>
   );

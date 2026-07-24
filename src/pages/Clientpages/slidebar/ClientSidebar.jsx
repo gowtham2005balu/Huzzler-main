@@ -638,7 +638,7 @@
 //       </aside>
 
 //       {/* 🔥 SAME CSS AS FREELANCER */}
-     
+
 //       {/* CSS */}
 //       <style>{`
 //      .hz-sidebar {
@@ -821,9 +821,9 @@
 // .hz-user-role {
 //   font-size: 12px;
 //   color: #666;
- 
+
 //   margin-top:-4px;
- 
+
 // }
 
 // /* MOBILE TOPBAR */
@@ -866,7 +866,7 @@
 
 //   .mobile-logo {
 //     width: 45px;
-  
+
 //   }
 
 //   .mobile-menu-btn {
@@ -887,7 +887,7 @@
 //   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 //   margin-top: 30px;
 //   margin-bottom: 40px;
- 
+
 // }
 
 // }
@@ -965,7 +965,7 @@ export default function ClientSidebar() {
           try {
             const stored = localStorage.getItem("clientOtpUser") || localStorage.getItem("freelancerOtpUser");
             if (stored) localData = JSON.parse(stored);
-          } catch (e) {}
+          } catch (e) { }
 
           const authDisplayName = currentUser.displayName || "";
           const authFirst = authDisplayName.split(" ")[0] || "";
@@ -1029,9 +1029,8 @@ export default function ClientSidebar() {
 
       {/* SIDEBAR */}
       <aside
-        className={`hz-sidebar ${collapsed ? "collapsed" : ""} ${
-          mobileOpen ? "mobile-show" : ""
-        }`}
+        className={`hz-sidebar ${collapsed ? "collapsed" : ""} ${mobileOpen ? "mobile-show" : ""
+          }`}
       >
         {/* LOGO */}
         <div className="hz-client-sidebar-header">
@@ -1047,7 +1046,7 @@ export default function ClientSidebar() {
 
         {/* SCROLLABLE MENU */}
         <div className="sidebar-scrollable">
-          
+
           {/* MAIN */}
           <div className="sidebar-group">
             {!collapsed && <div className="sidebar-title">MAIN</div>}
@@ -1100,7 +1099,7 @@ export default function ClientSidebar() {
               <User size={18} className="icon" />
               {!collapsed && <span className="btn-text">Talent Profile</span>}
             </button>
-            <button className={`hz-menu-btn`} onClick={() => {}}>
+            <button className={`hz-menu-btn`} onClick={() => { }}>
               <Star size={18} className="icon" />
               {!collapsed && <span className="btn-text">AI Assistant</span>}
             </button>
@@ -1115,7 +1114,7 @@ export default function ClientSidebar() {
           </div>
 
 
-          
+
 
 
         </div>
@@ -1136,7 +1135,7 @@ export default function ClientSidebar() {
           {!collapsed && (
             <div className="hz-user-more" onClick={() => setShowUserMenu(!showUserMenu)}>
               <MoreVertical size={16} />
-              
+
               {showUserMenu && (
                 <div className="hz-user-popup-menu">
                   <button className="hz-popup-btn" onClick={() => handleNav("/client-dashbroad2/settings")}>
