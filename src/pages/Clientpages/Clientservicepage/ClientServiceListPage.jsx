@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ArrowLeft, ChevronRight, Plus } from "lucide-react";
 import ServiceDetailsModal from "../../ServiceDetailsModal.jsx";
+import { API_BASE_URL } from "../../../api/config";
 
 const ServiceListPage = () => {
   const [activeTab, setActiveTab] = useState("Work");
@@ -15,7 +16,7 @@ const ServiceListPage = () => {
     const fetchServices = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/ClientWork/Clientworkget"
+          `${API_BASE_URL}/ClientWork/Clientworkget`
         );
         setServices(res.data.work || []);
       } catch (err) {

@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firbase/Firebase";
+import { getAuthErrorMessage } from "../firebaseutils/authErrors";
 import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
@@ -23,16 +24,17 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
   const [msg, setMsg] = useState(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setMode(initialMode);
-    }
+    setMode(initialMode);
+    setEmail("");
+    setPassword("");
+    setMsg(null);
   }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 
   const showToast = (text, isError = true) => {
     setMsg({ text, isError });
-    setTimeout(() => setMsg(null), 4000);
+    setTimeout(() => setMsg(null), 5000);
   };
 
   // Handle Role Selection during Sign Up (Image 2 -> Sign Up Form Page)
@@ -66,6 +68,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
     try {
       setLoading(true);
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
@@ -86,7 +89,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
         navigate("/freelance-dashboard");
       }
     } catch (err) {
-      showToast("Google authentication failed");
+      console.error("Google auth error:", err);
+      showToast(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

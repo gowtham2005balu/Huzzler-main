@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { auth, db } from "../firbase/Firebase";
+import { getAuthErrorMessage } from "../firebaseutils/authErrors";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -110,6 +111,7 @@ await setDoc(
     try {
       setLoading(true);
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
@@ -139,7 +141,8 @@ await setDoc(
       navigate("/freelancer-details", { state: { uid: user.uid, email: user.email, first_name, last_name } });
 
     } catch (err) {
-      showMsg(err.message);
+      console.error("Google register error:", err);
+      showMsg(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

@@ -118,6 +118,7 @@
 // }
 
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from "../api/config";
 
 export default function AfterSubmitBuildProfile() {
   const [user, setUser] = useState(null);
@@ -127,7 +128,7 @@ export default function AfterSubmitBuildProfile() {
     const email = localStorage.getItem("userEmail");
     if (!email) return;
 
-    fetch(`http://localhost:5000/api/auth/user/${email}`)
+    fetch(`${API_BASE_URL}/auth/user/${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {

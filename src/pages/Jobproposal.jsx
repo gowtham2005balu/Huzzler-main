@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SidebarC from "./SidebarClient";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../api/config";
 
 export default function JobProposal() {
   const [activeTab, setActiveTab] = useState("work");
@@ -65,7 +66,7 @@ export default function JobProposal() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/jobProposal/createJobProposal",
+        `${API_BASE_URL}/jobProposal/createJobProposal`,
         payload,
         {
           headers: { "Content-Type": "application/json" },

@@ -64,7 +64,7 @@ export default function Details1() {
       {/* Google Sign-in Button (if user not logged in) */}
       {!email && (
         <a
-          href="http://localhost:5000/api/auth/google"
+          href={`${import.meta.env.VITE_API_URL || "https://huzzler.onrender.com/api"}/auth/google`}
           className="flex items-center justify-center gap-3 border border-gray-300 rounded-md px-4 py-2 mb-6 hover:bg-gray-100 transition"
         >
           <img

@@ -71,7 +71,7 @@ export default function LoginForm() {
       </button>
 
       <div className="mt-4 text-center">
-        <a href="http://localhost:5000/api/auth/google">
+        <a href={`${import.meta.env.VITE_API_URL || "https://huzzler.onrender.com/api"}/auth/google`}>
           <button className="flex gap-2 border p-2 rounded mx-auto bg-white">
             <img
               src="https://developers.google.com/identity/images/g-logo.png"

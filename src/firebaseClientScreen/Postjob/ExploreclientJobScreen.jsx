@@ -31,6 +31,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { formatDistanceToNowStrict } from "date-fns";
+import { getAuthErrorMessage } from "../../firebaseutils/authErrors";
 
 
 const timeAgo = (date) => {
@@ -538,10 +539,11 @@ function AuthButtons() {
   const googleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       await signInWithPopup(auth, provider);
     } catch (e) {
       console.error("google sign in", e);
-      alert("Google sign-in failed");
+      alert(getAuthErrorMessage(e));
     }
   };
 

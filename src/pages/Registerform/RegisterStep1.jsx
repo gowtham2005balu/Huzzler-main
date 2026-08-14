@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firbase/Firebase";
+import { getAuthErrorMessage } from "../../firebaseutils/authErrors";
 
 import "./Signupstep1.css";
 import Profilepic from "../../assets/profile.png";
@@ -43,6 +44,7 @@ const Signupstep1 = () => {
     setErrorMsg("");
     try {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       const res = await signInWithPopup(auth, provider);
       const user = res.user;
 
@@ -66,8 +68,8 @@ const Signupstep1 = () => {
         state: { uid: user.uid, email: user.email, first_name: firstName, last_name: lastName },
       });
     } catch (err) {
-      console.error(err);
-      setErrorMsg("Google Sign Up failed. Please try again.");
+      console.error("Google sign up error:", err);
+      setErrorMsg(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }

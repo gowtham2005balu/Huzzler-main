@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 
 const AddPortfolioPage = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const AddPortfolioPage = () => {
     if (image) formData.append("image", image);
 
     try {
-      const res = await fetch("http://localhost:5000/api/portfolio", {
+      const res = await fetch(`${API_BASE_URL}/portfolio`, {
         method: "POST",
         body: formData,
       });

@@ -93,7 +93,7 @@ const ClientRegister = () => {
               <div className="social-buttons">
                 <a
                   className="google-btn"
-                  href="http://localhost:5000/api/auth/google"
+                  href={`${import.meta.env.VITE_API_URL || "https://huzzler.onrender.com/api"}/auth/google`}
                 >
                   <img
                     src="https://www.svgrepo.com/show/475656/google-color.svg"

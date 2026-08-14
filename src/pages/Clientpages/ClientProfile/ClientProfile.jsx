@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../../api/config";
 
 const FreelancerProfile = () => {
   const userId = localStorage.getItem("userId");
@@ -29,7 +30,7 @@ const FreelancerProfile = () => {
     if (!userId) return;
 
     axios
-      .get(`http://localhost:5000/api/freelanceprofile/user/${userId}`)
+      .get(`${API_BASE_URL}/freelanceprofile/user/${userId}`)
       .then((res) => {
         if (res.data.data) {
           const p = res.data.data;
@@ -63,7 +64,7 @@ const FreelancerProfile = () => {
       };
 
       const res = await axios.post(
-        "http://localhost:5000/api/freelanceprofile/create",
+        `${API_BASE_URL}/freelanceprofile/create`,
         payload
       );
 
@@ -84,7 +85,7 @@ const FreelancerProfile = () => {
     };
 
     await axios.put(
-      `http://localhost:5000/api/freelanceprofile/update/${currentProfileId}`,
+      `${API_BASE_URL}/freelanceprofile/update/${currentProfileId}`,
       payload
     );
 
@@ -103,7 +104,7 @@ const FreelancerProfile = () => {
     };
 
     const res = await axios.post(
-      `http://localhost:5000/api/freelanceprofile/portfolio/add/${currentProfileId}`,
+      `${API_BASE_URL}/freelanceprofile/portfolio/add/${currentProfileId}`,
       payload
     );
 
@@ -122,7 +123,7 @@ const FreelancerProfile = () => {
     };
 
     const res = await axios.put(
-      `http://localhost:5000/api/freelanceprofile/portfolio/update/${currentProfileId}/${editingPortfolioId}`,
+      `${API_BASE_URL}/freelanceprofile/portfolio/update/${currentProfileId}/${editingPortfolioId}`,
       payload
     );
 
@@ -132,7 +133,7 @@ const FreelancerProfile = () => {
 
   const deletePortfolio = async (id) => {
     const res = await axios.delete(
-      `http://localhost:5000/api/freelanceprofile/portfolio/delete/${currentProfileId}/${id}`
+      `${API_BASE_URL}/freelanceprofile/portfolio/delete/${currentProfileId}/${id}`
     );
 
     setPortfolioList(res.data.data.Portfolio);

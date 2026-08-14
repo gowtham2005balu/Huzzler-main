@@ -1,8 +1,6 @@
-
-
-
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../api/config";
 
 export default function BuildProfile() {
   const [user, setUser] = useState(null);
@@ -33,7 +31,7 @@ export default function BuildProfile() {
       if (!email) return;
 
       try {
-        const res = await fetch(`http://localhost:5000/api/auth/user/${email}`);
+        const res = await fetch(`${API_BASE_URL}/auth/user/${email}`);
         const data = await res.json();
 
         if (res.ok && data) {
@@ -64,7 +62,7 @@ export default function BuildProfile() {
       if (!email) return;
 
       try {
-        const res = await fetch(`http://localhost:5000/api/portfolio/user/${email}`);
+        const res = await fetch(`${API_BASE_URL}/portfolio/user/${email}`);
         const data = await res.json();
         if (res.ok) setPortfolios(data);
       } catch (err) {
@@ -80,7 +78,7 @@ export default function BuildProfile() {
     if (!window.confirm("Are you sure you want to delete this project?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/portfolio/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/portfolio/${id}`, {
         method: "DELETE",
       });
 
@@ -110,7 +108,7 @@ export default function BuildProfile() {
 
     setSaving(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/save-details2", {
+      const res = await fetch(`${API_BASE_URL}/auth/save-details2`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

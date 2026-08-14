@@ -294,6 +294,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Edit3 } from "lucide-react";
+import { API_BASE_URL } from "../api/config";
 
 export default function ViewMore() {
   const { id } = useParams();
@@ -303,7 +304,7 @@ export default function ViewMore() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/service/id/${id}`);
+        const res = await fetch(`${API_BASE_URL}/service/id/${id}`);
         const data = await res.json();
         setService(data);
       } catch (err) {

@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firbase/Firebase";
+import { getAuthErrorMessage } from "../firebaseutils/authErrors";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -28,12 +29,13 @@ export default function LoginPage() {
 
   const showMsg = (text, isError = true) => {
     setMsg({ text, isError });
-    setTimeout(() => setMsg(null), 4000);
+    setTimeout(() => setMsg(null), 5000);
   };
 
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
@@ -57,8 +59,9 @@ export default function LoginPage() {
       role === "client"
         ? navigate("/client-dashbroad2")
         : navigate("/freelance-dashboard");
-    } catch {
-      showMsg("Google login failed");
+    } catch (err) {
+      console.error("Google login error:", err);
+      showMsg(getAuthErrorMessage(err));
     }
   };
 

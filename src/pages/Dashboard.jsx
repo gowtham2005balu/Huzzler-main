@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PlusCircle } from "lucide-react";
-
-const BASE_URL = "http://localhost:5000";
+import { API_BASE_URL } from "../api/config";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);
@@ -15,7 +14,7 @@ const Dashboard = () => {
       setError(null);
 
       try {
-        const res = await axios.get(`${BASE_URL}/api/Work/getWork`);
+        const res = await axios.get(`${API_BASE_URL}/Work/getWork`);
         const sorted = res.data.work.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
