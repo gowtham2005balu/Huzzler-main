@@ -424,7 +424,7 @@ const styles = {
     justifyContent: "center",
     gap: 12,
     marginBottom: 16,
-    padding: "0 16px",  
+    padding: "0 16px",
     boxSizing: "border-box",
   },
 
@@ -443,16 +443,16 @@ const styles = {
   // },
 
   otpBox: {
-    padding: 0,    
+    padding: 0,
     outline: "none",
-  fontSize: 20,
-  border: "1.5px solid #cfd4dc",
-  width: 48,
-  height: 48,
-  textAlign: "center",
-  fontSize: 18,
-  borderRadius: 10,
-},
+    fontSize: 20,
+    border: "1.5px solid #cfd4dc",
+    width: 48,
+    height: 48,
+    textAlign: "center",
+    fontSize: 18,
+    borderRadius: 10,
+  },
 
 
 

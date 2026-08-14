@@ -90,8 +90,8 @@ export default function ExploreFreelancer() {
   const [notifications, setNotifications] = useState([]);
   const [notifCount, setNotifCount] = useState(0);
   const [notifOpen, setNotifOpen] = useState(false); // ✅ FIXED
- const [handledNotifs, setHandledNotifs] = useState({}); 
- 
+  const [handledNotifs, setHandledNotifs] = useState({});
+
   const [collapsed, setCollapsed] = useState(
     localStorage.getItem("sidebar-collapsed") === "true"
   );
@@ -105,29 +105,29 @@ export default function ExploreFreelancer() {
   }, []);
 
 
-  const [blockedUsers,setBlockedUsers] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
   /* ================= BLOCKED USERS ================= */
 
-useEffect(()=>{
+  useEffect(() => {
 
-  if(!uid) return;
+    if (!uid) return;
 
-  const q = query(
-    collection(db,"blocked_users"),
-    where("blockedBy","==",uid)
-  );
+    const q = query(
+      collection(db, "blocked_users"),
+      where("blockedBy", "==", uid)
+    );
 
-  const unsub = onSnapshot(q,(snap)=>{
+    const unsub = onSnapshot(q, (snap) => {
 
-    const blocked = snap.docs.map(d=>d.data().blockedUserId);
+      const blocked = snap.docs.map(d => d.data().blockedUserId);
 
-    setBlockedUsers(blocked);
+      setBlockedUsers(blocked);
 
-  });
+    });
 
-  return unsub;
+    return unsub;
 
-},[uid]);
+  }, [uid]);
 
 
   useEffect(() => {
@@ -244,87 +244,87 @@ useEffect(()=>{
     }
   };
 
-// ✅ FILTERED JOBS
-const filteredJobs = useMemo(() => {
+  // ✅ FILTERED JOBS
+  const filteredJobs = useMemo(() => {
 
-  let result = jobs.filter((job) => {
+    let result = jobs.filter((job) => {
 
-    // 🚫 BLOCKED USER JOB REMOVE
-    if (blockedUsers.includes(job.userId)) return false;
+      // 🚫 BLOCKED USER JOB REMOVE
+      if (blockedUsers.includes(job.userId)) return false;
 
-    // 🔍 Search query
-    if (
-      filters.searchQuery &&
-      !job.title?.toLowerCase().includes(filters.searchQuery.toLowerCase())
-    ) {
-      return false;
-    }
-
-    // 💰 Budget overlap logic
-    const jobMin = Number(job.budget_from) || 0;
-    const jobMax = Number(job.budget_to) || 0;
-    const filterMin = filters.budgetRange.start;
-    const filterMax = filters.budgetRange.end;
-
-    if (jobMax < filterMin || jobMin > filterMax) return false;
-
-    // 📂 Category filter
-    if (
-      filters.categories.length &&
-      !filters.categories.includes(job.category)
-    ) {
-      return false;
-    }
-
-    // 🛠 Skills filter
-    if (
-      filters.skills.length &&
-      !filters.skills.some((s) => job.skills?.includes(s))
-    ) {
-      return false;
-    }
-
-    // ⏱ Posting time filter
-    if (filters.postingTime) {
-      const postedAt = job.createdAt?.getTime?.() || 0;
-      const now = Date.now();
-
-      const daysMap = {
-        "Posted Today": 1,
-        "Last 3 Days": 3,
-        "Last 7 Days": 7,
-        "Last 30 Days": 30,
-      };
-
-      const limitDays = daysMap[filters.postingTime];
-      if (limitDays) {
-        const diffDays = (now - postedAt) / (1000 * 60 * 60 * 24);
-        if (diffDays > limitDays) return false;
+      // 🔍 Search query
+      if (
+        filters.searchQuery &&
+        !job.title?.toLowerCase().includes(filters.searchQuery.toLowerCase())
+      ) {
+        return false;
       }
+
+      // 💰 Budget overlap logic
+      const jobMin = Number(job.budget_from) || 0;
+      const jobMax = Number(job.budget_to) || 0;
+      const filterMin = filters.budgetRange.start;
+      const filterMax = filters.budgetRange.end;
+
+      if (jobMax < filterMin || jobMin > filterMax) return false;
+
+      // 📂 Category filter
+      if (
+        filters.categories.length &&
+        !filters.categories.includes(job.category)
+      ) {
+        return false;
+      }
+
+      // 🛠 Skills filter
+      if (
+        filters.skills.length &&
+        !filters.skills.some((s) => job.skills?.includes(s))
+      ) {
+        return false;
+      }
+
+      // ⏱ Posting time filter
+      if (filters.postingTime) {
+        const postedAt = job.createdAt?.getTime?.() || 0;
+        const now = Date.now();
+
+        const daysMap = {
+          "Posted Today": 1,
+          "Last 3 Days": 3,
+          "Last 7 Days": 7,
+          "Last 30 Days": 30,
+        };
+
+        const limitDays = daysMap[filters.postingTime];
+        if (limitDays) {
+          const diffDays = (now - postedAt) / (1000 * 60 * 60 * 24);
+          if (diffDays > limitDays) return false;
+        }
+      }
+
+      // 📑 Tab filter
+      if (selectedTab === 1 && !job.is24h) return false;
+      if (selectedTab === 2 && !savedJobs.includes(job.id)) return false;
+
+      return true;
+    });
+
+    // 🔽 Sort
+    if (filters.sortOption === JobSortOption.BEST_MATCH) {
+      result.sort((a, b) => matchScore(b, userSkills) - matchScore(a, userSkills));
+    }
+    else if (filters.sortOption === JobSortOption.NEWEST) {
+      result.sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
+    }
+    else if (filters.sortOption === JobSortOption.AVAILABILITY) {
+      result.sort((a, b) => (a.views || 0) - (b.views || 0));
     }
 
-    // 📑 Tab filter
-    if (selectedTab === 1 && !job.is24h) return false; 
-    if (selectedTab === 2 && !savedJobs.includes(job.id)) return false;
+    return result;
 
-    return true;
-  });
-
-  // 🔽 Sort
-  if (filters.sortOption === JobSortOption.BEST_MATCH) {
-    result.sort((a, b) => matchScore(b, userSkills) - matchScore(a, userSkills));
-  } 
-  else if (filters.sortOption === JobSortOption.NEWEST) {
-    result.sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
-  } 
-  else if (filters.sortOption === JobSortOption.AVAILABILITY) {
-    result.sort((a, b) => (a.views || 0) - (b.views || 0));
-  }
-
-  return result;
-
-}, [jobs, filters, selectedTab, savedJobs, userSkills, blockedUsers]);
- // ── Helper: should action buttons be shown for this notification ─
+  }, [jobs, filters, selectedTab, savedJobs, userSkills, blockedUsers]);
+  // ── Helper: should action buttons be shown for this notification ─
   function showActionButtons(item) {
     // Don't show for accepted-job or message type
     if (item.type === "application_accepted" || item.type === "message") return false;
@@ -474,136 +474,136 @@ const filteredJobs = useMemo(() => {
         </div>
 
         {/* ================= NOTIFICATION DROPDOWN ================= */}
-         {notifOpen && (
-                   <div
-                     onClick={() => setNotifOpen(false)}
-                     style={{
-                       position: "fixed",
-                       inset: 0,
-                       display: "flex",
-                       justifyContent: "center",
-                       alignItems: "flex-start",
-                       paddingTop: "90px",
-                       zIndex: 999,
-                     }}
-                   >
-                     <div
-                       onClick={(e) => e.stopPropagation()}
-                       style={{
-                         width: "480px",
-                         maxHeight: "70vh",
-                         background: "#f2f2f2",
-                         borderRadius: "20px",
-                         boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
-                         overflow: "hidden",
-                         display: "flex",
-                         flexDirection: "column",
-                         border: "1px solid #cfc2c2",
-                         marginLeft: "750px",
-                         marginTop: "50px",
-                       }}
-                     >
-                       {/* HEADER */}
-                       <div
-                         style={{
-                           display: "flex",
-                           alignItems: "center",
-                           padding: "16px 20px",
-                           fontWeight: 600,
-                           fontSize: "16px",
-                           borderBottom: "1px solid #ddd",
-                         }}
-                       >
-                         <FiBell size={20} />
-                         <span style={{ marginLeft: 8 }}>
-                           Notification ({notifications.length})
-                         </span>
-                       </div>
-         
-                       {/* SECTION TITLE */}
-                       <div
-                         style={{
-                           padding: "12px 20px",
-                           fontSize: "14px",
-                           fontWeight: 500,
-                           color: "#555",
-                           borderBottom: "1px solid #ddd",
-                         }}
-                       >
-                         Applicant
-                       </div>
-         
-                       {/* BODY */}
-                       <div style={{ overflowY: "auto" }}>
-                         {notifications.length === 0 && (
-                           <div
-                             style={{
-                               padding: "20px",
-                               textAlign: "center",
-                               color: "#888",
-                             }}
-                           >
-                             No notifications yet
-                           </div>
-                         )}
-         
-                         {notifications.map((n) => (
-                           <div
-                             key={n.id}
-                             style={{
-                               display: "flex",
-                               alignItems: "center",
-                               padding: "16px 20px",
-                               borderBottom: "1px solid #e5e5e5",
-                               background: !n.read ? "#ffffff" : "#f8f8f8",
-                             }}
-                           >
-                             {/* AVATAR */}
-                             <img
-                               src={n.profileImage || profile}
-                               alt=""
-                               style={{
-                                 width: "48px",
-                                 height: "48px",
-                                 borderRadius: "50%",
-                                 objectFit: "cover",
-                                 marginRight: "14px",
-                               }}
-                             />
-         
-                             {/* CONTENT */}
-                             <div style={{ flex: 1 }}>
-                               <div style={{ fontWeight: 600, fontSize: "15px" }}>
-                                 {n.title}
-                               </div>
-         
-                               <div
-                                 style={{
-                                   fontSize: "13px",
-                                   color: "#777",
-                                 }}
-                               >
-                                 {n.subtitle || "Applicant"}
-                               </div>
-         
-                               <div
-                                 style={{
-                                   fontSize: "13px",
-                                   marginTop: "4px",
-                                   color: "#555",
-                                 }}
-                               >
-                                 {n.body}
-                               </div>
-                             </div>
-         
-                            
-                           </div>
-                         ))}
-                       </div>
-                     </div>
-                   </div>
-                 )}
+        {notifOpen && (
+          <div
+            onClick={() => setNotifOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              paddingTop: "90px",
+              zIndex: 999,
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: "480px",
+                maxHeight: "70vh",
+                background: "#f2f2f2",
+                borderRadius: "20px",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid #cfc2c2",
+                marginLeft: "750px",
+                marginTop: "50px",
+              }}
+            >
+              {/* HEADER */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "16px 20px",
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                <FiBell size={20} />
+                <span style={{ marginLeft: 8 }}>
+                  Notification ({notifications.length})
+                </span>
+              </div>
+
+              {/* SECTION TITLE */}
+              <div
+                style={{
+                  padding: "12px 20px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: "#555",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Applicant
+              </div>
+
+              {/* BODY */}
+              <div style={{ overflowY: "auto" }}>
+                {notifications.length === 0 && (
+                  <div
+                    style={{
+                      padding: "20px",
+                      textAlign: "center",
+                      color: "#888",
+                    }}
+                  >
+                    No notifications yet
+                  </div>
+                )}
+
+                {notifications.map((n) => (
+                  <div
+                    key={n.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "16px 20px",
+                      borderBottom: "1px solid #e5e5e5",
+                      background: !n.read ? "#ffffff" : "#f8f8f8",
+                    }}
+                  >
+                    {/* AVATAR */}
+                    <img
+                      src={n.profileImage || profile}
+                      alt=""
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        marginRight: "14px",
+                      }}
+                    />
+
+                    {/* CONTENT */}
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: "15px" }}>
+                        {n.title}
+                      </div>
+
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#777",
+                        }}
+                      >
+                        {n.subtitle || "Applicant"}
+                      </div>
+
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          marginTop: "4px",
+                          color: "#555",
+                        }}
+                      >
+                        {n.body}
+                      </div>
+                    </div>
+
+
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
 
         {/* ================= SEARCH + FILTER ================= */}
@@ -803,7 +803,7 @@ const filteredJobs = useMemo(() => {
               // boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
               border: "1px solid #0e02020e",
               width: "fit-content",
-            
+
             }}
           >
             {Object.values(JobSortOption).map((opt) => {
@@ -829,7 +829,7 @@ const filteredJobs = useMemo(() => {
                     //   ? "0 6px 14px rgba(124,58,237,0.5)"
                     //   : "none",
                     transition: "all 0.25s ease",
-                  
+
                   }}
                 >
                   {opt}
@@ -977,21 +977,21 @@ const filteredJobs = useMemo(() => {
               </div>
 
               {/* ===== DESCRIPTION ===== */}
-             <p
-  style={{
-    marginTop: 14,
-    fontSize: 14,
-    color: "#444",
-    lineHeight: 1.6,
+              <p
+                style={{
+                  marginTop: 14,
+                  fontSize: 14,
+                  color: "#444",
+                  lineHeight: 1.6,
 
-    display: "-webkit-box",
-    WebkitLineClamp: 4, // 👈 5 or 6 lines control
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-  }}
->
-  {job.description}
-</p>
+                  display: "-webkit-box",
+                  WebkitLineClamp: 4, // 👈 5 or 6 lines control
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {job.description}
+              </p>
 
               {/* ===== FOOTER ===== */}
               <div

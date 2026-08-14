@@ -3203,15 +3203,15 @@ export default function ClientProfileMenuScreen() {
 
       // Update password
       await updatePassword(authUser, passwordForm.newPassword);
-      
+
       setPasswordSuccess("Password updated successfully!");
       setPasswordForm({ current: "", newPassword: "", retype: "", logoutOtherDevices: false });
-      
+
       setTimeout(() => {
         setIsChangePwdModalOpen(false);
         setPasswordSuccess("");
       }, 2000);
-      
+
     } catch (error) {
       console.error("Error changing password:", error);
       if (error.code === "auth/wrong-password" || error.code === "auth/invalid-login-credentials" || error.code === "auth/invalid-credential") {
@@ -3618,7 +3618,7 @@ export default function ClientProfileMenuScreen() {
               }}
             >
               {profileImage ? (
-                <img src={profileImage} alt="" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                <img src={profileImage} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 initials
               )}
@@ -3639,10 +3639,10 @@ export default function ClientProfileMenuScreen() {
             gap: 24
           }}
         >
-          <ProfileHeader 
-            profile={displayUser} 
-            projectCount={services.length} 
-            onEditProfile={() => setActiveTab("Edit Profile")} 
+          <ProfileHeader
+            profile={displayUser}
+            projectCount={services.length}
+            onEditProfile={() => setActiveTab("Edit Profile")}
           />
 
           {activeTab === "Edit Profile" && (
@@ -3676,7 +3676,7 @@ export default function ClientProfileMenuScreen() {
                     title="Personal Info"
                     icon={profilePlaceholder}
                     isActive={true}
-                    onClick={() => {}}
+                    onClick={() => { }}
                   />
                   <MenuItem
                     title="Privacy"
@@ -3733,15 +3733,15 @@ export default function ClientProfileMenuScreen() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
                       <h3 style={{ fontSize: 16, margin: 0, color: "#111", fontWeight: 700 }}>Personal Information</h3>
                       {!isEditingPersonalInfo ? (
-                         <button onClick={handleEditPersonalInfoClick} style={{ background: "none", border: "none", color: "#3B82F6", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Edit Profile</button>
+                        <button onClick={handleEditPersonalInfoClick} style={{ background: "none", border: "none", color: "#3B82F6", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Edit Profile</button>
                       ) : (
-                         <div style={{ display: "flex", gap: 8 }}>
-                           <button onClick={() => setIsEditingPersonalInfo(false)} style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: 6, padding: "6px 16px", color: "#4B5563", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Cancel</button>
-                           <button onClick={handleSavePersonalInfoClick} style={{ background: "#3B82F6", border: "none", borderRadius: 6, padding: "6px 16px", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Save Profile</button>
-                         </div>
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button onClick={() => setIsEditingPersonalInfo(false)} style={{ background: "none", border: "1px solid #E5E7EB", borderRadius: 6, padding: "6px 16px", color: "#4B5563", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Cancel</button>
+                          <button onClick={handleSavePersonalInfoClick} style={{ background: "#3B82F6", border: "none", borderRadius: 6, padding: "6px 16px", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Save Profile</button>
+                        </div>
                       )}
                     </div>
-                    
+
                     <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
                       {profileImage ? (
                         <img src={profileImage} alt="" style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover" }} />
@@ -3766,8 +3766,8 @@ export default function ClientProfileMenuScreen() {
                           <p style={{ fontSize: 14, color: "#111", margin: 0, fontWeight: 500 }}>{fullName}</p>
                         ) : (
                           <div style={{ display: "flex", gap: 8 }}>
-                            <input value={editForm.firstName} onChange={e => setEditForm({...editForm, firstName: e.target.value})} placeholder="First Name" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none" }} />
-                            <input value={editForm.lastName} onChange={e => setEditForm({...editForm, lastName: e.target.value})} placeholder="Last Name" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none" }} />
+                            <input value={editForm.firstName} onChange={e => setEditForm({ ...editForm, firstName: e.target.value })} placeholder="First Name" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none" }} />
+                            <input value={editForm.lastName} onChange={e => setEditForm({ ...editForm, lastName: e.target.value })} placeholder="Last Name" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none" }} />
                           </div>
                         )}
                       </div>
@@ -3780,7 +3780,7 @@ export default function ClientProfileMenuScreen() {
                         {!isEditingPersonalInfo ? (
                           <p style={{ fontSize: 14, color: "#111", margin: 0, fontWeight: 500 }}>{displayUser.phone || "+91 98765 43210"}</p>
                         ) : (
-                          <input value={editForm.phone} onChange={e => setEditForm({...editForm, phone: e.target.value})} placeholder="Phone Number" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                          <input value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} placeholder="Phone Number" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
                         )}
                       </div>
                       <div>
@@ -3788,7 +3788,7 @@ export default function ClientProfileMenuScreen() {
                         {!isEditingPersonalInfo ? (
                           <p style={{ fontSize: 14, color: "#111", margin: 0, fontWeight: 500 }}>{displayUser.location || displayUser.city || "Chennai, India"}</p>
                         ) : (
-                          <input value={editForm.location} onChange={e => setEditForm({...editForm, location: e.target.value})} placeholder="Location" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+                          <input value={editForm.location} onChange={e => setEditForm({ ...editForm, location: e.target.value })} placeholder="Location" style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", boxSizing: "border-box" }} />
                         )}
                       </div>
                     </div>
@@ -3800,7 +3800,7 @@ export default function ClientProfileMenuScreen() {
                           {displayUser.about || displayUser.bio || "Senior UI/UX Designer with 5+ years of experience creating intuitive and beautiful digital experiences. Specializing in fintech, SaaS, and mobile applications."}
                         </p>
                       ) : (
-                        <textarea value={editForm.bio} onChange={e => setEditForm({...editForm, bio: e.target.value})} placeholder="Write a short bio..." rows={3} style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }} />
+                        <textarea value={editForm.bio} onChange={e => setEditForm({ ...editForm, bio: e.target.value })} placeholder="Write a short bio..." rows={3} style={{ width: "100%", padding: "8px 12px", border: "1px solid #E5E7EB", borderRadius: 6, fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }} />
                       )}
                     </div>
                   </div>
@@ -4368,16 +4368,16 @@ export default function ClientProfileMenuScreen() {
           <div style={{ background: "#fff", borderRadius: 19, border: "2px solid #9A9A9A", width: "100%", maxWidth: 480, padding: "32px 24px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 12 }}>
             <h2 style={{ fontSize: 22, fontWeight: 600, color: "#000", margin: "0 0 4px", textAlign: "center" }}>Change password</h2>
             <p style={{ fontSize: 14, color: "#333", margin: "0 0 12px", textAlign: "center", lineHeight: 1.4 }}>
-              Your password must be at least 6 character and<br/>should include a combination of numbers, letter<br/>and special characters(!$@%).
+              Your password must be at least 6 character and<br />should include a combination of numbers, letter<br />and special characters(!$@%).
             </p>
 
             {passwordError && <div style={{ padding: "8px", background: "#FEE2E2", color: "#EF4444", borderRadius: 8, fontSize: 13, textAlign: "center", fontWeight: 500 }}>{passwordError}</div>}
             {passwordSuccess && <div style={{ padding: "8px", background: "#D1FAE5", color: "#10B981", borderRadius: 8, fontSize: 13, textAlign: "center", fontWeight: 500 }}>{passwordSuccess}</div>}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <input type="password" value={passwordForm.current} onChange={e => setPasswordForm({...passwordForm, current: e.target.value})} placeholder="Current password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
-              <input type="password" value={passwordForm.newPassword} onChange={e => setPasswordForm({...passwordForm, newPassword: e.target.value})} placeholder="New password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
-              <input type="password" value={passwordForm.retype} onChange={e => setPasswordForm({...passwordForm, retype: e.target.value})} placeholder="Retype new password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
+              <input type="password" value={passwordForm.current} onChange={e => setPasswordForm({ ...passwordForm, current: e.target.value })} placeholder="Current password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
+              <input type="password" value={passwordForm.newPassword} onChange={e => setPasswordForm({ ...passwordForm, newPassword: e.target.value })} placeholder="New password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
+              <input type="password" value={passwordForm.retype} onChange={e => setPasswordForm({ ...passwordForm, retype: e.target.value })} placeholder="Retype new password" style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: "1px solid #9A9A9A", outline: "none", fontSize: 14, boxSizing: "border-box", color: "#333" }} />
             </div>
 
             <p style={{ margin: "4px 0 0" }}>
@@ -4385,11 +4385,11 @@ export default function ClientProfileMenuScreen() {
             </p>
 
             <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 4, marginBottom: 16 }}>
-              <div style={{ width: 16, height: 16, borderRadius: 4, border: "1px solid #8B5CF6", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", marginTop: 2, flexShrink: 0 }} onClick={() => setPasswordForm({...passwordForm, logoutOtherDevices: !passwordForm.logoutOtherDevices})}>
+              <div style={{ width: 16, height: 16, borderRadius: 4, border: "1px solid #8B5CF6", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", marginTop: 2, flexShrink: 0 }} onClick={() => setPasswordForm({ ...passwordForm, logoutOtherDevices: !passwordForm.logoutOtherDevices })}>
                 {passwordForm.logoutOtherDevices && <div style={{ width: 10, height: 10, background: "#8B5CF6", borderRadius: 2 }}></div>}
               </div>
               <p style={{ fontSize: 13, color: "#000", margin: 0, lineHeight: 1.4 }}>
-                Log out of other device. choose this if someone else used your<br/>account.
+                Log out of other device. choose this if someone else used your<br />account.
               </p>
             </div>
 

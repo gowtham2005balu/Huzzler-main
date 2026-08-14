@@ -29,7 +29,7 @@ export default function ProfileSummary() {
     first_name: "",
     last_name: "",
     title: "",
-   businessInfo: "",
+    businessInfo: "",
     skills: [],
     tools: [],
     profileImage: "",
@@ -228,7 +228,7 @@ export default function ProfileSummary() {
                 <img
                   src={data?.profileImage || ""}
                   alt=""
-                  style={{ width: "100%", height: "100%", objectFit: "cover",  borderRadius: "50%", }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", }}
                 />
 
               </div>
@@ -271,9 +271,9 @@ export default function ProfileSummary() {
                 <div style={{ marginBottom: "25px", fontWeight: 400 }}> {data?.Company_name} </div>
 
 
-                <span style={{ fontSize: 20, fontWeight: 400 ,}}>
+                <span style={{ fontSize: 20, fontWeight: 400, }}>
                   Company Size <div></div>
-                  <div style={{fontSize: 17,color:"#000000d3"}} >{profileData.team_size} members </div>
+                  <div style={{ fontSize: 17, color: "#000000d3" }} >{profileData.team_size} members </div>
 
                 </span>
                 <div style={{ marginBottom: "25px", fontWeight: 400 }}>{data?.team_size}</div>
@@ -281,7 +281,7 @@ export default function ProfileSummary() {
 
                 <div>
                   <span style={{ fontSize: 20, fontWeight: 400 }}>Email Address</span>
-                  <div style={{ marginBottom: 18,fontWeight: 400 }}>{data?.email}</div>
+                  <div style={{ marginBottom: 18, fontWeight: 400 }}>{data?.email}</div>
                 </div>
               </div>
             </Card>
@@ -289,36 +289,36 @@ export default function ProfileSummary() {
             {/* ================= JOBS ================= */}
             <div style={{ marginTop: 40 }}>
               <div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "14px 6px",
-  }}
->
-  <h2
-    style={{
-      color: "#000",
-      fontSize: "20px",
-      fontWeight: 600,
-      margin: 0,
-    }}
-  >
-    Posted Jobs
-  </h2>
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "14px 6px",
+                }}
+              >
+                <h2
+                  style={{
+                    color: "#000",
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    margin: 0,
+                  }}
+                >
+                  Posted Jobs
+                </h2>
 
-  <span
-    style={{
-      fontSize: "14px",
-      color: "#7E7E7E",
-      cursor: "pointer",
-      fontWeight: 500,
-    }}
-    onClick={() => navigate("/client-dashbroad2/AddJobScreen")}
-  >
-    View All
-  </span>
-</div>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    color: "#7E7E7E",
+                    cursor: "pointer",
+                    fontWeight: 500,
+                  }}
+                  onClick={() => navigate("/client-dashbroad2/AddJobScreen")}
+                >
+                  View All
+                </span>
+              </div>
 
 
               <div style={styles.toggleGroup}>
@@ -409,7 +409,7 @@ function JobCard({ job, type }) {
 
 
 
-  
+
 
   return (
     <div
@@ -504,7 +504,7 @@ const styles = {
     width: "100%",
     margin: "20px 0",
     // boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    border:"1px solid #25202034"
+    border: "1px solid #25202034"
   },
   toggleButton: {
     padding: "8px 16px",

@@ -226,15 +226,15 @@ export default function FreelancerFullDetailScreen() {
               </div>
             )}
 
-          <img
-  src={profile?.profileImage ? profile.profileImage : dp}
-  alt={fullName}
-  style={{
-    ...styles.profileImg,
-    marginLeft: isMobile ? -250 : -170,
-    marginTop: isMobile ? 20 : 60,
-  }}
-/>
+            <img
+              src={profile?.profileImage ? profile.profileImage : dp}
+              alt={fullName}
+              style={{
+                ...styles.profileImg,
+                marginLeft: isMobile ? -250 : -170,
+                marginTop: isMobile ? 20 : 60,
+              }}
+            />
 
 
             <div style={{

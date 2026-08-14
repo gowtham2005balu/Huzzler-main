@@ -1509,9 +1509,9 @@ export default function Client() {
   );
   const [userProfile, setUserProfile] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [notifOpen, setNotifOpen] = useState(false);
-   const pending = notifications.filter((n) => !n.read).length;
+  const pending = notifications.filter((n) => !n.read).length;
   const [userInfo, setUserInfo] = useState({
     first_name: "",
     last_name: "",
@@ -1612,56 +1612,56 @@ const [notifications, setNotifications] = useState([]);
   }, [location.pathname]);
 
 
-   useEffect(() => {
-      const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          setNotifications([]); // Clear notifications if logged out
-          return;
-        }
-  
-        // Set up your notifications listener here
-        const q = query(collection(db, "notifications"), where("clientUid", "==", user.uid));
-  
-        const unsubscribeNotif = onSnapshot(q, (snap) => {
-  console.log("Notification docs:", snap.docs.map(d => d.data()));
-  const filtered = snap.docs
-    .map((d) => ({ id: d.id, ...d.data() }))
-    .filter((n) => n.type !== "hire_request");
-  console.log("Filtered notifications:", filtered);
-  setNotifications(filtered);
-});
-  
-        // Cleanup listener when user logs out or component unmounts
-        return () => unsubscribeNotif();
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setNotifications([]); // Clear notifications if logged out
+        return;
+      }
+
+      // Set up your notifications listener here
+      const q = query(collection(db, "notifications"), where("clientUid", "==", user.uid));
+
+      const unsubscribeNotif = onSnapshot(q, (snap) => {
+        console.log("Notification docs:", snap.docs.map(d => d.data()));
+        const filtered = snap.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((n) => n.type !== "hire_request");
+        console.log("Filtered notifications:", filtered);
+        setNotifications(filtered);
       });
-  
-      // Cleanup auth listener on unmount
-      return () => unsubscribeAuth();
-    }, []);
-      async function acceptNotif(item) {
-        try {
-          await updateDoc(doc(db, "notifications", item.id), { read: true });
-    
-          navigate("/chat", {
-            state: {
-              currentUid: auth.currentUser.uid,
-              otherUid: item.freelancerId,
-              otherName: item.freelancerName,
-              otherImage: item.freelancerImage,
-              initialMessage: `Your application for ${item.jobTitle} accepted!`,
-            },
-          });
-        } catch (error) {
-          console.error("Error accepting notification:", error);
-        }
-      }
-     async function declineNotif(item) {
-        try {
-          await deleteDoc(doc(db, "notifications", item.id));
-        } catch (error) {
-          console.error("Error declining notification:", error);
-        }
-      }
+
+      // Cleanup listener when user logs out or component unmounts
+      return () => unsubscribeNotif();
+    });
+
+    // Cleanup auth listener on unmount
+    return () => unsubscribeAuth();
+  }, []);
+  async function acceptNotif(item) {
+    try {
+      await updateDoc(doc(db, "notifications", item.id), { read: true });
+
+      navigate("/chat", {
+        state: {
+          currentUid: auth.currentUser.uid,
+          otherUid: item.freelancerId,
+          otherName: item.freelancerName,
+          otherImage: item.freelancerImage,
+          initialMessage: `Your application for ${item.jobTitle} accepted!`,
+        },
+      });
+    } catch (error) {
+      console.error("Error accepting notification:", error);
+    }
+  }
+  async function declineNotif(item) {
+    try {
+      await deleteDoc(doc(db, "notifications", item.id));
+    } catch (error) {
+      console.error("Error declining notification:", error);
+    }
+  }
   /* ======================================================
      UI
   ====================================================== */
@@ -1716,25 +1716,25 @@ const [notifications, setNotifications] = useState([]);
 
               <img src={message} onClick={() => navigate("/client-dashbroad2/messages")} alt="message" style={{ width: "23px", cursor: "pointer" }} />
               <div
-                      className="ibtan"
-                      onClick={() => setNotifOpen(true)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <img width={25}src={notification} alt="notification" />
-                      {pending > 0 && (
-                        <span
-                          style={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: "50%",
-                            background: "red",
-                            position: "absolute",
-                            top: 10,
-                            right: 12,
-                          }}
-                        />
-                      )}
-                    </div>
+                className="ibtan"
+                onClick={() => setNotifOpen(true)}
+                style={{ cursor: "pointer" }}
+              >
+                <img width={25} src={notification} alt="notification" />
+                {pending > 0 && (
+                  <span
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      background: "red",
+                      position: "absolute",
+                      top: 10,
+                      right: 12,
+                    }}
+                  />
+                )}
+              </div>
 
             </div>
           </div>
@@ -1827,152 +1827,152 @@ const [notifications, setNotifications] = useState([]);
           )}
 
 
-   {notifOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            onClick={() => setNotifOpen(false)}
-            style={{
-              position: "fixed",
-              inset: 0,
+          {notifOpen && (
+            <>
+              {/* Overlay */}
+              <div
+                onClick={() => setNotifOpen(false)}
+                style={{
+                  position: "fixed",
+                  inset: 0,
 
-              zIndex: 9998,
-            }}
-          />
+                  zIndex: 9998,
+                }}
+              />
 
-          {/* Panel */}
-          <div
-            style={{
-              position: "fixed",
-              top: 140,
-              right: 170,
-              width: 420,
-              maxHeight: "75vh",
-              background: "#fff",
-              borderRadius: 16,
-              boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-              zIndex: 9999,
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
-          >
-            {/* Header */}
-            <div
-              style={{
-                padding: "16px 20px",
-                borderBottom: "1px solid #eee",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <FiBell />
-                Notifications ({notifications.length})
-              </div>
-            </div>
-
-            {/* Scroll Area */}
-            <div style={{ overflowY: "auto" }}>
-              {notifications.length === 0 && (
-                <div style={{ padding: 30, textAlign: "center", color: "#777" }}>
-                  No notifications
-                </div>
-              )}
-
-              {notifications.map((item) => (
+              {/* Panel */}
+              <div
+                style={{
+                  position: "fixed",
+                  top: 140,
+                  right: 170,
+                  width: 420,
+                  maxHeight: "75vh",
+                  background: "#fff",
+                  borderRadius: 16,
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                  zIndex: 9999,
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Header */}
                 <div
-                  key={item.id}
                   style={{
+                    padding: "16px 20px",
+                    borderBottom: "1px solid #eee",
+                    fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
-                    padding: 16,
-                    borderBottom: "1px solid #f2f2f2",
-                    gap: 14,
+                    justifyContent: "space-between",
                   }}
                 >
-                  {/* Avatar */}
-                  <img
-                    src={
-                      item.freelancerImage ||
-                      "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                    }
-                    alt=""
-                    style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  {/* Text */}
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600 }}>
-                      {item.freelancerName}
-                    </div>
-                    <div style={{ fontSize: 13, color: "#666" }}>
-                      Applied for {item.jobTitle}
-                    </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <FiBell />
+                    Notifications ({notifications.length})
                   </div>
+                </div>
 
-                  {/* Action Buttons */}
-                  {!item.read ? (
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <button
-                        onClick={() => acceptNotif(item)}
-                        style={{
-                          width: 34,
-                          height: 34,
-                          borderRadius: "50%",
-                          border: "1px solid #d1fae5",
-                          background: "#ecfdf5",
-                          color: "#10b981",
-                          cursor: "pointer",
-                        }}
-                      >
-                        ✓
-                      </button>
-
-                      <button
-                        onClick={() => declineNotif(item)}
-                        style={{
-                          width: 34,
-                          height: 34,
-                          borderRadius: "50%",
-                          border: "1px solid #fee2e2",
-                          background: "#fef2f2",
-                          color: "#ef4444",
-                          cursor: "pointer",
-                        }}
-                      >
-                        ✕
-                      </button>
+                {/* Scroll Area */}
+                <div style={{ overflowY: "auto" }}>
+                  {notifications.length === 0 && (
+                    <div style={{ padding: 30, textAlign: "center", color: "#777" }}>
+                      No notifications
                     </div>
-                  ) : (
-                    <button
-                      onClick={() => acceptNotif(item)}
+                  )}
+
+                  {notifications.map((item) => (
+                    <div
+                      key={item.id}
                       style={{
-                        padding: "6px 14px",
-                        borderRadius: 20,
-                        border: "none",
-                        background: "#9050FF",
-                        color: "#fff",
-                        fontSize: 13,
-                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 16,
+                        borderBottom: "1px solid #f2f2f2",
+                        gap: 14,
                       }}
                     >
-                      Chat
-                    </button>
-                  )}
+                      {/* Avatar */}
+                      <img
+                        src={
+                          item.freelancerImage ||
+                          "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        }
+                        alt=""
+                        style={{
+                          width: 48,
+                          height: 48,
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                        }}
+                      />
+
+                      {/* Text */}
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 600 }}>
+                          {item.freelancerName}
+                        </div>
+                        <div style={{ fontSize: 13, color: "#666" }}>
+                          Applied for {item.jobTitle}
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      {!item.read ? (
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button
+                            onClick={() => acceptNotif(item)}
+                            style={{
+                              width: 34,
+                              height: 34,
+                              borderRadius: "50%",
+                              border: "1px solid #d1fae5",
+                              background: "#ecfdf5",
+                              color: "#10b981",
+                              cursor: "pointer",
+                            }}
+                          >
+                            ✓
+                          </button>
+
+                          <button
+                            onClick={() => declineNotif(item)}
+                            style={{
+                              width: 34,
+                              height: 34,
+                              borderRadius: "50%",
+                              border: "1px solid #fee2e2",
+                              background: "#fef2f2",
+                              color: "#ef4444",
+                              cursor: "pointer",
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => acceptNotif(item)}
+                          style={{
+                            padding: "6px 14px",
+                            borderRadius: 20,
+                            border: "none",
+                            background: "#9050FF",
+                            color: "#fff",
+                            fontSize: 13,
+                            cursor: "pointer",
+                          }}
+                        >
+                          Chat
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+              </div>
+            </>
+          )}
 
           {/* CONTENT */}
           {screen === "CATEGORIES" && (
