@@ -5,6 +5,8 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -29,6 +31,34 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
     setPassword("");
     setMsg(null);
   }, [isOpen, initialMode]);
+
+  // Handle redirect result if redirect login was used
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result && result.user) {
+          const user = result.user;
+          let userSnap = await getDoc(doc(db, "users", user.uid));
+          let userData = userSnap.exists() ? userSnap.data() : null;
+
+          if (!userData && user.email) {
+            const q = query(collection(db, "users"), where("email", "==", user.email));
+            const qSnap = await getDocs(q);
+            if (!qSnap.empty) userData = qSnap.docs[0].data();
+          }
+
+          if (!userData) {
+            navigate("/fireregister", { state: { email: user.email || "", uid: user.uid } });
+          } else {
+            const existingRole = (userData.role || "").trim().toLowerCase();
+            existingRole === "client" ? navigate("/client-dashbroad2") : navigate("/freelance-dashboard");
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Redirect auth error:", err);
+      });
+  }, [navigate]);
 
   if (!isOpen) return null;
 
@@ -69,19 +99,39 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
       setLoading(true);
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+      
+      let user;
+      try {
+        const result = await signInWithPopup(auth, provider);
+        user = result.user;
+      } catch (popupErr) {
+        if (popupErr.code === "auth/popup-blocked" || popupErr.code === "auth/cancelled-popup-request") {
+          await signInWithRedirect(auth, provider);
+          return;
+        }
+        throw popupErr;
+      }
 
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
+      if (!user) return;
 
-      if (!userSnap.exists()) {
+      let userSnap = await getDoc(doc(db, "users", user.uid));
+      let userData = userSnap.exists() ? userSnap.data() : null;
+
+      if (!userData && user.email) {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const qSnap = await getDocs(q);
+        if (!qSnap.empty) {
+          userData = qSnap.docs[0].data();
+        }
+      }
+
+      if (!userData) {
         onClose();
         navigate("/fireregister", { state: { email: user.email || "", uid: user.uid } });
         return;
       }
 
-      const existingRole = (userSnap.data().role || "").trim().toLowerCase();
+      const existingRole = (userData.role || "").trim().toLowerCase();
       onClose();
       if (existingRole === "client") {
         navigate("/client-dashbroad2");
@@ -101,19 +151,37 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
       setLoading(true);
       const provider = new GithubAuthProvider();
       provider.addScope("user:email");
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+      
+      let user;
+      try {
+        const result = await signInWithPopup(auth, provider);
+        user = result.user;
+      } catch (popupErr) {
+        if (popupErr.code === "auth/popup-blocked" || popupErr.code === "auth/cancelled-popup-request") {
+          await signInWithRedirect(auth, provider);
+          return;
+        }
+        throw popupErr;
+      }
 
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
+      if (!user) return;
 
-      if (!userSnap.exists()) {
+      let userSnap = await getDoc(doc(db, "users", user.uid));
+      let userData = userSnap.exists() ? userSnap.data() : null;
+
+      if (!userData && user.email) {
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const qSnap = await getDocs(q);
+        if (!qSnap.empty) userData = qSnap.docs[0].data();
+      }
+
+      if (!userData) {
         onClose();
         navigate("/fireregister", { state: { email: user.email || "", uid: user.uid } });
         return;
       }
 
-      const existingRole = (userSnap.data().role || "").trim().toLowerCase();
+      const existingRole = (userData.role || "").trim().toLowerCase();
       onClose();
       if (existingRole === "client") {
         navigate("/client-dashbroad2");
@@ -121,7 +189,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }) {
         navigate("/freelance-dashboard");
       }
     } catch (err) {
-      showToast("GitHub authentication failed");
+      console.error("GitHub auth error:", err);
+      showToast(getAuthErrorMessage(err));
     } finally {
       setLoading(false);
     }
